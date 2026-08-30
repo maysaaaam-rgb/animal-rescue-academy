@@ -2533,16 +2533,16 @@
       setTimeout(() => {
         this.diceBox.classList.remove('rolling');
         
-        // Orient dice face
+        // Orient dice face with clean 3D perspective
         const rotations = {
-          1: 'rotateY(0deg)',
-          6: 'rotateY(180deg)',
-          3: 'rotateY(-90deg)',
-          4: 'rotateY(90deg)',
-          5: 'rotateX(-90deg)',
-          2: 'rotateX(90deg)'
+          1: 'rotateX(-12deg) rotateY(16deg)',
+          6: 'rotateX(-12deg) rotateY(196deg)',
+          3: 'rotateX(-12deg) rotateY(-74deg)',
+          4: 'rotateX(-12deg) rotateY(106deg)',
+          5: 'rotateX(-102deg) rotateY(0deg) rotateZ(16deg)',
+          2: 'rotateX(78deg) rotateY(0deg) rotateZ(-16deg)'
         };
-        this.diceBox.style.transform = rotations[roll] || 'rotateY(0deg)';
+        this.diceBox.style.transform = rotations[roll] || 'rotateX(-12deg) rotateY(16deg)';
 
         this.moveToast.classList.remove('hidden');
         this.toastSteps.textContent = roll;
@@ -2708,8 +2708,9 @@
           this.stageDice.classList.remove('hidden');
           this.diceHeading.textContent = `🎲 LUCKY FREE ROLL: ${teamName}!`;
           this.diceSub.textContent = 'Roll the dice again right now!';
-          this.btnRollDice.disabled = false;
+          this.diceUnlocked = true;
           this.isRollingOrMoving = false;
+          this.updateDiceButtonState();
         });
         return;
       }
@@ -2858,8 +2859,9 @@
           this.stageDice.classList.remove('hidden');
           this.diceHeading.textContent = `🎲 LUCKY FREE ROLL: ${teamName}!`;
           this.diceSub.textContent = 'Roll the dice again right now!';
-          this.btnRollDice.disabled = false;
+          this.diceUnlocked = true;
           this.isRollingOrMoving = false;
+          this.updateDiceButtonState();
         } else {
           this.advanceTurn();
         }
