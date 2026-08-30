@@ -1,21 +1,20 @@
 /**
- * ⭐ EMOJI EXPERTS ⭐ — CLASSROOM SMART BOARD GAME ENGINE
- * Strictly renders original uploaded asset files:
- * 1. "EMOJI WORDS" reference sheet (Screen 2 & in-game reference modal)
- * 2. "ALL ABOUT ME!" profile worksheet (Screen 3 & Screen 7)
+ * ⭐ EMOJI EXPERTS ⭐ — OFFICIAL VOCABULARY CLASSROOM SMART BOARD GAME ENGINE
+ * Single-Page State Machine, Audio Synthesizer, Confetti Engine, Touch UX
+ * Official Vocabulary for "ALL ABOUT ME!" Profile Preparation
  */
 
 (function () {
   'use strict';
 
   // =========================================================================
-  // 1. DATA: 18 CURATED QUESTIONS FROM THE OFFICIAL "EMOJI WORDS" REFERENCE
+  // 1. DATA: 20 MIXED QUESTIONS FROM OFFICIAL "ALL ABOUT ME!" WORKSHEET
   // =========================================================================
   const QUESTIONS_DATA = [
     {
       id: 1,
       category: 'Things I love to do',
-      catIcon: '💚',
+      categoryIcon: '💚',
       emoji: '🎮',
       word: 'PLAY GAMES',
       correctChoice: 'A',
@@ -26,37 +25,37 @@
           fallbackBg: '#cbd5e1'
         },
         B: {
-          label: 'Child reading a book in library',
-          imgUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#e2e8f0'
+          label: 'Child watching videos on tablet',
+          imgUrl: 'https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fecaca'
         },
         C: {
-          label: 'Child riding a bicycle in park',
-          imgUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bfdbfe'
+          label: 'Child reading a book quietly',
+          imgUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fed7aa'
         }
       }
     },
     {
       id: 2,
       category: 'My favorite food',
-      catIcon: '🧡',
+      categoryIcon: '🧡',
       emoji: '🥑',
       word: 'AVOCADO',
       correctChoice: 'B',
       options: {
         A: {
-          label: 'Sliced green kiwi fruit',
+          label: 'Sliced Kiwi Fruit',
           imgUrl: 'https://images.unsplash.com/photo-1585059895524-72359e06133a?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#bbf7d0'
         },
         B: {
-          label: 'Fresh sliced ripe avocado with seed',
+          label: 'Fresh Sliced Avocado with seed',
           imgUrl: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#86efac'
         },
         C: {
-          label: 'Crisp green apples',
+          label: 'Green Apples',
           imgUrl: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#bbf7d0'
         }
@@ -65,23 +64,23 @@
     {
       id: 3,
       category: 'How do you feel about English?',
-      catIcon: '💜',
+      categoryIcon: '💜',
       emoji: '🤔',
       word: 'CURIOUS',
       correctChoice: 'B',
       options: {
         A: {
-          label: 'Child crying / sad',
+          label: 'Child crying with tears',
           imgUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fecaca'
+          fallbackBg: '#fee2e2'
         },
         B: {
-          label: 'Child looking curious / thinking with hand on chin',
+          label: 'Child with hand on chin looking curious',
           imgUrl: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#e2e8f0'
         },
         C: {
-          label: 'Child laughing out loud',
+          label: 'Child laughing with friends',
           imgUrl: 'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fef08a'
         }
@@ -90,7 +89,157 @@
     {
       id: 4,
       category: 'Things I love to do',
-      catIcon: '💚',
+      categoryIcon: '💚',
+      emoji: '🚲',
+      word: 'RIDE A BIKE',
+      correctChoice: 'B',
+      options: {
+        A: {
+          label: 'Child riding a skateboard',
+          imgUrl: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fed7aa'
+        },
+        B: {
+          label: 'Child wearing helmet riding a bicycle',
+          imgUrl: 'https://images.unsplash.com/photo-1502744688674-c619d1586c9e?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bfdbfe'
+        },
+        C: {
+          label: 'Child swimming in pool',
+          imgUrl: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bae6fd'
+        }
+      }
+    },
+    {
+      id: 5,
+      category: 'My favorite food',
+      categoryIcon: '🧡',
+      emoji: '🍕',
+      word: 'PIZZA',
+      correctChoice: 'C',
+      options: {
+        A: {
+          label: 'Stack of pancakes with syrup',
+          imgUrl: 'https://images.unsplash.com/photo-1567620905732-2d1ec7ab7445?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fde68a'
+        },
+        B: {
+          label: 'Toasted sandwich with cheese',
+          imgUrl: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fed7aa'
+        },
+        C: {
+          label: 'Cheesy pepperoni pizza slice',
+          imgUrl: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fecaca'
+        }
+      }
+    },
+    {
+      id: 6,
+      category: 'How do you feel about English?',
+      categoryIcon: '💜',
+      emoji: '🤩',
+      word: 'EXCITED',
+      correctChoice: 'B',
+      options: {
+        A: {
+          label: 'Child reading quietly',
+          imgUrl: 'https://images.unsplash.com/photo-1497633762265-9d179a990aa6?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#e2e8f0'
+        },
+        B: {
+          label: 'Excited child jumping joyfully with sparkling eyes',
+          imgUrl: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fef08a'
+        },
+        C: {
+          label: 'Child looking bored / resting head',
+          imgUrl: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#cbd5e1'
+        }
+      }
+    },
+    {
+      id: 7,
+      category: 'Things I love to do',
+      categoryIcon: '💚',
+      emoji: '🧩',
+      word: 'DO PUZZLES',
+      correctChoice: 'B',
+      options: {
+        A: {
+          label: 'Building with toy blocks',
+          imgUrl: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fde68a'
+        },
+        B: {
+          label: 'Assembling jigsaw puzzle pieces on table',
+          imgUrl: 'https://images.unsplash.com/photo-1618842676087-c1f8238248bc?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#93c5fd'
+        },
+        C: {
+          label: 'Painting with watercolors',
+          imgUrl: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fbcfe8'
+        }
+      }
+    },
+    {
+      id: 8,
+      category: 'My favorite food',
+      categoryIcon: '🧡',
+      emoji: '🥦',
+      word: 'BROCCOLI',
+      correctChoice: 'C',
+      options: {
+        A: {
+          label: 'Fresh sliced cucumbers',
+          imgUrl: 'https://images.unsplash.com/photo-1449300079323-02e209d9d3a6?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bbf7d0'
+        },
+        B: {
+          label: 'Green bell peppers',
+          imgUrl: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#86efac'
+        },
+        C: {
+          label: 'Fresh green broccoli florets',
+          imgUrl: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#4ade80'
+        }
+      }
+    },
+    {
+      id: 9,
+      category: 'Things I love to do',
+      categoryIcon: '💚',
+      emoji: '📷',
+      word: 'TAKE PHOTOS',
+      correctChoice: 'B',
+      options: {
+        A: {
+          label: 'Child holding a tablet screen',
+          imgUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fed7aa'
+        },
+        B: {
+          label: 'Child holding camera taking a photo',
+          imgUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#e2e8f0'
+        },
+        C: {
+          label: 'Child with headphones listening to music',
+          imgUrl: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bfdbfe'
+        }
+      }
+    },
+    {
+      id: 10,
+      category: 'Things I love to do',
+      categoryIcon: '💚',
       emoji: '🎤',
       word: 'SING',
       correctChoice: 'A',
@@ -101,46 +250,46 @@
           fallbackBg: '#fde047'
         },
         B: {
-          label: 'Child listening to music with headphones',
-          imgUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
+          label: 'Listening to music with headphones',
+          imgUrl: 'https://images.unsplash.com/photo-1546776310-eef45dd6d63c?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#bfdbfe'
         },
         C: {
-          label: 'Child watching videos on tablet',
-          imgUrl: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
+          label: 'Watching videos on phone',
+          imgUrl: 'https://images.unsplash.com/photo-1512499617640-c74ae3a79d37?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fecaca'
         }
       }
     },
     {
-      id: 5,
+      id: 11,
       category: 'My favorite food',
-      catIcon: '🧡',
-      emoji: '🥦',
-      word: 'BROCCOLI',
-      correctChoice: 'B',
+      categoryIcon: '🧡',
+      emoji: '🍓',
+      word: 'STRAWBERRY',
+      correctChoice: 'C',
       options: {
         A: {
-          label: 'Sliced green cucumber',
-          imgUrl: 'https://images.unsplash.com/photo-1604977042946-1eecc30f269e?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bbf7d0'
+          label: 'Fresh blueberries bowl',
+          imgUrl: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#c7d2fe'
         },
         B: {
-          label: 'Fresh green broccoli florets',
-          imgUrl: 'https://images.unsplash.com/photo-1459411621453-7b03977f4bfc?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#86efac'
+          label: 'Sliced watermelon',
+          imgUrl: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fecaca'
         },
         C: {
-          label: 'Green bell peppers',
-          imgUrl: 'https://images.unsplash.com/photo-1563565375-f3fdfdbefa83?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bbf7d0'
+          label: 'Bright red fresh strawberries',
+          imgUrl: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#f87171'
         }
       }
     },
     {
-      id: 6,
+      id: 12,
       category: 'My favorite color',
-      catIcon: '💙',
+      categoryIcon: '💙',
       emoji: '🔵',
       word: 'BLUE',
       correctChoice: 'B',
@@ -151,355 +300,257 @@
           fallbackBg: '#f87171'
         },
         B: {
-          label: 'Bright blue backpack',
-          imgUrl: 'https://images.unsplash.com/photo-1622560480605-d83c853bc5c3?auto=format&fit=crop&w=800&q=80',
+          label: 'Vibrant blue sports ball / object',
+          imgUrl: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#38bdf8'
         },
         C: {
-          label: 'Bright yellow backpack',
-          imgUrl: 'https://images.unsplash.com/photo-1577733966973-d680bffd2e80?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fde047'
-        }
-      }
-    },
-    {
-      id: 7,
-      category: 'Things I love to do',
-      catIcon: '💚',
-      emoji: '🚲',
-      word: 'RIDE A BIKE',
-      correctChoice: 'C',
-      options: {
-        A: {
-          label: 'Child skateboarding with helmet',
-          imgUrl: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
-        },
-        B: {
-          label: 'Child swimming in pool',
-          imgUrl: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bae6fd'
-        },
-        C: {
-          label: 'Child riding a bicycle outdoors',
-          imgUrl: 'https://images.unsplash.com/photo-1502086223501-7ea6ecd79368?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#86efac'
-        }
-      }
-    },
-    {
-      id: 8,
-      category: 'My favorite food',
-      catIcon: '🧡',
-      emoji: '🍕',
-      word: 'PIZZA',
-      correctChoice: 'A',
-      options: {
-        A: {
-          label: 'Hot cheesy pizza slice',
-          imgUrl: 'https://images.unsplash.com/photo-1513104890138-7c749659a591?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fde047'
-        },
-        B: {
-          label: 'Toasted sandwich with cheese',
-          imgUrl: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
-        },
-        C: {
-          label: 'Bowl of oatmeal with fruit',
-          imgUrl: 'https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fef08a'
-        }
-      }
-    },
-    {
-      id: 9,
-      category: 'How do you feel about English?',
-      catIcon: '💜',
-      emoji: '🤩',
-      word: 'EXCITED',
-      correctChoice: 'B',
-      options: {
-        A: {
-          label: 'Child reading quietly',
-          imgUrl: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#e2e8f0'
-        },
-        B: {
-          label: 'Child with huge smile jumping with excitement',
-          imgUrl: 'https://images.unsplash.com/photo-1533227268428-f9ed0900fb3b?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fef08a'
-        },
-        C: {
-          label: 'Child looking confused / scratching head',
-          imgUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
-        }
-      }
-    },
-    {
-      id: 10,
-      category: 'Things I love to do',
-      catIcon: '💚',
-      emoji: '🎨',
-      word: 'DRAW',
-      correctChoice: 'A',
-      options: {
-        A: {
-          label: 'Child painting / drawing with colors and paintbrush',
-          imgUrl: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fde047'
-        },
-        B: {
-          label: 'Child taking photos with camera',
-          imgUrl: 'https://images.unsplash.com/photo-1516035069371-29a1b244cc32?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bfdbfe'
-        },
-        C: {
-          label: 'Child doing jigsaw puzzle',
-          imgUrl: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
-        }
-      }
-    },
-    {
-      id: 11,
-      category: 'My favorite food',
-      catIcon: '🧡',
-      emoji: '🍓',
-      word: 'STRAWBERRY',
-      correctChoice: 'B',
-      options: {
-        A: {
-          label: 'Fresh red tomatoes',
-          imgUrl: 'https://images.unsplash.com/photo-1592924357228-91a4daadcfea?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#f87171'
-        },
-        B: {
-          label: 'Fresh sweet red strawberries',
-          imgUrl: 'https://images.unsplash.com/photo-1464965911861-746a04b4bca6?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#f87171'
-        },
-        C: {
-          label: 'Fresh blueberries',
-          imgUrl: 'https://images.unsplash.com/photo-1498557850523-fd3d118b962e?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#93c5fd'
-        }
-      }
-    },
-    {
-      id: 12,
-      category: 'Things I love to do',
-      catIcon: '💚',
-      emoji: '🎧',
-      word: 'LISTEN TO MUSIC',
-      correctChoice: 'B',
-      options: {
-        A: {
-          label: 'Child singing into microphone',
-          imgUrl: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fde047'
-        },
-        B: {
-          label: 'Child wearing headphones listening to music',
-          imgUrl: 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bfdbfe'
-        },
-        C: {
-          label: 'Child watching video on tablet',
-          imgUrl: 'https://images.unsplash.com/photo-1585776245991-cf89dd7fc73a?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
+          label: 'Bright yellow toy',
+          imgUrl: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#facc15'
         }
       }
     },
     {
       id: 13,
-      category: 'My favorite color',
-      catIcon: '💙',
-      emoji: '🔴',
-      word: 'RED',
+      category: 'Things I love to do',
+      categoryIcon: '💚',
+      emoji: '🧱',
+      word: 'BUILD THINGS',
       correctChoice: 'A',
       options: {
         A: {
-          label: 'Bright red shiny apple',
-          imgUrl: 'https://images.unsplash.com/photo-1560806887-1e4cd0b6cbd6?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#f87171'
+          label: 'Kids building tower with colorful toy blocks',
+          imgUrl: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fef08a'
         },
         B: {
-          label: 'Bright green apple',
-          imgUrl: 'https://images.unsplash.com/photo-1619546813926-a78fa6372cd2?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#86efac'
-        },
-        C: {
-          label: 'Bright yellow fruit',
-          imgUrl: 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fde047'
-        }
-      }
-    },
-    {
-      id: 14,
-      category: 'Things I love to do',
-      catIcon: '💚',
-      emoji: '🧩',
-      word: 'DO PUZZLES',
-      correctChoice: 'B',
-      options: {
-        A: {
-          label: 'Child building colorful blocks',
-          imgUrl: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fde047'
-        },
-        B: {
-          label: 'Child assembling jigsaw puzzle pieces',
-          imgUrl: 'https://images.unsplash.com/photo-1587654780291-39c9404d746b?auto=format&fit=crop&w=800&q=80',
+          label: 'Kids playing board games',
+          imgUrl: 'https://images.unsplash.com/photo-1610890716171-6b1bb98ffd09?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#bfdbfe'
         },
         C: {
-          label: 'Child drawing with colored pens',
-          imgUrl: 'https://images.unsplash.com/photo-1513364776144-60967b0f800f?auto=format&fit=crop&w=800&q=80',
+          label: 'Kids drawing on paper',
+          imgUrl: 'https://images.unsplash.com/photo-1503454537195-1dcabb73ffb9?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fbcfe8'
         }
       }
     },
     {
-      id: 15,
+      id: 14,
       category: 'My favorite food',
-      catIcon: '🧡',
-      emoji: '🍉',
-      word: 'WATERMELON',
-      correctChoice: 'C',
+      categoryIcon: '🧡',
+      emoji: '🥪',
+      word: 'SANDWICH',
+      correctChoice: 'B',
       options: {
         A: {
-          label: 'Sliced pineapple',
-          imgUrl: 'https://images.unsplash.com/photo-1550258987-190a2d41a8ba?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fef08a'
-        },
-        B: {
-          label: 'Sliced ripe mango',
-          imgUrl: 'https://images.unsplash.com/photo-1553279768-865429fa0078?auto=format&fit=crop&w=800&q=80',
+          label: 'Bowl of vegetable soup',
+          imgUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fed7aa'
         },
+        B: {
+          label: 'Fresh sandwich with lettuce, cheese and tomato',
+          imgUrl: 'https://images.unsplash.com/photo-1528735602780-2552fd46c7af?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fde68a'
+        },
         C: {
-          label: 'Fresh sliced red watermelon with black seeds',
-          imgUrl: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#f87171'
+          label: 'Bowl of yogurt with berries',
+          imgUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#e2e8f0'
         }
       }
     },
     {
-      id: 16,
+      id: 15,
       category: 'How do you feel about English?',
-      catIcon: '💜',
+      categoryIcon: '💜',
       emoji: '😟',
       word: 'NERVOUS',
-      correctChoice: 'B',
+      correctChoice: 'A',
       options: {
         A: {
-          label: 'Child laughing happily',
+          label: 'Child looking nervous / biting lip',
+          imgUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fecaca'
+        },
+        B: {
+          label: 'Happy smiling child',
           imgUrl: 'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fef08a'
         },
-        B: {
-          label: 'Child looking nervous / anxious in classroom',
-          imgUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
-        },
         C: {
-          label: 'Child sleeping peacefully',
+          label: 'Sleeping child',
           imgUrl: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#cbd5e1'
         }
       }
     },
     {
-      id: 17,
+      id: 16,
       category: 'Things I love to do',
-      catIcon: '💚',
-      emoji: '🏕️',
-      word: 'CAMP',
-      correctChoice: 'A',
+      categoryIcon: '💚',
+      emoji: '🛹',
+      word: 'SKATEBOARD',
+      correctChoice: 'B',
       options: {
         A: {
-          label: 'Tent camping in forest outdoors',
-          imgUrl: 'https://images.unsplash.com/photo-1504280390367-361c6d9f38f4?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#86efac'
+          label: 'Child riding bicycle',
+          imgUrl: 'https://images.unsplash.com/photo-1502744688674-c619d1586c9e?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bfdbfe'
         },
         B: {
-          label: 'Living room with sofa',
-          imgUrl: 'https://images.unsplash.com/photo-1554995207-c18c20360250?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#e2e8f0'
+          label: 'Skateboarding at skatepark',
+          imgUrl: 'https://images.unsplash.com/photo-1520045892732-304bc3ac5d8e?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fed7aa'
         },
         C: {
-          label: 'Indoor swimming pool',
-          imgUrl: 'https://images.unsplash.com/photo-1530549387789-4c1017266635?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#bae6fd'
+          label: 'Child running on track',
+          imgUrl: 'https://images.unsplash.com/photo-1461896836934-ffe607ba8211?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bbf7d0'
+        }
+      }
+    },
+    {
+      id: 17,
+      category: 'My favorite food',
+      categoryIcon: '🧡',
+      emoji: '🥗',
+      word: 'SALAD',
+      correctChoice: 'C',
+      options: {
+        A: {
+          label: 'Bowl of oatmeal with honey',
+          imgUrl: 'https://images.unsplash.com/photo-1584776296944-ab6fb57b0bdd?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fef08a'
+        },
+        B: {
+          label: 'Plate of grilled chicken',
+          imgUrl: 'https://images.unsplash.com/photo-1532550907401-a500c9a57435?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fed7aa'
+        },
+        C: {
+          label: 'Fresh colorful garden salad bowl',
+          imgUrl: 'https://images.unsplash.com/photo-1512621776951-a57141f2eefd?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#86efac'
         }
       }
     },
     {
       id: 18,
+      category: 'Things I love to do',
+      categoryIcon: '💚',
+      emoji: '🎧',
+      word: 'LISTEN TO MUSIC',
+      correctChoice: 'B',
+      options: {
+        A: {
+          label: 'Talking on phone',
+          imgUrl: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#e2e8f0'
+        },
+        B: {
+          label: 'Child with headphones listening to music',
+          imgUrl: 'https://images.unsplash.com/photo-1508700115892-45ecd05ae2ad?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#bfdbfe'
+        },
+        C: {
+          label: 'Singing into microphone',
+          imgUrl: 'https://images.unsplash.com/photo-1516280440614-37939bbacd81?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fde047'
+        }
+      }
+    },
+    {
+      id: 19,
+      category: 'How do you feel about English?',
+      categoryIcon: '💜',
+      emoji: '😭',
+      word: 'NEED HELP',
+      correctChoice: 'C',
+      options: {
+        A: {
+          label: 'Laughing happily',
+          imgUrl: 'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fef08a'
+        },
+        B: {
+          label: 'Thinking curiously',
+          imgUrl: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#e2e8f0'
+        },
+        C: {
+          label: 'Child crying needing help',
+          imgUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fee2e2'
+        }
+      }
+    },
+    {
+      id: 20,
       category: 'My favorite food',
-      catIcon: '🧡',
+      categoryIcon: '🧡',
       emoji: '🍦',
       word: 'ICE CREAM',
       correctChoice: 'C',
       options: {
         A: {
-          label: 'Bowl of yogurt / milk',
-          imgUrl: 'https://images.unsplash.com/photo-1550583724-b2692b85b150?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#f1f5f9'
+          label: 'Bowl of yogurt with berries',
+          imgUrl: 'https://images.unsplash.com/photo-1488477181946-6428a0291777?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fbcfe8'
         },
         B: {
-          label: 'Bowl of vegetable soup',
-          imgUrl: 'https://images.unsplash.com/photo-1547592166-23ac45744acd?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fed7aa'
+          label: 'Fresh sliced watermelon',
+          imgUrl: 'https://images.unsplash.com/photo-1587049352846-4a222e784d38?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fecaca'
         },
         C: {
-          label: 'Delicious strawberry ice cream cone',
-          imgUrl: 'https://images.unsplash.com/photo-1497034825429-c343d7c6a68f?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fbcfe8'
+          label: 'Delicious colorful ice cream cone',
+          imgUrl: 'https://images.unsplash.com/photo-1501443762994-82bd5dace89a?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fde047'
         }
       }
     }
   ];
 
-  // Official Profile Memory rounds
+  // Official memory game rounds with exact profile emojis
   const MEMORY_ROUNDS = [
     {
-      emojis: ['🎮', '🎧', '🎨', '⚽', '🥑', '🍓', '🥦', '🍕'],
+      emojis: ['🎮', '🥑', '🎧', '🥦', '🧩', '🍕', '🎤', '🛹'],
       queryWord: 'PIZZA',
       queryEmoji: '🍕',
       correctAnswer: 'yes'
     },
     {
-      emojis: ['🚲', '🏊', '🧩', '🎤', '🍉', '🥕', '🥪', '🍦'],
-      queryWord: 'SALMON',
-      queryEmoji: '🐟',
+      emojis: ['🚲', '🍓', '🤔', '🧱', '🥪', '🤩', '📷', '🥗'],
+      queryWord: 'ICE CREAM',
+      queryEmoji: '🍦',
       correctAnswer: 'no'
     },
     {
-      emojis: ['📷', '🛹', '🧱', '🏕️', '🍎', '🍌', '🥗', '🍗'],
-      queryWord: 'CAMPING',
-      queryEmoji: '🏕️',
+      emojis: ['🍦', '🎤', '😟', '🔵', '🛹', '🎧', '🥦', '🎮'],
+      queryWord: 'SINGING',
+      queryEmoji: '🎤',
       correctAnswer: 'yes'
     },
     {
-      emojis: ['🚁', '🪐', '📖', '💃', '🫐', '🥒', '🥣', '🥜'],
-      queryWord: 'FLY A DRONE',
-      queryEmoji: '🚁',
-      correctAnswer: 'yes'
+      emojis: ['🧱', '🥑', '😭', '🍓', '🍕', '🚲', '🧩', '🎧'],
+      queryWord: 'BROCCOLI',
+      queryEmoji: '🥦',
+      correctAnswer: 'no'
     }
   ];
 
-  // Guess What I Like prompts from profile options
+  // Official Guess What I Like prompts from the profile
   const GUESS_QUESTIONS = [
-    { emoji: '⚽', question: 'DO YOU LIKE PLAYING FOOTBALL?' },
-    { emoji: '🎮', question: 'DO YOU LIKE PLAYING GAMES?' },
+    { emoji: '⚽', question: 'DO YOU LIKE FOOTBALL?' },
     { emoji: '🍕', question: 'DO YOU LIKE PIZZA?' },
-    { emoji: '🥑', question: 'DO YOU LIKE AVOCADO?' },
+    { emoji: '🎮', question: 'DO YOU LIKE PLAYING GAMES?' },
+    { emoji: '🍓', question: 'DO YOU LIKE STRAWBERRIES?' },
     { emoji: '🎨', question: 'DO YOU LIKE DRAWING?' },
-    { emoji: '🍓', question: 'DO YOU LIKE STRAWBERRIES?' }
+    { emoji: '🍦', question: 'DO YOU LIKE ICE CREAM?' },
+    { emoji: '🎧', question: 'DO YOU LIKE MUSIC?' },
+    { emoji: '🛹', question: 'DO YOU LIKE SKATEBOARDING?' }
   ];
 
   // =========================================================================
@@ -550,7 +601,7 @@
       this.init();
       if (!this.ctx) return;
       const now = this.ctx.currentTime;
-      const notes = [523.25, 659.25, 783.99, 1046.5];
+      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
       notes.forEach((freq, i) => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -718,11 +769,7 @@
       this.confetti = new ConfettiEngine();
 
       // State variables
-      this.currentScreen = 'screen-welcome';
-      this.wordsZoomScale = 1.0;
-      this.profileZoomScale = 1.0;
-
-      // Main game state
+      this.currentScreen = 'screen-start';
       this.currentQuestionIndex = 0;
       this.score = 0;
       this.currentQuestionAnswered = false;
@@ -742,40 +789,36 @@
     cacheDOMElements() {
       // Screens
       this.screens = {
-        welcome: document.getElementById('screen-welcome'),
-        words: document.getElementById('screen-words'),
-        profilePreview: document.getElementById('screen-profile-preview'),
+        start: document.getElementById('screen-start'),
+        intro: document.getElementById('screen-intro'),
         game: document.getElementById('screen-game'),
         memory: document.getElementById('screen-memory'),
         guess: document.getElementById('screen-guess'),
-        final: document.getElementById('screen-final')
+        profile: document.getElementById('screen-profile')
       };
 
-      // Modal Reference
-      this.modalReference = document.getElementById('modal-reference');
-      this.btnOpenReference = document.getElementById('btn-open-reference');
-      this.btnCloseReference = document.getElementById('btn-close-reference');
+      // Modal Elements
+      this.worksheetModal = document.getElementById('worksheet-modal');
+      this.btnOpenSheetModal = document.getElementById('btn-open-sheet-modal');
+      this.btnCloseModal = document.getElementById('btn-close-modal');
+      this.tabBtnProfile = document.getElementById('tab-btn-profile');
+      this.tabBtnWords = document.getElementById('tab-btn-words');
+      this.paneProfile = document.getElementById('pane-profile');
+      this.paneWords = document.getElementById('pane-words');
+      this.btnPreviewSheetStart = document.getElementById('btn-preview-sheet-start');
+      this.introPreviewTrigger = document.getElementById('intro-preview-trigger');
+      this.btnOpenFinalSheet = document.getElementById('btn-open-final-sheet');
 
-      // Screen 1: Welcome
-      this.btnStartWelcome = document.getElementById('btn-start-welcome');
+      // Start screen
+      this.btnStartPlay = document.getElementById('btn-start-play');
 
-      // Screen 2: Look at Words
-      this.btnWordsPrev = document.getElementById('btn-words-prev');
-      this.btnWordsZoomIn = document.getElementById('btn-words-zoom-in');
-      this.btnWordsZoomOut = document.getElementById('btn-words-zoom-out');
-      this.btnWordsNext = document.getElementById('btn-words-next');
-      this.scrollWrapperWords = document.getElementById('scroll-wrapper-words');
+      // Intro screen
+      this.btnIntroHelp = document.getElementById('btn-intro-help');
 
-      // Screen 3: Our Profile
-      this.btnProfileBack = document.getElementById('btn-profile-back');
-      this.btnProfileZoomIn = document.getElementById('btn-profile-zoom-in');
-      this.btnProfileZoomOut = document.getElementById('btn-profile-zoom-out');
-      this.btnProfileStartGame = document.getElementById('btn-profile-start-game');
-      this.scrollWrapperProfile = document.getElementById('scroll-wrapper-profile');
-
-      // Screen 4: Main Game UI
-      this.categoryBadgeIcon = document.getElementById('category-badge-icon');
-      this.categoryBadgeText = document.getElementById('category-badge-text');
+      // Main Game UI
+      this.qCategoryPill = document.getElementById('q-category-pill');
+      this.qCatIcon = document.getElementById('q-cat-icon');
+      this.qCatText = document.getElementById('q-cat-text');
       this.qCounterText = document.getElementById('q-counter-text');
       this.progressFill = document.getElementById('progress-fill');
       this.scoreDisplay = document.getElementById('game-score-display');
@@ -797,7 +840,7 @@
       this.btnPronounceWord = document.getElementById('btn-pronounce-word');
       this.btnNextQuestion = document.getElementById('btn-next-question');
 
-      // Screen 5: Memory Game UI
+      // Memory Game UI
       this.memoryIntroView = document.getElementById('memory-intro-view');
       this.memoryPlayView = document.getElementById('memory-play-view');
       this.btnStartMemoryGame = document.getElementById('btn-start-memory-game');
@@ -815,7 +858,7 @@
       this.memFeedbackText = document.getElementById('mem-feedback-text');
       this.btnMemoryNext = document.getElementById('btn-memory-next');
 
-      // Screen 6: Guess What I Like UI
+      // Guess What I Like UI
       this.guessStepIndicator = document.getElementById('guess-step-indicator');
       this.guessTargetEmoji = document.getElementById('guess-target-emoji');
       this.guessQuestionTitle = document.getElementById('guess-question-title');
@@ -824,7 +867,7 @@
       this.btnGuessNext = document.getElementById('btn-guess-next');
       this.btnGuessFinish = document.getElementById('btn-guess-finish');
 
-      // Screen 7: Final Screen UI
+      // Profile Screen UI
       this.finalScoreNum = document.getElementById('final-score-num');
       this.btnReplayGame = document.getElementById('btn-replay-game');
 
@@ -836,78 +879,18 @@
     }
 
     bindEvents() {
-      // 1. Welcome Screen
-      this.btnStartWelcome.addEventListener('click', () => {
+      // 1. Navigation / State buttons
+      this.btnStartPlay.addEventListener('click', () => {
         this.audio.playPop();
-        this.switchScreen('words');
+        this.switchScreen('intro');
       });
 
-      // 2. Look at Words Controls
-      this.btnWordsPrev.addEventListener('click', () => {
-        this.audio.playPop();
-        this.switchScreen('welcome');
-      });
-
-      this.btnWordsZoomIn.addEventListener('click', () => {
-        this.audio.playPop();
-        if (this.wordsZoomScale < 2.0) {
-          this.wordsZoomScale += 0.25;
-          this.scrollWrapperWords.style.transform = `scale(${this.wordsZoomScale})`;
-        }
-      });
-
-      this.btnWordsZoomOut.addEventListener('click', () => {
-        this.audio.playPop();
-        if (this.wordsZoomScale > 0.75) {
-          this.wordsZoomScale -= 0.25;
-          this.scrollWrapperWords.style.transform = `scale(${this.wordsZoomScale})`;
-        }
-      });
-
-      this.btnWordsNext.addEventListener('click', () => {
-        this.audio.playPop();
-        this.switchScreen('profilePreview');
-      });
-
-      // 3. Our Profile Controls
-      this.btnProfileBack.addEventListener('click', () => {
-        this.audio.playPop();
-        this.switchScreen('words');
-      });
-
-      this.btnProfileZoomIn.addEventListener('click', () => {
-        this.audio.playPop();
-        if (this.profileZoomScale < 2.0) {
-          this.profileZoomScale += 0.25;
-          this.scrollWrapperProfile.style.transform = `scale(${this.profileZoomScale})`;
-        }
-      });
-
-      this.btnProfileZoomOut.addEventListener('click', () => {
-        this.audio.playPop();
-        if (this.profileZoomScale > 0.75) {
-          this.profileZoomScale -= 0.25;
-          this.scrollWrapperProfile.style.transform = `scale(${this.profileZoomScale})`;
-        }
-      });
-
-      this.btnProfileStartGame.addEventListener('click', () => {
+      this.btnIntroHelp.addEventListener('click', () => {
         this.audio.playPop();
         this.startMainGame();
       });
 
-      // 4. Reference Modal in Main Game
-      this.btnOpenReference.addEventListener('click', () => {
-        this.audio.playPop();
-        this.modalReference.classList.remove('hidden');
-      });
-
-      this.btnCloseReference.addEventListener('click', () => {
-        this.audio.playPop();
-        this.modalReference.classList.add('hidden');
-      });
-
-      // 5. Choice Cards (A, B, C)
+      // 2. Choice Cards (A, B, C)
       [this.cardOptA, this.cardOptB, this.cardOptC].forEach(card => {
         card.addEventListener('click', () => {
           const choice = card.getAttribute('data-choice');
@@ -915,7 +898,7 @@
         });
       });
 
-      // Pronunciation button
+      // 3. Pronunciation button
       this.btnPronounceWord.addEventListener('click', () => {
         const q = QUESTIONS_DATA[this.currentQuestionIndex];
         if (q) {
@@ -923,13 +906,13 @@
         }
       });
 
-      // Teacher NEXT button
+      // 4. Teacher NEXT button
       this.btnNextQuestion.addEventListener('click', () => {
         this.audio.playPop();
         this.goToNextQuestion();
       });
 
-      // 6. Memory Game buttons
+      // 5. Memory Game buttons
       this.btnStartMemoryGame.addEventListener('click', () => {
         this.audio.playPop();
         this.memoryIntroView.classList.add('hidden');
@@ -945,7 +928,7 @@
         this.advanceMemoryRound();
       });
 
-      // 7. Guess What I Like buttons
+      // 6. Guess What I Like buttons
       this.btnGuessYes.addEventListener('click', () => this.handleGuessResponse('yes'));
       this.btnGuessNo.addEventListener('click', () => this.handleGuessResponse('no'));
 
@@ -960,13 +943,13 @@
         this.showFinalProfileScreen();
       });
 
-      // 8. Replay button
+      // 7. Replay button
       this.btnReplayGame.addEventListener('click', () => {
         this.audio.playPop();
         this.resetEntireGame();
       });
 
-      // 9. Teacher Top Utilities
+      // 8. Teacher Top Utilities & Modal Triggers
       this.btnSoundToggle.addEventListener('click', () => {
         const isSound = this.audio.toggleSound();
         this.soundIcon.textContent = isSound ? '🔊' : '🔇';
@@ -976,8 +959,32 @@
         this.toggleFullscreen();
       });
 
-      // 10. Keyboard Shortcuts for Teacher Clicker
+      const openModal = (tab = 'profile') => {
+        this.audio.playPop();
+        this.switchModalTab(tab);
+        this.worksheetModal.classList.remove('hidden');
+      };
+
+      this.btnOpenSheetModal.addEventListener('click', () => openModal('profile'));
+      if (this.btnPreviewSheetStart) this.btnPreviewSheetStart.addEventListener('click', () => openModal('profile'));
+      if (this.introPreviewTrigger) this.introPreviewTrigger.addEventListener('click', () => openModal('profile'));
+      if (this.btnOpenFinalSheet) this.btnOpenFinalSheet.addEventListener('click', () => openModal('profile'));
+
+      this.btnCloseModal.addEventListener('click', () => {
+        this.audio.playPop();
+        this.worksheetModal.classList.add('hidden');
+      });
+
+      this.tabBtnProfile.addEventListener('click', () => this.switchModalTab('profile'));
+      this.tabBtnWords.addEventListener('click', () => this.switchModalTab('words'));
+
+      // 9. Keyboard Shortcuts for Teacher Smart Board Clicker
       window.addEventListener('keydown', (e) => {
+        if (!this.worksheetModal.classList.contains('hidden')) {
+          if (e.key === 'Escape') this.btnCloseModal.click();
+          return;
+        }
+
         if (this.currentScreen === 'game') {
           if (e.key === '1' || e.key === 'a' || e.key === 'A') this.cardOptA.click();
           if (e.key === '2' || e.key === 'b' || e.key === 'B') this.cardOptB.click();
@@ -996,6 +1003,21 @@
           this.toggleFullscreen();
         }
       });
+    }
+
+    switchModalTab(tabKey) {
+      this.audio.playPop();
+      if (tabKey === 'profile') {
+        this.tabBtnProfile.classList.add('active');
+        this.tabBtnWords.classList.remove('active');
+        this.paneProfile.classList.remove('hidden');
+        this.paneWords.classList.add('hidden');
+      } else {
+        this.tabBtnProfile.classList.remove('active');
+        this.tabBtnWords.classList.add('active');
+        this.paneProfile.classList.add('hidden');
+        this.paneWords.classList.remove('hidden');
+      }
     }
 
     preloadImages() {
@@ -1019,9 +1041,12 @@
       }
     }
 
+    // =========================================================================
+    // SCREEN STATE MACHINE (Hides all other screens completely)
+    // =========================================================================
     switchScreen(screenKey) {
       Object.values(this.screens).forEach(screen => {
-        if (screen) screen.classList.remove('active');
+        screen.classList.remove('active');
       });
 
       if (this.screens[screenKey]) {
@@ -1031,7 +1056,7 @@
     }
 
     // =========================================================================
-    // SCREEN 4: EMOJI EXPERTS MAIN GAME (18 QUESTIONS)
+    // STATE 3: EMOJI EXPERTS MAIN GAME (ONE QUESTION PER SCREEN)
     // =========================================================================
     startMainGame() {
       this.currentQuestionIndex = 0;
@@ -1048,8 +1073,8 @@
       this.currentQuestionAnswered = false;
 
       // Update Category Tag
-      this.categoryBadgeIcon.textContent = q.catIcon;
-      this.categoryBadgeText.textContent = q.category;
+      this.qCatIcon.textContent = q.categoryIcon;
+      this.qCatText.textContent = q.category;
 
       // Update question counter & progress bar
       this.qCounterText.textContent = `Question ${index + 1} / ${QUESTIONS_DATA.length}`;
@@ -1144,7 +1169,7 @@
         this.currentQuestionIndex++;
         this.renderQuestion(this.currentQuestionIndex);
       } else {
-        // All 18 questions completed! Transition to Memory Game
+        // All 20 questions completed! Transition to Memory Game
         this.switchScreen('memory');
         this.memoryIntroView.classList.remove('hidden');
         this.memoryPlayView.classList.add('hidden');
@@ -1154,7 +1179,7 @@
     }
 
     // =========================================================================
-    // SCREEN 5: MEMORY GAME
+    // STATE 4: MEMORY GAME
     // =========================================================================
     startMemoryRound(roundIndex) {
       this.memoryRoundIndex = roundIndex;
@@ -1242,7 +1267,7 @@
     }
 
     // =========================================================================
-    // SCREEN 6: GUESS WHAT I LIKE
+    // STATE 5: GUESS WHAT I LIKE
     // =========================================================================
     startGuessGame() {
       this.guessStepIndex = 0;
@@ -1289,11 +1314,11 @@
     }
 
     // =========================================================================
-    // SCREEN 7: FINAL SCREEN
+    // STATE 6: FINAL PROFILE SCREEN
     // =========================================================================
     showFinalProfileScreen() {
       this.finalScoreNum.textContent = this.score;
-      this.switchScreen('final');
+      this.switchScreen('profile');
     }
 
     resetEntireGame() {
@@ -1302,11 +1327,7 @@
       this.score = 0;
       this.memoryRoundIndex = 0;
       this.guessStepIndex = 0;
-      this.wordsZoomScale = 1.0;
-      this.profileZoomScale = 1.0;
-      if (this.scrollWrapperWords) this.scrollWrapperWords.style.transform = 'scale(1)';
-      if (this.scrollWrapperProfile) this.scrollWrapperProfile.style.transform = 'scale(1)';
-      this.switchScreen('welcome');
+      this.switchScreen('start');
     }
   }
 
