@@ -295,19 +295,19 @@
       correctChoice: 'B',
       options: {
         A: {
-          label: 'Bright red backpack',
-          imgUrl: 'https://images.unsplash.com/photo-1553062407-98eeb64c6a62?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#f87171'
+          label: 'Bright Red Color Object',
+          imgUrl: 'https://images.unsplash.com/photo-1584824486509-112e4181ff6b?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#ef4444'
         },
         B: {
-          label: 'Vibrant blue sports ball / object',
-          imgUrl: 'https://images.unsplash.com/photo-1520975916090-3105956dac38?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#38bdf8'
+          label: 'Vibrant Blue Color Object',
+          imgUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#3b82f6'
         },
         C: {
-          label: 'Bright yellow toy',
-          imgUrl: 'https://images.unsplash.com/photo-1515488042361-ee00e0ddd4e4?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#facc15'
+          label: 'Bright Yellow Color Object',
+          imgUrl: 'https://images.unsplash.com/photo-1587496679742-bad502958fbe?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#eab308'
         }
       }
     },
@@ -370,17 +370,17 @@
       correctChoice: 'A',
       options: {
         A: {
-          label: 'Child looking nervous / biting lip',
-          imgUrl: 'https://images.unsplash.com/photo-1544717305-2782549b5136?auto=format&fit=crop&w=800&q=80',
+          label: 'Child feeling nervous biting nails',
+          imgUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fecaca'
         },
         B: {
-          label: 'Happy smiling child',
+          label: 'Happy smiling child celebrating',
           imgUrl: 'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fef08a'
         },
         C: {
-          label: 'Sleeping child',
+          label: 'Sleeping child peacefully',
           imgUrl: 'https://images.unsplash.com/photo-1541781774459-bb2af2f05b55?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#cbd5e1'
         }
@@ -470,19 +470,19 @@
       correctChoice: 'C',
       options: {
         A: {
-          label: 'Laughing happily',
+          label: 'Happy laughing child',
           imgUrl: 'https://images.unsplash.com/photo-1485546246426-74dc88dec4d9?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#fef08a'
         },
         B: {
-          label: 'Thinking curiously',
+          label: 'Curious child thinking',
           imgUrl: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80',
           fallbackBg: '#e2e8f0'
         },
         C: {
-          label: 'Child crying needing help',
-          imgUrl: 'https://images.unsplash.com/photo-1508214751196-bcfd4ca60f91?auto=format&fit=crop&w=800&q=80',
-          fallbackBg: '#fee2e2'
+          label: 'Child crying with tears needing help',
+          imgUrl: 'https://images.unsplash.com/photo-1607453998774-d533f65dac99?auto=format&fit=crop&w=800&q=80',
+          fallbackBg: '#fca5a5'
         }
       }
     },
