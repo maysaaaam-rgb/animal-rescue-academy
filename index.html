@@ -106,6 +106,10 @@
                 <span class="btn-icon">🎲</span>
                 <span class="btn-text">EMOJI MONOPOLY</span>
               </button>
+              <button class="btn-giant btn-play-charades animate-pulse" id="btn-start-charades">
+                <span class="btn-icon">🎭</span>
+                <span class="btn-text">EMOJI CHARADES</span>
+              </button>
             </div>
 
             <div class="start-sheet-shortcuts">
@@ -804,6 +808,95 @@
               </button>
             </div>
           </div>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 7: EMOJI CHARADES — TEACHER CONTROL PANEL
+         ========================================================= -->
+    <section class="game-screen" id="screen-charades">
+      <div class="screen-content charades-content animate-pop">
+        
+        <!-- Header: Back Button & Title -->
+        <header class="charades-top-bar">
+          <button class="btn-charades-back" id="btn-charades-home">
+            <span class="btn-icon">🏠</span>
+            <span class="btn-text">BACK</span>
+          </button>
+          <div class="charades-title-pill">
+            <span class="charades-title-icon">🎭</span>
+            <h2 class="charades-main-heading">EMOJI CHARADES</h2>
+          </div>
+          <div class="charades-mode-tag">TEACHER PANEL</div>
+        </header>
+
+        <!-- Main Arena Layout -->
+        <div class="charades-arena">
+          
+          <!-- Central Word & Emoji Display Card (Word ALWAYS visible) -->
+          <div class="charades-card" id="charades-card">
+            <div class="charades-category-badge" id="charades-category">ACTIVITIES</div>
+            <div class="charades-emoji-display" id="charades-emoji">🎮</div>
+            <div class="charades-word-display" id="charades-word">PLAY GAMES</div>
+            <p class="charades-hint-text">Act without speaking • Teams guess orally!</p>
+          </div>
+
+          <!-- Scoreboard & Controls Grid -->
+          <div class="charades-controls-panel">
+            
+            <!-- Team Scoreboard Row -->
+            <div class="charades-scoreboard">
+              
+              <!-- Blue Team Column -->
+              <div class="charades-team-card team-blue">
+                <div class="charades-team-header">
+                  <span class="team-dot">🔵</span>
+                  <span class="team-name">BLUE TEAM</span>
+                </div>
+                <div class="charades-team-score">
+                  <span class="score-val" id="charades-blue-score">0</span>
+                  <span class="score-star">⭐</span>
+                </div>
+                <button class="btn-charades-point btn-point-blue" id="btn-charades-blue-plus">
+                  <span class="point-icon">🔵</span>
+                  <span class="point-text">+1</span>
+                </button>
+              </div>
+
+              <!-- Red Team Column -->
+              <div class="charades-team-card team-red">
+                <div class="charades-team-header">
+                  <span class="team-dot">🔴</span>
+                  <span class="team-name">RED TEAM</span>
+                </div>
+                <div class="charades-team-score">
+                  <span class="score-val" id="charades-red-score">0</span>
+                  <span class="score-star">⭐</span>
+                </div>
+                <button class="btn-charades-point btn-point-red" id="btn-charades-red-plus">
+                  <span class="point-icon">🔴</span>
+                  <span class="point-text">+1</span>
+                </button>
+              </div>
+
+            </div>
+
+            <!-- Bottom Action Row: UNDO & NEXT -->
+            <div class="charades-action-row">
+              <button class="btn-charades-action btn-charades-undo" id="btn-charades-undo" disabled>
+                <span class="action-icon">↩</span>
+                <span class="action-text">UNDO</span>
+              </button>
+              <button class="btn-charades-action btn-charades-next animate-pulse" id="btn-charades-next">
+                <span class="action-text">NEXT</span>
+                <span class="action-icon">→</span>
+              </button>
+            </div>
+
+          </div>
+
         </div>
 
       </div>

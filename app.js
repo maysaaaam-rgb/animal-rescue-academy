@@ -713,6 +713,44 @@
       });
     }
 
+    playPointChime() {
+      if (!this.soundEnabled) return;
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const notes = [587.33, 880.00]; // D5, A5
+      notes.forEach((freq, i) => {
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(freq, now + i * 0.08);
+        gain.gain.setValueAtTime(0.3, now + i * 0.08);
+        gain.gain.exponentialRampToValueAtTime(0.001, now + i * 0.08 + 0.25);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(now + i * 0.08);
+        osc.stop(now + i * 0.08 + 0.25);
+      });
+    }
+
+    playSoftClick() {
+      if (!this.soundEnabled) return;
+      this.init();
+      if (!this.ctx) return;
+      const now = this.ctx.currentTime;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(320, now);
+      osc.frequency.exponentialRampToValueAtTime(200, now + 0.06);
+      gain.gain.setValueAtTime(0.2, now);
+      gain.gain.exponentialRampToValueAtTime(0.01, now + 0.06);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start(now);
+      osc.stop(now + 0.06);
+    }
+
     speak(word) {
       if (!this.soundEnabled) return;
       if ('speechSynthesis' in window) {
@@ -3002,6 +3040,215 @@
   }
 
   // =========================================================================
+  // 3.5. 🎭 EMOJI CHARADES ACTIVITY ENGINE
+  // =========================================================================
+  const CHARADES_VOCABULARY = [
+    // ACTIVITIES:
+    { emoji: '🎮', word: 'PLAY GAMES', category: 'Activities' },
+    { emoji: '🎧', word: 'LISTEN TO MUSIC', category: 'Activities' },
+    { emoji: '📱', word: 'WATCH VIDEOS', category: 'Activities' },
+    { emoji: '📷', word: 'TAKE PHOTOS', category: 'Activities' },
+    { emoji: '🎨', word: 'DRAW', category: 'Activities' },
+    { emoji: '⚽', word: 'PLAY FOOTBALL', category: 'Activities' },
+    { emoji: '🏀', word: 'PLAY BASKETBALL', category: 'Activities' },
+    { emoji: '🛹', word: 'SKATEBOARD', category: 'Activities' },
+    { emoji: '🚲', word: 'RIDE A BIKE', category: 'Activities' },
+    { emoji: '🎤', word: 'SING', category: 'Activities' },
+    { emoji: '💃', word: 'DANCE', category: 'Activities' },
+    { emoji: '🏊', word: 'SWIM', category: 'Activities' },
+    { emoji: '📖', word: 'READ BOOKS', category: 'Activities' },
+    { emoji: '🧩', word: 'DO PUZZLES', category: 'Activities' },
+    { emoji: '🧱', word: 'BUILD THINGS', category: 'Activities' },
+    { emoji: '⛺', word: 'CAMP', category: 'Activities' },
+
+    // FOOD:
+    { emoji: '🍏', word: 'APPLE', category: 'Food' },
+    { emoji: '🍌', word: 'BANANA', category: 'Food' },
+    { emoji: '🍓', word: 'STRAWBERRY', category: 'Food' },
+    { emoji: '🫐', word: 'BLUEBERRIES', category: 'Food' },
+    { emoji: '🥑', word: 'AVOCADO', category: 'Food' },
+    { emoji: '🥗', word: 'SALAD', category: 'Food' },
+    { emoji: '🥪', word: 'SANDWICH', category: 'Food' },
+    { emoji: '🍕', word: 'PIZZA', category: 'Food' },
+    { emoji: '🍦', word: 'ICE CREAM', category: 'Food' },
+    { emoji: '🥦', word: 'BROCCOLI', category: 'Food' },
+    { emoji: '🍣', word: 'SUSHI', category: 'Food' },
+
+    // COLORS:
+    { emoji: '🔴', word: 'RED', category: 'Colors' },
+    { emoji: '🟠', word: 'ORANGE', category: 'Colors' },
+    { emoji: '🟡', word: 'YELLOW', category: 'Colors' },
+    { emoji: '🟢', word: 'GREEN', category: 'Colors' },
+    { emoji: '🔵', word: 'BLUE', category: 'Colors' },
+    { emoji: '🟣', word: 'PURPLE', category: 'Colors' },
+    { emoji: '🩷', word: 'PINK', category: 'Colors' },
+    { emoji: '🟤', word: 'BROWN', category: 'Colors' },
+    { emoji: '⚫', word: 'BLACK', category: 'Colors' },
+    { emoji: '⚪', word: 'WHITE', category: 'Colors' },
+    { emoji: '🩵', word: 'LIGHT BLUE', category: 'Colors' },
+
+    // FEELINGS:
+    { emoji: '🤩', word: 'EXCITED', category: 'Feelings' },
+    { emoji: '😁', word: 'HAPPY', category: 'Feelings' },
+    { emoji: '😊', word: 'GOOD', category: 'Feelings' },
+    { emoji: '😐', word: 'OKAY', category: 'Feelings' },
+    { emoji: '🤔', word: 'CURIOUS', category: 'Feelings' },
+    { emoji: '😟', word: 'NERVOUS', category: 'Feelings' },
+    { emoji: '😢', word: 'SAD', category: 'Feelings' },
+    { emoji: '😫', word: 'DIFFICULT', category: 'Feelings' },
+    { emoji: '😭', word: 'NEED HELP', category: 'Feelings' }
+  ];
+
+  class EmojiCharadesEngine {
+    constructor(app) {
+      this.app = app;
+      this.blueScore = 0;
+      this.redScore = 0;
+      this.history = [];
+      this.pool = [];
+      this.currentItem = null;
+
+      this.cacheDOMElements();
+      this.bindEvents();
+    }
+
+    cacheDOMElements() {
+      this.emojiEl = document.getElementById('charades-emoji');
+      this.wordEl = document.getElementById('charades-word');
+      this.categoryEl = document.getElementById('charades-category');
+      this.cardEl = document.getElementById('charades-card');
+
+      this.blueScoreEl = document.getElementById('charades-blue-score');
+      this.redScoreEl = document.getElementById('charades-red-score');
+
+      this.btnBluePlus = document.getElementById('btn-charades-blue-plus');
+      this.btnRedPlus = document.getElementById('btn-charades-red-plus');
+      this.btnUndo = document.getElementById('btn-charades-undo');
+      this.btnNext = document.getElementById('btn-charades-next');
+      this.btnHome = document.getElementById('btn-charades-home');
+    }
+
+    bindEvents() {
+      if (this.btnBluePlus) {
+        this.btnBluePlus.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.addPoint('blue');
+        });
+      }
+      if (this.btnRedPlus) {
+        this.btnRedPlus.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.addPoint('red');
+        });
+      }
+      if (this.btnUndo) {
+        this.btnUndo.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.undo();
+        });
+      }
+      if (this.btnNext) {
+        this.btnNext.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.nextCard(true);
+        });
+      }
+      if (this.btnHome) {
+        this.btnHome.addEventListener('click', (e) => {
+          e.preventDefault();
+          this.app.audio.playPop();
+          this.app.switchScreen('start');
+        });
+      }
+    }
+
+    start() {
+      this.blueScore = 0;
+      this.redScore = 0;
+      this.history = [];
+      this.initPool();
+      this.nextCard(false);
+      this.updateUI();
+    }
+
+    initPool() {
+      this.pool = [...CHARADES_VOCABULARY];
+      // Fisher-Yates shuffle
+      for (let i = this.pool.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [this.pool[i], this.pool[j]] = [this.pool[j], this.pool[i]];
+      }
+    }
+
+    nextCard(playAudio = true) {
+      if (this.pool.length === 0) {
+        const lastItem = this.currentItem;
+        this.initPool();
+        if (this.pool.length > 1 && this.pool[this.pool.length - 1] === lastItem) {
+          [this.pool[this.pool.length - 1], this.pool[0]] = [this.pool[0], this.pool[this.pool.length - 1]];
+        }
+      }
+
+      this.currentItem = this.pool.pop();
+
+      if (this.emojiEl) this.emojiEl.textContent = this.currentItem.emoji;
+      if (this.wordEl) this.wordEl.textContent = this.currentItem.word;
+      if (this.categoryEl) this.categoryEl.textContent = this.currentItem.category.toUpperCase();
+
+      if (this.cardEl) {
+        this.cardEl.classList.remove('animate-pop');
+        void this.cardEl.offsetWidth; // trigger reflow
+        this.cardEl.classList.add('animate-pop');
+      }
+
+      if (playAudio && this.app.audio) {
+        this.app.audio.playPop();
+      }
+    }
+
+    addPoint(team) {
+      if (team === 'blue') {
+        this.blueScore++;
+        this.history.push({ team: 'blue' });
+      } else if (team === 'red') {
+        this.redScore++;
+        this.history.push({ team: 'red' });
+      }
+
+      if (this.app.audio) {
+        this.app.audio.playPointChime();
+      }
+
+      this.updateUI();
+    }
+
+    undo() {
+      if (this.history.length === 0) return;
+      const lastAction = this.history.pop();
+      if (lastAction.team === 'blue') {
+        this.blueScore = Math.max(0, this.blueScore - 1);
+      } else if (lastAction.team === 'red') {
+        this.redScore = Math.max(0, this.redScore - 1);
+      }
+
+      if (this.app.audio) {
+        this.app.audio.playSoftClick();
+      }
+
+      this.updateUI();
+    }
+
+    updateUI() {
+      if (this.blueScoreEl) this.blueScoreEl.textContent = this.blueScore;
+      if (this.redScoreEl) this.redScoreEl.textContent = this.redScore;
+      if (this.btnUndo) this.btnUndo.disabled = (this.history.length === 0);
+    }
+  }
+
+  window.CHARADES_VOCABULARY = CHARADES_VOCABULARY;
+  window.EmojiCharadesEngine = EmojiCharadesEngine;
+
+  // =========================================================================
   // 4. MAIN GAME STATE CONTROLLER (EMOJI EXPERTS & NAVIGATION)
   // =========================================================================
   class GameApp {
@@ -3024,6 +3271,7 @@
 
       this.cacheDOMElements();
       this.monopolyEngine = new EmojiMonopolyEngine(this);
+      this.charadesEngine = new EmojiCharadesEngine(this);
       this.bindEvents();
       this.preloadImages();
     }
@@ -3037,7 +3285,8 @@
         memory: document.getElementById('screen-memory'),
         guess: document.getElementById('screen-guess'),
         profile: document.getElementById('screen-profile'),
-        monopoly: document.getElementById('screen-monopoly')
+        monopoly: document.getElementById('screen-monopoly'),
+        charades: document.getElementById('screen-charades')
       };
 
       // Modal Elements
@@ -3055,6 +3304,7 @@
       // Start screen
       this.btnStartPlay = document.getElementById('btn-start-play');
       this.btnStartMonopoly = document.getElementById('btn-start-monopoly');
+      this.btnStartCharades = document.getElementById('btn-start-charades');
       this.btnToggleGameMode = document.getElementById('btn-toggle-game-mode');
 
       // Intro screen
@@ -3135,6 +3385,14 @@
           this.audio.playPop();
           this.switchScreen('monopoly');
           this.monopolyEngine.showModeSelect();
+        });
+      }
+
+      if (this.btnStartCharades) {
+        this.btnStartCharades.addEventListener('click', () => {
+          this.audio.playPop();
+          this.switchScreen('charades');
+          this.charadesEngine.start();
         });
       }
 
