@@ -1864,6 +1864,7 @@
       this.diceSub = document.getElementById('m-dice-sub');
       this.diceBox = document.getElementById('m-dice-box');
       this.diceResultBadge = document.getElementById('m-dice-result-badge');
+      this.diceResultVal = document.getElementById('m-dice-result-val');
       this.btnRollDice = document.getElementById('btn-monopoly-roll');
       this.moveToast = document.getElementById('m-move-toast');
       this.toastSteps = document.getElementById('m-toast-steps');
@@ -2552,9 +2553,9 @@
         this.diceBox.style.transform = faceRotations[roll] || 'rotateX(0deg) rotateY(0deg)';
 
         setTimeout(() => {
-          // Show giant glowing number badge
+          // Show glowing result pill above the dice (unobstructed 3D cube)
           if (this.diceResultBadge) {
-            this.diceResultBadge.textContent = roll;
+            if (this.diceResultVal) this.diceResultVal.textContent = roll;
             this.diceResultBadge.classList.remove('hidden');
           }
 
@@ -2567,10 +2568,10 @@
             this.audio.speak(String(roll));
           }
 
-          // Step-by-step movement along the linear path
+          // Generous pause so students and teachers can admire the 3D dice & number
           setTimeout(() => {
             this.animateTokenStepByStep(this.activeTeam, roll);
-          }, 600);
+          }, 1200);
         }, 700);
       }, 850);
     }
