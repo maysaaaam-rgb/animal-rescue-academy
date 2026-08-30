@@ -31,6 +31,9 @@
 
   <!-- Smart Board Teacher Utility Controls (Always accessible in top corner) -->
   <aside class="board-top-controls">
+    <button class="icon-tool-btn tool-btn-monopoly" id="btn-toggle-game-mode" title="Switch to Emoji Monopoly" aria-label="Emoji Monopoly">
+      <span>🎲</span>
+    </button>
     <button class="icon-tool-btn tool-btn-sheet" id="btn-open-sheet-modal" title="View Official Profile & Words Sheet" aria-label="View Worksheet">
       <span>📋</span>
     </button>
@@ -96,8 +99,12 @@
 
             <div class="start-btn-wrapper">
               <button class="btn-giant btn-play-primary animate-pulse" id="btn-start-play">
-                <span class="btn-icon">🎮</span>
-                <span class="btn-text">LET'S PLAY!</span>
+                <span class="btn-icon">⭐</span>
+                <span class="btn-text">EMOJI EXPERTS</span>
+              </button>
+              <button class="btn-giant btn-play-monopoly animate-pulse" id="btn-start-monopoly">
+                <span class="btn-icon">🎲</span>
+                <span class="btn-text">EMOJI MONOPOLY</span>
               </button>
             </div>
 
@@ -475,6 +482,299 @@
             <span class="btn-icon">🔄</span>
             <span class="btn-text">PLAY AGAIN</span>
           </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 7: 🎲 EMOJI MONOPOLY (NEW MODULE)
+         ========================================================= -->
+    <section class="game-screen" id="screen-monopoly">
+      <div class="screen-content monopoly-content">
+
+        <!-- Mode Selection Overlay (Before Game Begins) -->
+        <div class="monopoly-mode-overlay" id="m-mode-overlay">
+          <div class="m-mode-card animate-pop">
+            <div class="m-mode-badge animate-bounce">🎲</div>
+            <h1 class="m-mode-title">EMOJI MONOPOLY</h1>
+            <p class="m-mode-subtitle">Grade 3 A1+ Team Board Game Challenge</p>
+            
+            <div class="m-teams-preview">
+              <div class="m-team-tag tag-blue">🔵 BLUE TEAM</div>
+              <span class="m-vs">VS</span>
+              <div class="m-team-tag tag-red">🔴 RED TEAM</div>
+            </div>
+
+            <div class="m-mode-select-box">
+              <h3 class="m-select-heading">SELECT GAME LENGTH</h3>
+              <div class="m-mode-options">
+                <button class="btn-mode-choice active" id="btn-mode-quick" data-mode="quick">
+                  <span class="mode-icon">⚡</span>
+                  <span class="mode-name">QUICK GAME</span>
+                  <span class="mode-info">10 Rounds (10 mins)</span>
+                </button>
+                <button class="btn-mode-choice" id="btn-mode-normal" data-mode="normal">
+                  <span class="mode-icon">🎮</span>
+                  <span class="mode-name">NORMAL GAME</span>
+                  <span class="mode-info">20 Rounds (20 mins)</span>
+                </button>
+                <button class="btn-mode-choice" id="btn-mode-full" data-mode="full">
+                  <span class="mode-icon">🏆</span>
+                  <span class="mode-name">FULL GAME</span>
+                  <span class="mode-info">30 Rounds (30 mins)</span>
+                </button>
+              </div>
+            </div>
+
+            <div class="m-mode-actions">
+              <button class="btn-giant btn-play-monopoly animate-pulse" id="btn-launch-monopoly">
+                <span class="btn-icon">🎲</span>
+                <span class="btn-text">START BATTLE!</span>
+              </button>
+              <button class="btn-back-menu" id="btn-monopoly-back-start">
+                <span>🏠 Return to Emoji Experts</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- Main Monopoly Match Arena -->
+        <div class="monopoly-arena" id="monopoly-arena">
+          
+          <!-- Top HUD Bar: Scores, Turn Banner & Controls -->
+          <header class="monopoly-top-bar">
+            <!-- Left: Back Button -->
+            <button class="m-hud-btn" id="btn-monopoly-return-main" title="Return to Menu">
+              <span>🏠 Menu</span>
+            </button>
+
+            <!-- Blue Team Score Capsule -->
+            <div class="m-team-score-capsule capsule-blue" id="m-blue-capsule">
+              <div class="m-capsule-header">
+                <span class="m-token-dot dot-blue">🔵</span>
+                <span class="m-team-name">BLUE</span>
+              </div>
+              <div class="m-capsule-stats">
+                <div class="m-stat-item">⭐ <strong id="m-blue-score">0</strong></div>
+                <div class="m-stat-item">🏠 <strong id="m-blue-owned">0</strong></div>
+              </div>
+            </div>
+
+            <!-- Center: Active Turn Banner & Round Info -->
+            <div class="m-center-turn-indicator" id="m-turn-banner-container">
+              <div class="m-turn-banner banner-turn-blue" id="m-turn-banner">
+                <span class="m-turn-icon" id="m-turn-icon">🔵</span>
+                <span class="m-turn-text" id="m-turn-text">BLUE TEAM'S TURN</span>
+              </div>
+              <div class="m-round-pill" id="m-round-badge">Round 1 / 10</div>
+            </div>
+
+            <!-- Red Team Score Capsule -->
+            <div class="m-team-score-capsule capsule-red" id="m-red-capsule">
+              <div class="m-capsule-header">
+                <span class="m-token-dot dot-red">🔴</span>
+                <span class="m-team-name">RED</span>
+              </div>
+              <div class="m-capsule-stats">
+                <div class="m-stat-item">⭐ <strong id="m-red-score">0</strong></div>
+                <div class="m-stat-item">🏠 <strong id="m-red-owned">0</strong></div>
+              </div>
+            </div>
+
+            <!-- Right: Reset Game Button -->
+            <button class="m-hud-btn" id="btn-monopoly-reset" title="Restart Game">
+              <span>🔄 Reset</span>
+            </button>
+          </header>
+
+          <!-- The Interactive Board Canvas/Grid Container -->
+          <div class="monopoly-board-wrapper">
+            <div class="monopoly-board-grid" id="monopoly-board-grid">
+              <!-- 26 Spaces Generated Dynamically via JS -->
+            </div>
+
+            <!-- Center Interactive Arena (Inside the perimeter board loop) -->
+            <div class="monopoly-center-arena" id="monopoly-center-arena">
+              
+              <!-- 1. Question Challenge Phase Area -->
+              <div class="m-arena-stage" id="m-stage-question">
+                
+                <!-- Category & Difficulty Header -->
+                <div class="m-q-meta-row">
+                  <div class="m-q-cat-tag" id="m-q-cat-badge">
+                    <span id="m-q-cat-icon">💚</span>
+                    <span id="m-q-cat-name">Activities</span>
+                  </div>
+                  <div class="m-q-diff-tag diff-easy" id="m-q-diff-badge">
+                    <span>🟢 EASY (+1 ⭐)</span>
+                  </div>
+                </div>
+
+                <!-- 8-Second Countdown Timer Bar & Counter -->
+                <div class="m-countdown-wrap">
+                  <div class="m-countdown-bar-track">
+                    <div class="m-countdown-bar-fill" id="m-countdown-fill" style="width: 100%;"></div>
+                  </div>
+                  <div class="m-countdown-bubble" id="m-countdown-bubble">8</div>
+                </div>
+
+                <!-- Active Question Prompt Title -->
+                <h2 class="m-question-prompt" id="m-q-prompt-text">WHAT'S THIS?</h2>
+
+                <!-- Question Visual Display (Emoji, Photo, or Sentence) -->
+                <div class="m-q-visual-stage" id="m-q-visual-stage">
+                  <div class="m-q-emoji-display" id="m-q-emoji">🎮</div>
+                  <img src="" alt="Question Clue" class="m-q-photo hidden" id="m-q-photo">
+                </div>
+
+                <!-- 3 Choice Buttons -->
+                <div class="m-q-choices-grid" id="m-q-choices-grid">
+                  <button class="m-choice-btn" id="m-opt-a" data-choice="A">
+                    <span class="m-opt-badge">A</span>
+                    <span class="m-opt-label" id="m-opt-label-a">PLAY GAMES</span>
+                  </button>
+                  <button class="m-choice-btn" id="m-opt-b" data-choice="B">
+                    <span class="m-opt-badge">B</span>
+                    <span class="m-opt-label" id="m-opt-label-b">READ BOOKS</span>
+                  </button>
+                  <button class="m-choice-btn" id="m-opt-c" data-choice="C">
+                    <span class="m-opt-badge">C</span>
+                    <span class="m-opt-label" id="m-opt-label-c">SLEEP</span>
+                  </button>
+                </div>
+
+                <!-- Feedback Banner (Correct / Wrong / Time's up) -->
+                <div class="m-feedback-banner hidden" id="m-feedback-banner">
+                  <div class="m-feedback-left">
+                    <span class="m-fb-icon" id="m-fb-icon">🎉</span>
+                    <span class="m-fb-text" id="m-fb-text">CORRECT! ROLL THE DICE!</span>
+                  </div>
+                  <button class="btn-pronounce m-fb-pronounce" id="m-fb-pronounce-btn" title="Pronounce">
+                    <span>🔊</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- 2. Dice Roll & Token Movement Stage -->
+              <div class="m-arena-stage hidden" id="m-stage-dice">
+                
+                <div class="m-dice-area-header">
+                  <h3 class="m-dice-heading" id="m-dice-heading">🔵 BLUE TEAM: ROLL THE DICE!</h3>
+                  <p class="m-dice-sub" id="m-dice-sub">Correct answer unlocked your roll!</p>
+                </div>
+
+                <!-- 3D Realistic Interactive Dice -->
+                <div class="m-dice-stage">
+                  <div class="m-dice-box" id="m-dice-box">
+                    <div class="m-dice-face face-front" data-dots="1">
+                      <span class="dot dot-center"></span>
+                    </div>
+                    <div class="m-dice-face face-back" data-dots="6">
+                      <span class="dot"></span><span class="dot"></span>
+                      <span class="dot"></span><span class="dot"></span>
+                      <span class="dot"></span><span class="dot"></span>
+                    </div>
+                    <div class="m-dice-face face-right" data-dots="3">
+                      <span class="dot"></span><span class="dot"></span><span class="dot"></span>
+                    </div>
+                    <div class="m-dice-face face-left" data-dots="4">
+                      <span class="dot"></span><span class="dot"></span>
+                      <span class="dot"></span><span class="dot"></span>
+                    </div>
+                    <div class="m-dice-face face-top" data-dots="5">
+                      <span class="dot"></span><span class="dot"></span>
+                      <span class="dot"></span>
+                      <span class="dot"></span><span class="dot"></span>
+                    </div>
+                    <div class="m-dice-face face-bottom" data-dots="2">
+                      <span class="dot"></span><span class="dot"></span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Large Dice Roll Button -->
+                <button class="btn-giant btn-roll-dice animate-pulse" id="btn-monopoly-roll">
+                  <span class="btn-icon">🎲</span>
+                  <span class="btn-text">ROLL THE DICE!</span>
+                </button>
+
+                <!-- Movement Feedback Toast -->
+                <div class="m-move-toast hidden" id="m-move-toast">
+                  <span>Moving <strong id="m-toast-steps">5</strong> spaces...</span>
+                </div>
+
+              </div>
+
+              <!-- 3. Special Event / Landing Announcement Modal Overlay -->
+              <div class="m-event-modal-overlay hidden" id="m-event-modal">
+                <div class="m-event-card animate-pop" id="m-event-card">
+                  <div class="m-event-badge" id="m-event-badge">🎁</div>
+                  <h2 class="m-event-title" id="m-event-title">MYSTERY BOX!</h2>
+                  <p class="m-event-desc" id="m-event-desc">You opened a lucky chest! +2 Bonus Stars!</p>
+                  
+                  <!-- Interactive choices for Double or Nothing / Memory / Steal if needed -->
+                  <div class="m-event-interactive-box hidden" id="m-event-interactive"></div>
+
+                  <button class="btn-giant btn-next animate-pulse" id="btn-event-continue">
+                    <span class="btn-text">CONTINUE</span>
+                    <span class="btn-icon">➔</span>
+                  </button>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
+        </div>
+
+        <!-- 4. Winner Celebration Ceremony Screen -->
+        <div class="monopoly-winner-overlay hidden" id="m-winner-overlay">
+          <div class="m-winner-card animate-pop">
+            <div class="m-winner-trophy animate-bounce">🏆</div>
+            <h1 class="m-winner-title" id="m-winner-title">BLUE TEAM WINS!</h1>
+            <h2 class="m-winner-subtitle">CLASSROOM EMOJI MONOPOLY CHAMPIONS!</h2>
+
+            <div class="m-winner-scoreboard">
+              <!-- Blue Team Card -->
+              <div class="m-team-final-card card-final-blue" id="m-final-blue-card">
+                <div class="m-final-header">
+                  <span class="m-final-dot">🔵</span>
+                  <h3>BLUE TEAM</h3>
+                </div>
+                <div class="m-final-stats">
+                  <div class="stat-row"><span>Total Stars:</span> <strong id="m-final-blue-stars">15 ⭐</strong></div>
+                  <div class="stat-row"><span>Spaces Owned:</span> <strong id="m-final-blue-owned">5 🏠</strong></div>
+                  <div class="stat-row"><span>Correct Answers:</span> <strong id="m-final-blue-correct">8</strong></div>
+                </div>
+              </div>
+
+              <!-- Red Team Card -->
+              <div class="m-team-final-card card-final-red" id="m-final-red-card">
+                <div class="m-final-header">
+                  <span class="m-final-dot">🔴</span>
+                  <h3>RED TEAM</h3>
+                </div>
+                <div class="m-final-stats">
+                  <div class="stat-row"><span>Total Stars:</span> <strong id="m-final-red-stars">12 ⭐</strong></div>
+                  <div class="stat-row"><span>Spaces Owned:</span> <strong id="m-final-red-owned">4 🏠</strong></div>
+                  <div class="stat-row"><span>Correct Answers:</span> <strong id="m-final-red-correct">6</strong></div>
+                </div>
+              </div>
+            </div>
+
+            <div class="m-winner-actions">
+              <button class="btn-giant btn-replay animate-pulse" id="btn-monopoly-play-again">
+                <span class="btn-icon">🔄</span>
+                <span class="btn-text">PLAY AGAIN</span>
+              </button>
+              <button class="btn-giant btn-back-menu" id="btn-monopoly-return-experts">
+                <span class="btn-icon">⭐</span>
+                <span class="btn-text">EMOJI EXPERTS</span>
+              </button>
+            </div>
+          </div>
         </div>
 
       </div>

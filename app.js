@@ -650,6 +650,42 @@
       osc.stop(this.ctx.currentTime + 0.05);
     }
 
+    playHop() {
+      if (!this.soundEnabled) return;
+      this.init();
+      if (!this.ctx) return;
+      const osc = this.ctx.createOscillator();
+      const gain = this.ctx.createGain();
+      osc.type = 'sine';
+      osc.frequency.setValueAtTime(587.33, this.ctx.currentTime);
+      osc.frequency.exponentialRampToValueAtTime(880, this.ctx.currentTime + 0.06);
+      gain.gain.setValueAtTime(0.25, this.ctx.currentTime);
+      gain.gain.exponentialRampToValueAtTime(0.01, this.ctx.currentTime + 0.06);
+      osc.connect(gain);
+      gain.connect(this.ctx.destination);
+      osc.start();
+      osc.stop(this.ctx.currentTime + 0.06);
+    }
+
+    playDiceRoll() {
+      if (!this.soundEnabled) return;
+      this.init();
+      if (!this.ctx) return;
+      for (let i = 0; i < 6; i++) {
+        const time = this.ctx.currentTime + i * 0.12;
+        const osc = this.ctx.createOscillator();
+        const gain = this.ctx.createGain();
+        osc.type = 'triangle';
+        osc.frequency.setValueAtTime(320 + Math.random() * 380, time);
+        gain.gain.setValueAtTime(0.2, time);
+        gain.gain.exponentialRampToValueAtTime(0.001, time + 0.04);
+        osc.connect(gain);
+        gain.connect(this.ctx.destination);
+        osc.start(time);
+        osc.stop(time + 0.04);
+      }
+    }
+
     playFanfare() {
       if (!this.soundEnabled) return;
       this.init();
@@ -761,7 +797,1110 @@
   }
 
   // =========================================================================
-  // 3. MAIN GAME STATE CONTROLLER
+  // 3. EMOJI MONOPOLY BOARD GAME ENGINE (NEW MODULE)
+  // =========================================================================
+  const MONOPOLY_BOARD_TILES = [
+    // Top Row: 0 to 7
+    { index: 0, type: 'start', name: 'START', icon: '🏁', label: 'Pass or Land: +2 ⭐', gridCol: 1, gridRow: 1 },
+    { index: 1, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'PLAY GAMES', emoji: '🎮', icon: '🎮', word: 'PLAY GAMES', difficulty: 'easy', gridCol: 2, gridRow: 1 },
+    { index: 2, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'AVOCADO', emoji: '🥑', icon: '🥑', word: 'AVOCADO', difficulty: 'easy', gridCol: 3, gridRow: 1 },
+    { index: 3, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'BLUE', emoji: '🔵', icon: '🔵', word: 'BLUE', difficulty: 'easy', gridCol: 4, gridRow: 1 },
+    { index: 4, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'EXCITED', emoji: '🤩', icon: '🤩', word: 'EXCITED', difficulty: 'medium', gridCol: 5, gridRow: 1 },
+    { index: 5, type: 'special_speed', name: 'SPEED ROUND', icon: '⚡', label: '5s Challenge: +2 ⭐', gridCol: 6, gridRow: 1 },
+    { index: 6, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'RIDE A BIKE', emoji: '🚲', icon: '🚲', word: 'RIDE A BIKE', difficulty: 'easy', gridCol: 7, gridRow: 1 },
+    { index: 7, type: 'special_mystery', name: 'MYSTERY BOX', icon: '🎁', label: 'Random Reward!', gridCol: 8, gridRow: 1 },
+
+    // Right Column: 8 to 12
+    { index: 8, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'PIZZA', emoji: '🍕', icon: '🍕', word: 'PIZZA', difficulty: 'easy', gridCol: 8, gridRow: 2 },
+    { index: 9, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'RED', emoji: '🔴', icon: '🔴', word: 'RED', difficulty: 'easy', gridCol: 8, gridRow: 3 },
+    { index: 10, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'CURIOUS', emoji: '🤔', icon: '🤔', word: 'CURIOUS', difficulty: 'medium', gridCol: 8, gridRow: 4 },
+    { index: 11, type: 'special_boost', name: 'BOOST +2', icon: '🚀', label: 'Move Ahead 2!', gridCol: 8, gridRow: 5 },
+    { index: 12, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'TAKE PHOTOS', emoji: '📷', icon: '📷', word: 'TAKE PHOTOS', difficulty: 'medium', gridCol: 8, gridRow: 6 },
+
+    // Bottom Row: 13 to 19 (Right to Left)
+    { index: 13, type: 'special_double', name: 'DOUBLE / 0', icon: '💰', label: 'Correct +3 / Wrong -1', gridCol: 8, gridRow: 7 },
+    { index: 14, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'STRAWBERRY', emoji: '🍓', icon: '🍓', word: 'STRAWBERRY', difficulty: 'easy', gridCol: 7, gridRow: 7 },
+    { index: 15, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'YELLOW', emoji: '🟡', icon: '🟡', word: 'YELLOW', difficulty: 'easy', gridCol: 6, gridRow: 7 },
+    { index: 16, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'HAPPY', emoji: '😁', icon: '😁', word: 'HAPPY', difficulty: 'easy', gridCol: 5, gridRow: 7 },
+    { index: 17, type: 'special_memory', name: 'MEMORY TEST', icon: '🧠', label: 'Remember Emojis!', gridCol: 4, gridRow: 7 },
+    { index: 18, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'SING', emoji: '🎤', icon: '🎤', word: 'SING', difficulty: 'easy', gridCol: 3, gridRow: 7 },
+    { index: 19, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'ICE CREAM', emoji: '🍦', icon: '🍦', word: 'ICE CREAM', difficulty: 'easy', gridCol: 2, gridRow: 7 },
+
+    // Left Column: 20 to 25 (Bottom to Top)
+    { index: 20, type: 'special_miss', name: 'MISS A TURN', icon: '⏸️', label: 'Chill & Rest', gridCol: 1, gridRow: 7 },
+    { index: 21, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'GREEN', emoji: '🟢', icon: '🟢', word: 'GREEN', difficulty: 'easy', gridCol: 1, gridRow: 6 },
+    { index: 22, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'TIRED', emoji: '🥱', icon: '🥱', word: 'TIRED', difficulty: 'medium', gridCol: 1, gridRow: 5 },
+    { index: 23, type: 'special_trap', name: 'TRAP -2', icon: '🐌', label: 'Move Back 2!', gridCol: 1, gridRow: 4 },
+    { index: 24, type: 'special_lucky', name: 'LUCKY ROLL', icon: '🎲', label: 'Roll Again!', gridCol: 1, gridRow: 3 },
+    { index: 25, type: 'special_bonus', name: 'BONUS STAR', icon: '⭐', label: '+1 Free Star!', gridCol: 1, gridRow: 2 }
+  ];
+
+  class EmojiMonopolyEngine {
+    constructor(gameApp) {
+      this.gameApp = gameApp;
+      this.audio = gameApp.audio;
+      this.confetti = gameApp.confetti;
+
+      // State
+      this.selectedMode = 'quick';
+      this.maxRounds = 10;
+      this.currentRound = 1;
+      this.activeTeam = 'blue'; // 'blue' or 'red'
+      this.isStealChallenge = false;
+      this.stealTargetTileIndex = null;
+      this.isRollingOrMoving = false;
+      this.currentQuestion = null;
+      this.currentQuestionAnswered = false;
+      this.countdownInterval = null;
+
+      this.teams = {
+        blue: { score: 0, position: 0, ownedSpaces: [], correctCount: 0, missTurn: false },
+        red: { score: 0, position: 0, ownedSpaces: [], correctCount: 0, missTurn: false }
+      };
+      this.tileOwnership = Array(26).fill(null);
+
+      this.cacheDOMElements();
+      this.bindEvents();
+    }
+
+    cacheDOMElements() {
+      // Overlays & Screens
+      this.modeOverlay = document.getElementById('m-mode-overlay');
+      this.winnerOverlay = document.getElementById('m-winner-overlay');
+      this.eventModal = document.getElementById('m-event-modal');
+
+      // Mode choices
+      this.btnModeQuick = document.getElementById('btn-mode-quick');
+      this.btnModeNormal = document.getElementById('btn-mode-normal');
+      this.btnModeFull = document.getElementById('btn-mode-full');
+      this.btnLaunchMonopoly = document.getElementById('btn-launch-monopoly');
+      this.btnMonopolyBackStart = document.getElementById('btn-monopoly-back-start');
+
+      // HUD elements
+      this.blueScore = document.getElementById('m-blue-score');
+      this.blueOwned = document.getElementById('m-blue-owned');
+      this.redScore = document.getElementById('m-red-score');
+      this.redOwned = document.getElementById('m-red-owned');
+      this.turnBanner = document.getElementById('m-turn-banner');
+      this.turnIcon = document.getElementById('m-turn-icon');
+      this.turnText = document.getElementById('m-turn-text');
+      this.roundBadge = document.getElementById('m-round-badge');
+      this.btnReturnMain = document.getElementById('btn-monopoly-return-main');
+      this.btnResetMatch = document.getElementById('btn-monopoly-reset');
+
+      // Board Grid
+      this.boardGrid = document.getElementById('monopoly-board-grid');
+
+      // Arena Stages
+      this.stageQuestion = document.getElementById('m-stage-question');
+      this.stageDice = document.getElementById('m-stage-dice');
+
+      // Question Elements
+      this.qCatIcon = document.getElementById('m-q-cat-icon');
+      this.qCatName = document.getElementById('m-q-cat-name');
+      this.qDiffBadge = document.getElementById('m-q-diff-badge');
+      this.countdownFill = document.getElementById('m-countdown-fill');
+      this.countdownBubble = document.getElementById('m-countdown-bubble');
+      this.qPromptText = document.getElementById('m-q-prompt-text');
+      this.qEmoji = document.getElementById('m-q-emoji');
+      this.qPhoto = document.getElementById('m-q-photo');
+      this.choiceButtons = [
+        document.getElementById('m-opt-a'),
+        document.getElementById('m-opt-b'),
+        document.getElementById('m-opt-c')
+      ];
+      this.choiceLabels = [
+        document.getElementById('m-opt-label-a'),
+        document.getElementById('m-opt-label-b'),
+        document.getElementById('m-opt-label-c')
+      ];
+      this.feedbackBanner = document.getElementById('m-feedback-banner');
+      this.fbIcon = document.getElementById('m-fb-icon');
+      this.fbText = document.getElementById('m-fb-text');
+      this.fbPronounceBtn = document.getElementById('m-fb-pronounce-btn');
+
+      // Dice Elements
+      this.diceHeading = document.getElementById('m-dice-heading');
+      this.diceSub = document.getElementById('m-dice-sub');
+      this.diceBox = document.getElementById('m-dice-box');
+      this.btnRollDice = document.getElementById('btn-monopoly-roll');
+      this.moveToast = document.getElementById('m-move-toast');
+      this.toastSteps = document.getElementById('m-toast-steps');
+
+      // Event Modal
+      this.eventBadge = document.getElementById('m-event-badge');
+      this.eventTitle = document.getElementById('m-event-title');
+      this.eventDesc = document.getElementById('m-event-desc');
+      this.eventInteractive = document.getElementById('m-event-interactive');
+      this.btnEventContinue = document.getElementById('btn-event-continue');
+
+      // Winner Ceremony
+      this.winnerTitle = document.getElementById('m-winner-title');
+      this.finalBlueStars = document.getElementById('m-final-blue-stars');
+      this.finalBlueOwned = document.getElementById('m-final-blue-owned');
+      this.finalBlueCorrect = document.getElementById('m-final-blue-correct');
+      this.finalRedStars = document.getElementById('m-final-red-stars');
+      this.finalRedOwned = document.getElementById('m-final-red-owned');
+      this.finalRedCorrect = document.getElementById('m-final-red-correct');
+      this.btnPlayAgain = document.getElementById('btn-monopoly-play-again');
+      this.btnReturnExperts = document.getElementById('btn-monopoly-return-experts');
+    }
+
+    bindEvents() {
+      // 1. Mode selection
+      const modeButtons = [this.btnModeQuick, this.btnModeNormal, this.btnModeFull];
+      modeButtons.forEach(btn => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          this.audio.playPop();
+          modeButtons.forEach(b => b.classList.remove('active'));
+          btn.classList.add('active');
+          this.selectedMode = btn.getAttribute('data-mode') || 'quick';
+        });
+      });
+
+      if (this.btnLaunchMonopoly) {
+        this.btnLaunchMonopoly.addEventListener('click', () => {
+          this.audio.playPop();
+          this.startMatch();
+        });
+      }
+
+      if (this.btnMonopolyBackStart) {
+        this.btnMonopolyBackStart.addEventListener('click', () => {
+          this.audio.playPop();
+          this.gameApp.switchScreen('start');
+        });
+      }
+
+      // 2. HUD Buttons
+      if (this.btnReturnMain) {
+        this.btnReturnMain.addEventListener('click', () => {
+          this.audio.playPop();
+          this.gameApp.switchScreen('start');
+        });
+      }
+
+      if (this.btnResetMatch) {
+        this.btnResetMatch.addEventListener('click', () => {
+          this.audio.playPop();
+          this.showModeSelect();
+        });
+      }
+
+      // 3. Choice buttons (A, B, C)
+      this.choiceButtons.forEach((btn, idx) => {
+        if (!btn) return;
+        btn.addEventListener('click', () => {
+          const choiceLetter = ['A', 'B', 'C'][idx];
+          this.handleChoiceClick(choiceLetter, btn);
+        });
+      });
+
+      // 4. Pronounce button
+      if (this.fbPronounceBtn) {
+        this.fbPronounceBtn.addEventListener('click', () => {
+          if (this.currentQuestion && this.currentQuestion.spokenWord) {
+            this.audio.speak(this.currentQuestion.spokenWord);
+          }
+        });
+      }
+
+      // 5. Dice Roll button
+      if (this.btnRollDice) {
+        this.btnRollDice.addEventListener('click', () => {
+          if (this.isRollingOrMoving) return;
+          this.handleDiceRoll();
+        });
+      }
+
+      // 6. Event continue button
+      if (this.btnEventContinue) {
+        this.btnEventContinue.addEventListener('click', () => {
+          this.audio.playPop();
+          this.eventModal.classList.add('hidden');
+          if (this.onEventModalContinue) {
+            const cb = this.onEventModalContinue;
+            this.onEventModalContinue = null;
+            cb();
+          } else {
+            this.advanceTurn();
+          }
+        });
+      }
+
+      // 7. Winner screen buttons
+      if (this.btnPlayAgain) {
+        this.btnPlayAgain.addEventListener('click', () => {
+          this.audio.playPop();
+          this.winnerOverlay.classList.add('hidden');
+          this.showModeSelect();
+        });
+      }
+
+      if (this.btnReturnExperts) {
+        this.btnReturnExperts.addEventListener('click', () => {
+          this.audio.playPop();
+          this.winnerOverlay.classList.add('hidden');
+          this.gameApp.switchScreen('start');
+        });
+      }
+    }
+
+    showModeSelect() {
+      clearInterval(this.countdownInterval);
+      this.modeOverlay.classList.remove('hidden');
+      this.winnerOverlay.classList.add('hidden');
+      this.eventModal.classList.add('hidden');
+    }
+
+    startMatch() {
+      clearInterval(this.countdownInterval);
+      this.modeOverlay.classList.add('hidden');
+      this.winnerOverlay.classList.add('hidden');
+      this.eventModal.classList.add('hidden');
+
+      this.maxRounds = this.selectedMode === 'quick' ? 10 : (this.selectedMode === 'normal' ? 20 : 30);
+      this.currentRound = 1;
+      this.activeTeam = 'blue';
+      this.isRollingOrMoving = false;
+      this.isStealChallenge = false;
+      this.stealTargetTileIndex = null;
+
+      this.teams = {
+        blue: { score: 0, position: 0, ownedSpaces: [], correctCount: 0, missTurn: false },
+        red: { score: 0, position: 0, ownedSpaces: [], correctCount: 0, missTurn: false }
+      };
+      this.tileOwnership = Array(26).fill(null);
+
+      this.renderBoard();
+      this.updateHUD();
+      this.startPreRollTurn();
+    }
+
+    renderBoard() {
+      this.boardGrid.innerHTML = '';
+      MONOPOLY_BOARD_TILES.forEach(tile => {
+        const cell = document.createElement('div');
+        cell.className = `m-tile tile-${tile.type}`;
+        if (tile.category) {
+          cell.classList.add(`tile-cat-${tile.category}`);
+        }
+        cell.setAttribute('data-index', tile.index);
+        cell.style.gridColumn = tile.gridCol;
+        cell.style.gridRow = tile.gridRow;
+
+        const icon = document.createElement('span');
+        icon.className = 'm-tile-icon';
+        icon.textContent = tile.icon || '⭐';
+        cell.appendChild(icon);
+
+        const name = document.createElement('span');
+        name.className = 'm-tile-name';
+        name.textContent = tile.name;
+        cell.appendChild(name);
+
+        const ownerBadge = document.createElement('div');
+        ownerBadge.className = 'm-owner-badge';
+        ownerBadge.id = `owner-badge-${tile.index}`;
+        cell.appendChild(ownerBadge);
+
+        const tokensTray = document.createElement('div');
+        tokensTray.className = 'm-tile-tokens-tray';
+        tokensTray.id = `tokens-tray-${tile.index}`;
+        cell.appendChild(tokensTray);
+
+        this.boardGrid.appendChild(cell);
+      });
+
+      this.updateTokensOnBoard();
+    }
+
+    updateTokensOnBoard() {
+      for (let i = 0; i < 26; i++) {
+        const tray = document.getElementById(`tokens-tray-${i}`);
+        if (tray) tray.innerHTML = '';
+      }
+
+      // Blue Token
+      const blueTray = document.getElementById(`tokens-tray-${this.teams.blue.position}`);
+      if (blueTray) {
+        const blueToken = document.createElement('div');
+        blueToken.className = 'm-token-avatar token-blue';
+        blueToken.id = 'avatar-token-blue';
+        blueToken.textContent = '🔵';
+        blueTray.appendChild(blueToken);
+      }
+
+      // Red Token
+      const redTray = document.getElementById(`tokens-tray-${this.teams.red.position}`);
+      if (redTray) {
+        const redToken = document.createElement('div');
+        redToken.className = 'm-token-avatar token-red';
+        redToken.id = 'avatar-token-red';
+        redToken.textContent = '🔴';
+        redTray.appendChild(redToken);
+      }
+    }
+
+    updateHUD() {
+      this.blueScore.textContent = this.teams.blue.score;
+      this.blueOwned.textContent = this.teams.blue.ownedSpaces.length;
+      this.redScore.textContent = this.teams.red.score;
+      this.redOwned.textContent = this.teams.red.ownedSpaces.length;
+      this.roundBadge.textContent = `Round ${this.currentRound} / ${this.maxRounds}`;
+
+      if (this.activeTeam === 'blue') {
+        this.turnBanner.className = 'm-turn-banner banner-turn-blue';
+        this.turnIcon.textContent = '🔵';
+        this.turnText.textContent = "BLUE TEAM'S TURN";
+      } else {
+        this.turnBanner.className = 'm-turn-banner banner-turn-red';
+        this.turnIcon.textContent = '🔴';
+        this.turnText.textContent = "RED TEAM'S TURN";
+      }
+    }
+
+    // =========================================================================
+    // PRE-ROLL QUESTION SYSTEM (8-Second Challenge)
+    // =========================================================================
+    startPreRollTurn() {
+      clearInterval(this.countdownInterval);
+      this.currentQuestionAnswered = false;
+      this.isRollingOrMoving = false;
+      this.isStealChallenge = false;
+      this.stealTargetTileIndex = null;
+
+      this.stageQuestion.classList.remove('hidden');
+      this.stageDice.classList.add('hidden');
+      this.feedbackBanner.classList.add('hidden');
+      this.feedbackBanner.classList.remove('fb-wrong');
+
+      const teamName = this.activeTeam === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      const teamDot = this.activeTeam === 'blue' ? '🔵' : '🔴';
+
+      // Generate question
+      this.currentQuestion = this.generateQuestion('normal');
+      this.renderQuestionData(this.currentQuestion, `${teamDot} ${teamName}: ANSWER TO EARN ROLL!`);
+
+      // Start 8-second countdown
+      const duration = this.currentQuestion.isSpeed ? 5 : 8;
+      this.startCountdown(duration, () => this.handleTimeout());
+    }
+
+    generateQuestion(mode = 'normal', forcedCategory = null, forcedDiff = null) {
+      const qTypes = ['emoji_to_word', 'word_to_emoji', 'choose_category', 'photo_quiz', 'missing_word'];
+      const chosenType = qTypes[Math.floor(Math.random() * qTypes.length)];
+
+      const categories = [
+        {
+          id: 'activities', name: 'Activities', icon: '💚',
+          items: [
+            { emoji: '🎮', word: 'PLAY GAMES' },
+            { emoji: '🚲', word: 'RIDE A BIKE' },
+            { emoji: '🧩', word: 'DO PUZZLES' },
+            { emoji: '📷', word: 'TAKE PHOTOS' },
+            { emoji: '🎤', word: 'SING' },
+            { emoji: '🧱', word: 'BUILD THINGS' },
+            { emoji: '🛹', word: 'SKATEBOARD' },
+            { emoji: '🎧', word: 'LISTEN TO MUSIC' }
+          ]
+        },
+        {
+          id: 'food', name: 'Food', icon: '❤️',
+          items: [
+            { emoji: '🥑', word: 'AVOCADO' },
+            { emoji: '🍕', word: 'PIZZA' },
+            { emoji: '🥦', word: 'BROCCOLI' },
+            { emoji: '🍓', word: 'STRAWBERRY' },
+            { emoji: '🥪', word: 'SANDWICH' },
+            { emoji: '🥗', word: 'SALAD' },
+            { emoji: '🍦', word: 'ICE CREAM' },
+            { emoji: '🍏', word: 'GREEN APPLE' },
+            { emoji: '🍌', word: 'BANANA' }
+          ]
+        },
+        {
+          id: 'colors', name: 'Colors', icon: '💙',
+          items: [
+            { emoji: '🔵', word: 'BLUE' },
+            { emoji: '🔴', word: 'RED' },
+            { emoji: '🟡', word: 'YELLOW' },
+            { emoji: '🟢', word: 'GREEN' },
+            { emoji: '🟣', word: 'PURPLE' },
+            { emoji: '🟠', word: 'ORANGE' },
+            { emoji: '🩷', word: 'PINK' }
+          ]
+        },
+        {
+          id: 'feelings', name: 'Feelings', icon: '💜',
+          items: [
+            { emoji: '🤩', word: 'EXCITED' },
+            { emoji: '🤔', word: 'CURIOUS' },
+            { emoji: '😟', word: 'NERVOUS' },
+            { emoji: '😭', word: 'SAD' },
+            { emoji: '😁', word: 'HAPPY' },
+            { emoji: '🥱', word: 'TIRED' }
+          ]
+        }
+      ];
+
+      const cat = forcedCategory
+        ? categories.find(c => c.id === forcedCategory) || categories[0]
+        : categories[Math.floor(Math.random() * categories.length)];
+
+      const target = cat.items[Math.floor(Math.random() * cat.items.length)];
+      const difficulty = forcedDiff || (Math.random() > 0.65 ? 'medium' : 'easy');
+
+      // Generate 2 distractors
+      const otherItems = cat.items.filter(i => i.word !== target.word);
+      const shuffledOthers = [...otherItems].sort(() => 0.5 - Math.random());
+      const dist1 = shuffledOthers[0] || { emoji: '⭐', word: 'STAR' };
+      const dist2 = shuffledOthers[1] || { emoji: '🎮', word: 'PLAY' };
+
+      const options = [
+        { label: target.word, emoji: target.emoji, isCorrect: true },
+        { label: dist1.word, emoji: dist1.emoji, isCorrect: false },
+        { label: dist2.word, emoji: dist2.emoji, isCorrect: false }
+      ].sort(() => 0.5 - Math.random());
+
+      const correctChoiceLetter = ['A', 'B', 'C'][options.findIndex(o => o.isCorrect)];
+
+      // 1. Photo Question Archetype
+      if (chosenType === 'photo_quiz') {
+        const photoQ = QUESTIONS_DATA[Math.floor(Math.random() * QUESTIONS_DATA.length)];
+        if (photoQ) {
+          const correctOpt = photoQ.options[photoQ.correctChoice];
+          const allWords = QUESTIONS_DATA.map(q => q.word).filter(w => w !== photoQ.word);
+          const shuffledWords = [...allWords].sort(() => 0.5 - Math.random());
+          const distractor1 = shuffledWords[0] || 'APPLE';
+          const distractor2 = shuffledWords[1] || 'BIKE';
+
+          const photoOptions = [
+            { label: photoQ.word, isCorrect: true },
+            { label: distractor1, isCorrect: false },
+            { label: distractor2, isCorrect: false }
+          ].sort(() => 0.5 - Math.random());
+
+          return {
+            categoryName: photoQ.category,
+            categoryIcon: photoQ.categoryIcon,
+            difficulty: difficulty,
+            prompt: '📸 LOOK AT THE PHOTO: WHAT IS THIS?',
+            emoji: photoQ.emoji,
+            photoUrl: correctOpt.imgUrl,
+            options: photoOptions,
+            correctChoice: ['A', 'B', 'C'][photoOptions.findIndex(o => o.isCorrect)],
+            spokenWord: photoQ.word
+          };
+        }
+      }
+
+      // 2. Missing Word Archetype
+      if (chosenType === 'missing_word') {
+        const sentenceTemplates = [
+          { sentence: `I like to ____ every day! ${target.emoji}`, word: target.word },
+          { sentence: `My favorite is ____! ${target.emoji}`, word: target.word },
+          { sentence: `Look at the ____! ${target.emoji}`, word: target.word }
+        ];
+        const selectedTemplate = sentenceTemplates[Math.floor(Math.random() * sentenceTemplates.length)];
+
+        return {
+          categoryName: cat.name,
+          categoryIcon: cat.icon,
+          difficulty: 'medium',
+          prompt: selectedTemplate.sentence,
+          emoji: target.emoji,
+          photoUrl: null,
+          options: options.map(o => ({ label: o.label, isCorrect: o.isCorrect })),
+          correctChoice: correctChoiceLetter,
+          spokenWord: target.word
+        };
+      }
+
+      // 3. Word to Emoji Archetype
+      if (chosenType === 'word_to_emoji') {
+        return {
+          categoryName: cat.name,
+          categoryIcon: cat.icon,
+          difficulty: difficulty,
+          prompt: `WHICH ONE IS "${target.word}"?`,
+          emoji: '❓',
+          photoUrl: null,
+          options: options.map(o => ({ label: `${o.emoji} ${o.label}`, isCorrect: o.isCorrect })),
+          correctChoice: correctChoiceLetter,
+          spokenWord: target.word
+        };
+      }
+
+      // 4. Choose Category Item Archetype
+      if (chosenType === 'choose_category') {
+        const otherCats = categories.filter(c => c.id !== cat.id);
+        const wrongCat1 = otherCats[0].items[0];
+        const wrongCat2 = otherCats[1].items[0];
+        const catOptions = [
+          { label: `${target.emoji} ${target.word}`, isCorrect: true },
+          { label: `${wrongCat1.emoji} ${wrongCat1.word}`, isCorrect: false },
+          { label: `${wrongCat2.emoji} ${wrongCat2.word}`, isCorrect: false }
+        ].sort(() => 0.5 - Math.random());
+        return {
+          categoryName: cat.name,
+          categoryIcon: cat.icon,
+          difficulty: difficulty,
+          prompt: `CHOOSE THE CORRECT ${cat.name.toUpperCase()}!`,
+          emoji: cat.icon,
+          photoUrl: null,
+          options: catOptions,
+          correctChoice: ['A', 'B', 'C'][catOptions.findIndex(o => o.isCorrect)],
+          spokenWord: target.word
+        };
+      }
+
+      // 5. Default Emoji to Word Archetype
+      return {
+        categoryName: cat.name,
+        categoryIcon: cat.icon,
+        difficulty: difficulty,
+        prompt: "WHAT'S THIS?",
+        emoji: target.emoji,
+        photoUrl: null,
+        options: options.map(o => ({ label: o.label, isCorrect: o.isCorrect })),
+        correctChoice: correctChoiceLetter,
+        spokenWord: target.word
+      };
+    }
+
+    renderQuestionData(q, headerPrompt) {
+      this.qCatIcon.textContent = q.categoryIcon;
+      this.qCatName.textContent = q.categoryName;
+      this.qPromptText.textContent = headerPrompt || q.prompt;
+
+      if (q.difficulty === 'hard') {
+        this.qDiffBadge.className = 'm-q-diff-tag diff-hard';
+        this.qDiffBadge.textContent = '🔴 HARD (+2 ⭐)';
+      } else if (q.difficulty === 'medium') {
+        this.qDiffBadge.className = 'm-q-diff-tag diff-medium';
+        this.qDiffBadge.textContent = '🟡 MEDIUM (+2 ⭐)';
+      } else {
+        this.qDiffBadge.className = 'm-q-diff-tag diff-easy';
+        this.qDiffBadge.textContent = '🟢 EASY (+1 ⭐)';
+      }
+
+      if (q.photoUrl) {
+        this.qEmoji.classList.add('hidden');
+        this.qPhoto.classList.remove('hidden');
+        this.qPhoto.src = q.photoUrl;
+      } else {
+        this.qEmoji.classList.remove('hidden');
+        this.qPhoto.classList.add('hidden');
+        this.qEmoji.textContent = q.emoji;
+      }
+
+      // Render 3 choices
+      this.choiceButtons.forEach((btn, i) => {
+        btn.disabled = false;
+        btn.classList.remove('is-correct', 'is-wrong', 'is-dimmed');
+        if (q.options[i]) {
+          this.choiceLabels[i].textContent = q.options[i].label;
+          btn.style.display = 'flex';
+        } else {
+          btn.style.display = 'none';
+        }
+      });
+    }
+
+    startCountdown(seconds, onExpire) {
+      let timeLeft = seconds;
+      this.countdownBubble.textContent = timeLeft;
+      this.countdownBubble.classList.remove('urgent');
+      this.countdownFill.style.width = '100%';
+
+      this.countdownInterval = setInterval(() => {
+        timeLeft--;
+        this.audio.playTick();
+        this.countdownBubble.textContent = timeLeft;
+        this.countdownFill.style.width = `${(timeLeft / seconds) * 100}%`;
+
+        if (timeLeft <= 3) {
+          this.countdownBubble.classList.add('urgent');
+        }
+
+        if (timeLeft <= 0) {
+          clearInterval(this.countdownInterval);
+          onExpire();
+        }
+      }, 1000);
+    }
+
+    handleChoiceClick(choiceLetter, cardElement) {
+      if (this.currentQuestionAnswered) return;
+      clearInterval(this.countdownInterval);
+
+      const q = this.currentQuestion;
+      if (!q) return;
+
+      if (choiceLetter === q.correctChoice) {
+        // === CORRECT ANSWER ===
+        this.currentQuestionAnswered = true;
+        cardElement.classList.add('is-correct');
+        this.choiceButtons.forEach(b => {
+          if (b !== cardElement) b.classList.add('is-dimmed');
+        });
+
+        const pts = (q.difficulty === 'hard' || q.difficulty === 'medium') ? 2 : 1;
+        this.teams[this.activeTeam].score += pts;
+        this.teams[this.activeTeam].correctCount++;
+        this.updateHUD();
+
+        this.audio.playSuccess();
+        this.confetti.fire(35);
+        if (q.spokenWord) this.audio.speak(q.spokenWord);
+
+        this.fbIcon.textContent = '🎉';
+        this.fbText.textContent = `CORRECT! (+${pts} ⭐) ROLL THE DICE!`;
+        this.feedbackBanner.classList.remove('hidden', 'fb-wrong');
+
+        if (this.isStealChallenge) {
+          // Steal resolution
+          setTimeout(() => this.resolveStealChallenge(true), 1200);
+        } else {
+          // Pre-roll success -> Switch to dice stage
+          setTimeout(() => {
+            this.stageQuestion.classList.add('hidden');
+            this.stageDice.classList.remove('hidden');
+            this.diceHeading.textContent = `${this.activeTeam.toUpperCase()} TEAM: ROLL THE DICE!`;
+            this.diceSub.textContent = 'Tap below to roll!';
+            this.btnRollDice.disabled = false;
+          }, 1200);
+        }
+
+      } else {
+        // === WRONG ANSWER ===
+        this.currentQuestionAnswered = true;
+        this.audio.playWrong();
+        cardElement.classList.add('is-wrong');
+
+        this.fbIcon.textContent = '❌';
+        this.fbText.textContent = 'NO ROLL! TURN OVER';
+        this.feedbackBanner.classList.remove('hidden');
+        this.feedbackBanner.classList.add('fb-wrong');
+
+        if (this.isStealChallenge) {
+          setTimeout(() => this.resolveStealChallenge(false), 1400);
+        } else {
+          setTimeout(() => this.advanceTurn(), 1600);
+        }
+      }
+    }
+
+    handleTimeout() {
+      this.currentQuestionAnswered = true;
+      this.audio.playWrong();
+      this.choiceButtons.forEach(b => (b.disabled = true));
+
+      this.fbIcon.textContent = '⏰';
+      this.fbText.textContent = "TIME'S UP! NO ROLL!";
+      this.feedbackBanner.classList.remove('hidden');
+      this.feedbackBanner.classList.add('fb-wrong');
+
+      if (this.isStealChallenge) {
+        setTimeout(() => this.resolveStealChallenge(false), 1400);
+      } else {
+        setTimeout(() => this.advanceTurn(), 1600);
+      }
+    }
+
+    // =========================================================================
+    // 3D DICE & STEP-BY-STEP TOKEN MOVEMENT
+    // =========================================================================
+    handleDiceRoll() {
+      if (this.isRollingOrMoving) return;
+      this.isRollingOrMoving = true;
+      this.btnRollDice.disabled = true;
+
+      const roll = Math.floor(Math.random() * 6) + 1;
+      this.diceBox.classList.add('rolling');
+      this.audio.playDiceRoll();
+
+      setTimeout(() => {
+        this.diceBox.classList.remove('rolling');
+        
+        // Orient dice face
+        const rotations = {
+          1: 'rotateY(0deg)',
+          6: 'rotateY(180deg)',
+          3: 'rotateY(-90deg)',
+          4: 'rotateY(90deg)',
+          5: 'rotateX(-90deg)',
+          2: 'rotateX(90deg)'
+        };
+        this.diceBox.style.transform = rotations[roll] || 'rotateY(0deg)';
+
+        this.moveToast.classList.remove('hidden');
+        this.toastSteps.textContent = roll;
+
+        // Step-by-step movement
+        setTimeout(() => {
+          this.animateTokenStepByStep(this.activeTeam, roll);
+        }, 600);
+      }, 900);
+    }
+
+    animateTokenStepByStep(teamKey, totalSteps) {
+      let stepCount = 0;
+      const stepInterval = setInterval(() => {
+        stepCount++;
+        const nextPos = (this.teams[teamKey].position + 1) % 26;
+        this.teams[teamKey].position = nextPos;
+
+        this.audio.playHop();
+
+        // Pass START space bonus (+2 Stars)
+        if (nextPos === 0) {
+          this.teams[teamKey].score += 2;
+          this.updateHUD();
+          this.audio.playSuccess();
+          this.confetti.fire(30);
+        }
+
+        this.updateTokensOnBoard();
+
+        if (stepCount >= totalSteps) {
+          clearInterval(stepInterval);
+          this.moveToast.classList.add('hidden');
+          setTimeout(() => {
+            this.handleSpaceLanding(teamKey, this.teams[teamKey].position);
+          }, 400);
+        }
+      }, 340);
+    }
+
+    // =========================================================================
+    // SPACE LANDING & SPECIAL EVENTS
+    // =========================================================================
+    handleSpaceLanding(teamKey, pos) {
+      const tile = MONOPOLY_BOARD_TILES[pos];
+      if (!tile) {
+        this.advanceTurn();
+        return;
+      }
+
+      const teamName = teamKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      const opponentKey = teamKey === 'blue' ? 'red' : 'blue';
+      const opponentName = opponentKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+
+      // 1. START SPACE
+      if (tile.type === 'start') {
+        this.showEventModal('🏁', 'LANDED ON START!', `${teamName} landed on START! +2 Bonus Stars!`, null, () => {
+          this.teams[teamKey].score += 2;
+          this.updateHUD();
+          this.advanceTurn();
+        });
+        return;
+      }
+
+      // 2. CATEGORY SPACES (Ownership & Steal Mechanic)
+      if (tile.type === 'category') {
+        const owner = this.tileOwnership[pos];
+
+        if (owner === null) {
+          // Unclaimed space -> Claim it!
+          this.tileOwnership[pos] = teamKey;
+          this.teams[teamKey].ownedSpaces.push(pos);
+          this.teams[teamKey].score += 1;
+          this.updateTileOwnershipUI(pos, teamKey);
+          this.updateHUD();
+          this.audio.playSuccess();
+          this.confetti.fire(30);
+
+          this.showEventModal(
+            tile.emoji,
+            `${teamName} CLAIMS ${tile.name}!`,
+            `Great job! ${teamName} now owns this space and earns +1 Star!`,
+            null,
+            () => this.advanceTurn()
+          );
+          return;
+
+        } else if (owner === teamKey) {
+          // Own space -> Loyalty Star
+          this.teams[teamKey].score += 1;
+          this.updateHUD();
+          this.audio.playSuccess();
+
+          this.showEventModal(
+            '⭐',
+            'LOYALTY BONUS!',
+            `${teamName} landed on their own space! +1 Loyalty Star!`,
+            null,
+            () => this.advanceTurn()
+          );
+          return;
+
+        } else {
+          // Opponent space -> STEAL CHALLENGE!
+          this.triggerStealChallenge(pos, teamKey, opponentKey);
+          return;
+        }
+      }
+
+      // 3. SPECIAL EVENT SPACES
+      if (tile.type === 'special_speed') {
+        this.showEventModal('⚡', 'SPEED ZONE!', 'Speed Zone! Keep up the great pace!', null, () => this.advanceTurn());
+      } else if (tile.type === 'special_mystery') {
+        this.handleMysteryBox(teamKey);
+      } else if (tile.type === 'special_boost') {
+        this.showEventModal('🚀', 'ROCKET BOOST!', `${teamName} hops forward 2 extra spaces!`, null, () => {
+          this.animateTokenStepByStep(teamKey, 2);
+        });
+      } else if (tile.type === 'special_trap') {
+        this.showEventModal('🐌', 'SLIME TRAP!', `${teamName} moves backward 2 spaces!`, null, () => {
+          this.teams[teamKey].position = (this.teams[teamKey].position - 2 + 26) % 26;
+          this.updateTokensOnBoard();
+          this.advanceTurn();
+        });
+      } else if (tile.type === 'special_double') {
+        this.handleDoubleOrNothing(teamKey);
+      } else if (tile.type === 'special_memory') {
+        this.handleMemorySpace(teamKey);
+      } else if (tile.type === 'special_miss') {
+        this.teams[teamKey].missTurn = true;
+        this.showEventModal('⏸️', 'MISS A TURN!', `${teamName} is resting and will miss their next turn!`, null, () => this.advanceTurn());
+      } else if (tile.type === 'special_lucky') {
+        this.showEventModal('🎲', 'LUCKY ROLL!', `${teamName} gets a free extra roll!`, null, () => {
+          this.stageQuestion.classList.add('hidden');
+          this.stageDice.classList.remove('hidden');
+          this.btnRollDice.disabled = false;
+          this.isRollingOrMoving = false;
+        });
+      } else if (tile.type === 'special_bonus') {
+        this.teams[teamKey].score += 1;
+        this.updateHUD();
+        this.audio.playSuccess();
+        this.showEventModal('⭐', 'FREE BONUS STAR!', `${teamName} found a bonus star on the board! +1 Star!`, null, () => this.advanceTurn());
+      } else {
+        this.advanceTurn();
+      }
+    }
+
+    updateTileOwnershipUI(tileIndex, teamKey) {
+      const tileElem = this.boardGrid.querySelector(`[data-index="${tileIndex}"]`);
+      if (!tileElem) return;
+
+      tileElem.classList.remove('owned-blue', 'owned-red');
+      if (teamKey === 'blue') tileElem.classList.add('owned-blue');
+      if (teamKey === 'red') tileElem.classList.add('owned-red');
+
+      const badge = document.getElementById(`owner-badge-${tileIndex}`);
+      if (badge) {
+        badge.className = `m-owner-badge m-owner-${teamKey}`;
+        badge.textContent = teamKey === 'blue' ? '🔵' : '🔴';
+      }
+    }
+
+    // --- Steal Challenge ---
+    triggerStealChallenge(tileIndex, attackerKey, defenderKey) {
+      const tile = MONOPOLY_BOARD_TILES[tileIndex];
+      const attackerName = attackerKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      const defenderName = defenderKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+
+      this.showEventModal(
+        '⚡',
+        'STEAL CHALLENGE!',
+        `${attackerName} landed on ${defenderName}'s ${tile.name}! Answer the HARD question to STEAL it!`,
+        null,
+        () => {
+          this.isStealChallenge = true;
+          this.stealTargetTileIndex = tileIndex;
+          this.currentQuestionAnswered = false;
+
+          this.stageQuestion.classList.remove('hidden');
+          this.stageDice.classList.add('hidden');
+          this.feedbackBanner.classList.add('hidden');
+
+          this.currentQuestion = this.generateQuestion('steal', tile.category, 'hard');
+          this.renderQuestionData(this.currentQuestion, `🔴 STEAL CHALLENGE: ${attackerName}!`);
+          this.startCountdown(8, () => this.handleTimeout());
+        }
+      );
+    }
+
+    resolveStealChallenge(isSuccess) {
+      const tileIndex = this.stealTargetTileIndex;
+      const tile = MONOPOLY_BOARD_TILES[tileIndex];
+      const attackerKey = this.activeTeam;
+      const defenderKey = attackerKey === 'blue' ? 'red' : 'blue';
+      const attackerName = attackerKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      const defenderName = defenderKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+
+      this.isStealChallenge = false;
+      this.stealTargetTileIndex = null;
+
+      if (!tile || tileIndex === null || tileIndex === undefined) {
+        this.advanceTurn();
+        return;
+      }
+
+      if (isSuccess) {
+        // Ownership transfers
+        this.tileOwnership[tileIndex] = attackerKey;
+        this.teams[defenderKey].ownedSpaces = this.teams[defenderKey].ownedSpaces.filter(idx => idx !== tileIndex);
+        this.teams[attackerKey].ownedSpaces.push(tileIndex);
+        this.updateTileOwnershipUI(tileIndex, attackerKey);
+        this.updateHUD();
+
+        this.showEventModal('🎉', 'STEAL SUCCESSFUL!', `${attackerName} stole ${tile.name} from ${defenderName}!`, null, () => this.advanceTurn());
+      } else {
+        // Defender keeps and earns rent
+        this.teams[defenderKey].score += 1;
+        this.updateHUD();
+
+        this.showEventModal('🛡️', 'DEFENSE SUCCESSFUL!', `${defenderName} defended their space and gets +1 Star Rent!`, null, () => this.advanceTurn());
+      }
+    }
+
+    // --- Mystery Box Event ---
+    handleMysteryBox(teamKey) {
+      const teamName = teamKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      const rewards = [
+        { title: '⭐ LUCKY CHEST!', desc: `${teamName} opened a treasure box! +2 Stars!`, pts: 2 },
+        { title: '💎 JACKPOT!', desc: `Super jackpot! ${teamName} gets +3 Stars!`, pts: 3 },
+        { title: '🚀 TURBO ROCKET!', desc: `${teamName} launches forward 2 spaces!`, boost: 2 },
+        { title: '🎲 LUCKY ROLL!', desc: `${teamName} gets to roll the dice again!`, extraRoll: true }
+      ];
+
+      const r = rewards[Math.floor(Math.random() * rewards.length)];
+      this.showEventModal('🎁', r.title, r.desc, null, () => {
+        if (r.pts) {
+          this.teams[teamKey].score += r.pts;
+          this.updateHUD();
+          this.audio.playSuccess();
+          this.advanceTurn();
+        } else if (r.boost) {
+          this.animateTokenStepByStep(teamKey, r.boost);
+        } else if (r.extraRoll) {
+          this.stageQuestion.classList.add('hidden');
+          this.stageDice.classList.remove('hidden');
+          this.btnRollDice.disabled = false;
+          this.isRollingOrMoving = false;
+        } else {
+          this.advanceTurn();
+        }
+      });
+    }
+
+    // --- Double or Nothing ---
+    handleDoubleOrNothing(teamKey) {
+      const teamName = teamKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      this.showEventModal(
+        '💰',
+        'DOUBLE OR NOTHING!',
+        `${teamName}: Answer correctly for +3 Stars! (Wrong = -1 Star)`,
+        null,
+        () => {
+          this.currentQuestionAnswered = false;
+          this.stageQuestion.classList.remove('hidden');
+          this.stageDice.classList.add('hidden');
+          this.feedbackBanner.classList.add('hidden');
+
+          this.currentQuestion = this.generateQuestion('double', null, 'medium');
+          this.renderQuestionData(this.currentQuestion, `💰 DOUBLE OR NOTHING: ${teamName}`);
+          this.startCountdown(8, () => {
+            this.teams[teamKey].score = Math.max(0, this.teams[teamKey].score - 1);
+            this.updateHUD();
+            this.audio.playWrong();
+            setTimeout(() => this.advanceTurn(), 1400);
+          });
+        }
+      );
+    }
+
+    // --- Memory Space ---
+    handleMemorySpace(teamKey) {
+      const teamName = teamKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+      this.teams[teamKey].score += 2;
+      this.updateHUD();
+      this.audio.playSuccess();
+      this.showEventModal('🧠', 'MEMORY MASTERY!', `${teamName} completed the memory check! +2 Bonus Stars!`, null, () => this.advanceTurn());
+    }
+
+    showEventModal(badge, title, desc, interactiveHtml, onContinue) {
+      this.eventBadge.textContent = badge;
+      this.eventTitle.textContent = title;
+      this.eventDesc.textContent = desc;
+
+      if (interactiveHtml) {
+        this.eventInteractive.innerHTML = interactiveHtml;
+        this.eventInteractive.classList.remove('hidden');
+      } else {
+        this.eventInteractive.classList.add('hidden');
+      }
+
+      this.onEventModalContinue = onContinue;
+      this.eventModal.classList.remove('hidden');
+    }
+
+    // =========================================================================
+    // ADVANCE TURN & WINNER CEREMONY
+    // =========================================================================
+    advanceTurn() {
+      clearInterval(this.countdownInterval);
+
+      if (this.activeTeam === 'red') {
+        this.currentRound++;
+        if (this.currentRound > this.maxRounds) {
+          this.showWinnerCeremony();
+          return;
+        }
+      }
+
+      // Switch active team
+      this.activeTeam = this.activeTeam === 'blue' ? 'red' : 'blue';
+      this.updateHUD();
+
+      // Check if new active team has missed turn
+      if (this.teams[this.activeTeam].missTurn) {
+        this.teams[this.activeTeam].missTurn = false;
+        const teamName = this.activeTeam === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
+        this.showEventModal('⏸️', 'MISSED TURN!', `${teamName} is resting this turn (Miss a Turn space)!`, null, () => {
+          this.advanceTurn();
+        });
+        return;
+      }
+
+      this.startPreRollTurn();
+    }
+
+    showWinnerCeremony() {
+      clearInterval(this.countdownInterval);
+
+      const blueTotal = this.teams.blue.score + this.teams.blue.ownedSpaces.length;
+      const redTotal = this.teams.red.score + this.teams.red.ownedSpaces.length;
+
+      this.finalBlueStars.textContent = `${this.teams.blue.score} ⭐`;
+      this.finalBlueOwned.textContent = `${this.teams.blue.ownedSpaces.length} 🏠`;
+      this.finalBlueCorrect.textContent = this.teams.blue.correctCount;
+
+      this.finalRedStars.textContent = `${this.teams.red.score} ⭐`;
+      this.finalRedOwned.textContent = `${this.teams.red.ownedSpaces.length} 🏠`;
+      this.finalRedCorrect.textContent = this.teams.red.correctCount;
+
+      if (blueTotal > redTotal) {
+        this.winnerTitle.textContent = '🏆 BLUE TEAM WINS!';
+      } else if (redTotal > blueTotal) {
+        this.winnerTitle.textContent = '🏆 RED TEAM WINS!';
+      } else {
+        this.winnerTitle.textContent = "🤝 IT'S A TIE!";
+      }
+
+      this.audio.playFanfare();
+      this.confetti.fire(160);
+      this.winnerOverlay.classList.remove('hidden');
+    }
+  }
+
+  // =========================================================================
+  // 4. MAIN GAME STATE CONTROLLER (EMOJI EXPERTS & NAVIGATION)
   // =========================================================================
   class GameApp {
     constructor() {
@@ -782,6 +1921,7 @@
       this.guessStepIndex = 0;
 
       this.cacheDOMElements();
+      this.monopolyEngine = new EmojiMonopolyEngine(this);
       this.bindEvents();
       this.preloadImages();
     }
@@ -794,7 +1934,8 @@
         game: document.getElementById('screen-game'),
         memory: document.getElementById('screen-memory'),
         guess: document.getElementById('screen-guess'),
-        profile: document.getElementById('screen-profile')
+        profile: document.getElementById('screen-profile'),
+        monopoly: document.getElementById('screen-monopoly')
       };
 
       // Modal Elements
@@ -811,6 +1952,8 @@
 
       // Start screen
       this.btnStartPlay = document.getElementById('btn-start-play');
+      this.btnStartMonopoly = document.getElementById('btn-start-monopoly');
+      this.btnToggleGameMode = document.getElementById('btn-toggle-game-mode');
 
       // Intro screen
       this.btnIntroHelp = document.getElementById('btn-intro-help');
@@ -884,6 +2027,26 @@
         this.audio.playPop();
         this.switchScreen('intro');
       });
+
+      if (this.btnStartMonopoly) {
+        this.btnStartMonopoly.addEventListener('click', () => {
+          this.audio.playPop();
+          this.switchScreen('monopoly');
+          this.monopolyEngine.showModeSelect();
+        });
+      }
+
+      if (this.btnToggleGameMode) {
+        this.btnToggleGameMode.addEventListener('click', () => {
+          this.audio.playPop();
+          if (this.currentScreen === 'monopoly') {
+            this.switchScreen('start');
+          } else {
+            this.switchScreen('monopoly');
+            this.monopolyEngine.showModeSelect();
+          }
+        });
+      }
 
       this.btnIntroHelp.addEventListener('click', () => {
         this.audio.playPop();
@@ -998,6 +2161,15 @@
         } else if (this.currentScreen === 'guess') {
           if (e.key === 'y' || e.key === 'Y' || e.key === '1') this.btnGuessYes.click();
           if (e.key === 'n' || e.key === 'N' || e.key === '2') this.btnGuessNo.click();
+        } else if (this.currentScreen === 'monopoly') {
+          if (e.key === '1' || e.key === 'a' || e.key === 'A') this.monopolyEngine.choiceButtons[0]?.click();
+          if (e.key === '2' || e.key === 'b' || e.key === 'B') this.monopolyEngine.choiceButtons[1]?.click();
+          if (e.key === '3' || e.key === 'c' || e.key === 'C') this.monopolyEngine.choiceButtons[2]?.click();
+          if (e.key === ' ' || e.key === 'Enter') {
+            if (!this.monopolyEngine.btnRollDice.disabled && !this.monopolyEngine.stageDice.classList.contains('hidden')) {
+              this.monopolyEngine.btnRollDice.click();
+            }
+          }
         }
         if (e.key === 'f' || e.key === 'F') {
           this.toggleFullscreen();
