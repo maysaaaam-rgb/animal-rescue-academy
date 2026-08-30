@@ -2057,6 +2057,8 @@ html, body {
   justify-content: center;
   align-items: center;
   box-shadow: 0 16px 36px rgba(0, 0, 0, 0.5), inset 0 0 30px rgba(0, 0, 0, 0.4);
+  z-index: 50;
+  pointer-events: auto;
 }
 
 .m-arena-stage {
@@ -2066,6 +2068,49 @@ html, body {
   flex-direction: column;
   justify-content: space-between;
   align-items: center;
+  position: relative;
+  z-index: 55;
+  pointer-events: auto;
+}
+
+#m-stage-dice {
+  position: relative;
+  z-index: 60;
+  pointer-events: auto;
+  width: 100%;
+}
+
+.btn-roll-dice {
+  position: relative !important;
+  z-index: 1000 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
+  box-shadow: 0 8px 0 #9a3412, 0 14px 20px rgba(245, 158, 11, 0.4) !important;
+  font-size: clamp(1.2rem, 2vw, 1.6rem) !important;
+  padding: clamp(12px, 1.8vh, 20px) clamp(28px, 3.5vw, 50px) !important;
+  min-height: 56px;
+  min-width: 220px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 14px !important;
+}
+
+.btn-roll-dice * {
+  pointer-events: none !important;
+}
+
+.btn-roll-dice:disabled {
+  opacity: 0.45 !important;
+  cursor: not-allowed !important;
+  pointer-events: none !important;
+  box-shadow: 0 4px 0 #78350f !important;
+  transform: none !important;
+  filter: grayscale(0.5) !important;
 }
 
 /* In-Card Prominent Turn Banner */
@@ -2416,13 +2461,6 @@ html, body {
   width: 22px;
   height: 22px;
   background: #dc2626;
-}
-
-.btn-roll-dice {
-  background: linear-gradient(135deg, #f59e0b 0%, #d97706 100%) !important;
-  box-shadow: 0 8px 0 #9a3412, 0 14px 20px rgba(245, 158, 11, 0.4) !important;
-  font-size: 1.3rem;
-  padding: 12px 32px;
 }
 
 .m-move-toast {

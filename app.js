@@ -1759,6 +1759,7 @@
       this.activeTeam = 'blue'; // 'blue' or 'red'
       this.isStealChallenge = false;
       this.stealTargetTileIndex = null;
+      this.diceUnlocked = false;
       this.isRollingOrMoving = false;
       this.currentQuestion = null;
       this.currentQuestionAnswered = false;
@@ -1930,12 +1931,23 @@
         });
       }
 
-      // 5. Dice Roll button
+      // 5. Dice Roll button with guarded handler for click and pointerup (touch/Smart Board)
       if (this.btnRollDice) {
-        this.btnRollDice.addEventListener('click', () => {
-          if (this.isRollingOrMoving) return;
+        let lastTriggerTime = 0;
+        const triggerRoll = (e) => {
+          if (e) {
+            e.stopPropagation();
+          }
+          const now = Date.now();
+          if (now - lastTriggerTime < 400) return; // Prevent duplicate rapid taps
+          lastTriggerTime = now;
+
+          if (!this.diceUnlocked || this.isRollingOrMoving) return;
           this.handleDiceRoll();
-        });
+        };
+
+        this.btnRollDice.addEventListener('click', triggerRoll);
+        this.btnRollDice.addEventListener('pointerup', triggerRoll);
       }
 
       // 6. Event continue button
@@ -2148,15 +2160,34 @@
       }
     }
 
+    updateDiceButtonState() {
+      if (!this.btnRollDice) return;
+      if (this.diceUnlocked && !this.isRollingOrMoving) {
+        this.btnRollDice.disabled = false;
+        this.btnRollDice.style.pointerEvents = 'auto';
+        this.btnRollDice.style.cursor = 'pointer';
+        this.btnRollDice.style.opacity = '1';
+        this.btnRollDice.classList.add('animate-pulse');
+      } else {
+        this.btnRollDice.disabled = true;
+        this.btnRollDice.style.pointerEvents = 'none';
+        this.btnRollDice.style.cursor = 'not-allowed';
+        this.btnRollDice.style.opacity = '0.45';
+        this.btnRollDice.classList.remove('animate-pulse');
+      }
+    }
+
     // =========================================================================
     // PRE-ROLL QUESTION SYSTEM (15s Easy / 12s Medium / 10s Hard)
     // =========================================================================
     startPreRollTurn() {
       clearInterval(this.countdownInterval);
       this.currentQuestionAnswered = false;
+      this.diceUnlocked = false;
       this.isRollingOrMoving = false;
       this.isStealChallenge = false;
       this.stealTargetTileIndex = null;
+      this.updateDiceButtonState();
 
       this.stageQuestion.classList.remove('hidden');
       this.stageDice.classList.add('hidden');
@@ -2320,6 +2351,7 @@
       if (choiceLetter === q.correctChoice) {
         // === CORRECT ANSWER ===
         this.currentQuestionAnswered = true;
+        this.diceUnlocked = true;
         cardElement.classList.add('is-correct');
         this.choiceButtons.forEach(b => {
           if (b !== cardElement) b.classList.add('is-dimmed');
@@ -2348,13 +2380,14 @@
             this.stageDice.classList.remove('hidden');
             this.diceHeading.textContent = `🔓 DICE UNLOCKED: ${this.activeTeam.toUpperCase()} TEAM!`;
             this.diceSub.textContent = 'Tap ROLL THE DICE below to advance your token!';
-            this.btnRollDice.disabled = false;
-          }, 1100);
+            this.updateDiceButtonState();
+          }, 1000);
         }
 
       } else {
         // === WRONG ANSWER ===
         this.currentQuestionAnswered = true;
+        this.diceUnlocked = false;
         this.audio.playWrong();
         cardElement.classList.add('is-wrong');
 
@@ -2373,6 +2406,7 @@
 
     handleTimeout() {
       this.currentQuestionAnswered = true;
+      this.diceUnlocked = false;
       this.audio.playWrong();
       this.choiceButtons.forEach(b => (b.disabled = true));
 
@@ -2392,9 +2426,10 @@
     // 3D DICE & STEP-BY-STEP TOKEN MOVEMENT
     // =========================================================================
     handleDiceRoll() {
-      if (this.isRollingOrMoving) return;
+      if (!this.diceUnlocked || this.isRollingOrMoving) return;
       this.isRollingOrMoving = true;
-      this.btnRollDice.disabled = true;
+      this.diceUnlocked = false;
+      this.updateDiceButtonState();
 
       const roll = Math.floor(Math.random() * 6) + 1;
       this.diceBox.classList.add('rolling');
