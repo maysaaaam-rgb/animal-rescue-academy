@@ -1950,6 +1950,7 @@
         let lastTriggerTime = 0;
         const triggerRoll = (e) => {
           if (e) {
+            if (e.cancelable) e.preventDefault();
             e.stopPropagation();
           }
           const now = Date.now();
@@ -1962,6 +1963,19 @@
 
         this.btnRollDice.addEventListener('click', triggerRoll);
         this.btnRollDice.addEventListener('pointerup', triggerRoll);
+
+        // Also allow tapping the 3D dice directly to roll
+        const diceStage = document.getElementById('m-dice-stage');
+        if (diceStage) {
+          diceStage.style.cursor = 'pointer';
+          diceStage.addEventListener('click', triggerRoll);
+          diceStage.addEventListener('pointerup', triggerRoll);
+        }
+        if (this.diceBox) {
+          this.diceBox.style.cursor = 'pointer';
+          this.diceBox.addEventListener('click', triggerRoll);
+          this.diceBox.addEventListener('pointerup', triggerRoll);
+        }
       }
 
       // 6. Event continue button with direct and delegated document handlers
