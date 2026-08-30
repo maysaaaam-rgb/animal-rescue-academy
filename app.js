@@ -295,18 +295,18 @@
       correctChoice: 'B',
       options: {
         A: {
-          label: 'Bright Red Color Object',
-          imgUrl: 'https://images.unsplash.com/photo-1584824486509-112e4181ff6b?auto=format&fit=crop&w=800&q=80',
+          label: 'Bright Red Color Paint & Crayon',
+          imgUrl: 'assets/color_red.jpg',
           fallbackBg: '#ef4444'
         },
         B: {
-          label: 'Vibrant Blue Color Object',
-          imgUrl: 'https://images.unsplash.com/photo-1579546929518-9e396f3cc809?auto=format&fit=crop&w=800&q=80',
+          label: 'Vibrant Blue Color Paint & Crayon',
+          imgUrl: 'assets/color_blue.jpg',
           fallbackBg: '#3b82f6'
         },
         C: {
-          label: 'Bright Yellow Color Object',
-          imgUrl: 'https://images.unsplash.com/photo-1587496679742-bad502958fbe?auto=format&fit=crop&w=800&q=80',
+          label: 'Bright Yellow Color Paint & Crayon',
+          imgUrl: 'assets/color_yellow.jpg',
           fallbackBg: '#eab308'
         }
       }
@@ -371,7 +371,7 @@
       options: {
         A: {
           label: 'Child feeling nervous biting nails',
-          imgUrl: 'https://images.unsplash.com/photo-1509062522246-3755977927d7?auto=format&fit=crop&w=800&q=80',
+          imgUrl: 'assets/kid_nervous.jpg',
           fallbackBg: '#fecaca'
         },
         B: {
@@ -466,7 +466,7 @@
       category: 'How do you feel about English?',
       categoryIcon: '💜',
       emoji: '😭',
-      word: 'NEED HELP',
+      word: 'SAD / NEED HELP',
       correctChoice: 'C',
       options: {
         A: {
@@ -480,8 +480,8 @@
           fallbackBg: '#e2e8f0'
         },
         C: {
-          label: 'Child crying with tears needing help',
-          imgUrl: 'https://images.unsplash.com/photo-1607453998774-d533f65dac99?auto=format&fit=crop&w=800&q=80',
+          label: 'Child looking sad and upset at desk',
+          imgUrl: 'assets/kid_sad.jpg',
           fallbackBg: '#fca5a5'
         }
       }
