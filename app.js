@@ -1746,6 +1746,19 @@
 
   console.log(`Question Bank: ${QUESTION_BANK.length} total / ${VALID_QUESTIONS.length} valid`);
 
+  function unlockGameUI() {
+    if (typeof document === 'undefined') return;
+    if (document.body) document.body.style.pointerEvents = "auto";
+    const overlays = document.querySelectorAll(".monopoly-mode-overlay, .m-event-modal-overlay, .monopoly-winner-overlay");
+    overlays.forEach(el => {
+      if (el.classList.contains("hidden")) {
+        el.style.pointerEvents = "none";
+      } else {
+        el.style.pointerEvents = "auto";
+      }
+    });
+  }
+
   class EmojiMonopolyEngine {
     constructor(gameApp) {
       this.gameApp = gameApp;
@@ -1951,21 +1964,33 @@
         this.btnRollDice.addEventListener('pointerup', triggerRoll);
       }
 
-      // 6. Event continue button with guarded click and pointerup handler
+      // 6. Event continue button with direct and delegated document handlers
+      const handleContinueAction = (e) => {
+        if (e) {
+          if (e.cancelable) e.preventDefault();
+          e.stopPropagation();
+        }
+        if (!this.modalOpen) return;
+
+        this.audio.playPop();
+        this.closeEventModal();
+      };
+
       if (this.btnEventContinue) {
-        const handleContinue = (e) => {
-          if (e) {
-            e.stopPropagation();
-          }
-          if (!this.modalOpen) return;
-
-          this.audio.playPop();
-          this.closeEventModal();
-        };
-
-        this.btnEventContinue.addEventListener('click', handleContinue);
-        this.btnEventContinue.addEventListener('pointerup', handleContinue);
+        this.btnEventContinue.addEventListener('click', handleContinueAction);
+        this.btnEventContinue.addEventListener('pointerup', handleContinueAction);
       }
+
+      document.addEventListener('click', (e) => {
+        if (e.target && e.target.closest && e.target.closest('#btn-event-continue')) {
+          handleContinueAction(e);
+        }
+      });
+      document.addEventListener('pointerup', (e) => {
+        if (e.target && e.target.closest && e.target.closest('#btn-event-continue')) {
+          handleContinueAction(e);
+        }
+      });
 
       // 7. Winner screen buttons
       if (this.btnPlayAgain) {
