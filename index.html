@@ -3,391 +3,392 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>Animal Rescue Academy — ESL English Learning Game</title>
+  <title>⭐ EMOJI EXPERTS ⭐ — Classroom Smart Board Game</title>
   
-  <!-- Friendly, high-legibility Google Fonts for young learners -->
+  <!-- High-legibility Google Fonts for young learners -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700;800;900&family=Comic+Neue:wght@700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Nunito:wght@700;800;900;1000&display=swap" rel="stylesheet">
   
   <link rel="stylesheet" href="style.css">
 </head>
 <body>
 
-  <!-- =========================================================
-       CANVAS CONFETTI PARTICLE OVERLAY
-       ========================================================= -->
+  <!-- Fullscreen Particle Confetti Canvas -->
   <canvas id="confetti-canvas"></canvas>
 
-  <!-- =========================================================
-       TOP HEADER & NAVIGATION BAR
-       ========================================================= -->
-  <header class="app-header">
-    <div class="header-container">
-      
-      <!-- Brand Logo -->
-      <div class="header-brand" id="brand-home-btn" role="button" tabindex="0">
-        <div class="brand-badge">🦁</div>
-        <div>
-          <h1 class="brand-title">ANIMAL RESCUE ACADEMY</h1>
-          <span class="brand-subtitle">Junior English Rangers</span>
-        </div>
-      </div>
-
-      <!-- Player Live Progress Counters -->
-      <div class="header-stats">
-        <div class="stat-pill stars" title="Total Stars Earned">
-          <span>⭐</span>
-          <span id="header-star-count">0</span>
-        </div>
-        <div class="stat-pill rescues" title="Total Animals Rescued">
-          <span>🐾</span>
-          <span id="header-rescue-count">0</span>
-        </div>
-      </div>
-
-      <!-- Primary Mode Tabs -->
-      <nav class="header-nav" aria-label="Game Navigation">
-        <button class="nav-item-btn" id="nav-btn-map" aria-label="Missions Map">
-          <span>🗺️</span>
-          <span>Missions</span>
-        </button>
-        <button class="nav-item-btn" id="nav-btn-explore" aria-label="Free Animal Sanctuary">
-          <span>🌿</span>
-          <span>Sanctuary</span>
-        </button>
-        <button class="nav-item-btn" id="nav-btn-review" aria-label="Smart Review Clinic">
-          <span>🎯</span>
-          <span>Review</span>
-        </button>
-        <button class="nav-item-btn" id="nav-btn-teacher" aria-label="Teacher & Parent Dashboard">
-          <span>📊</span>
-          <span>Teacher</span>
-        </button>
-      </nav>
-
-      <!-- Action Buttons (Trophy & Audio) -->
-      <div class="header-actions">
-        <button class="btn-circle" id="btn-badges-drawer" title="View Badges & Trophies" aria-label="Badges">
-          <span>🏅</span>
-        </button>
-        <button class="btn-circle" id="btn-mute-toggle" title="Toggle Sound / Voice" aria-label="Toggle Sound">
-          <span>🔊</span>
-        </button>
-      </div>
-
-    </div>
-  </header>
-
-  <!-- =========================================================
-       SPEECH CAPTION BUBBLE (Live Subtitles for ESL Dual-Coding)
-       ========================================================= -->
-  <div class="speech-caption-container">
-    <div class="speech-caption-bubble" id="speech-caption-bubble">
-      <span>💬</span>
-      <span id="speech-caption-text">Welcome to Animal Rescue Academy!</span>
-    </div>
+  <!-- Floating Background Ambient Emojis -->
+  <div class="ambient-background" id="ambient-bg" aria-hidden="true">
+    <span class="bubble bubble-1">⭐</span>
+    <span class="bubble bubble-2">🥑</span>
+    <span class="bubble bubble-3">🤩</span>
+    <span class="bubble bubble-4">🍣</span>
+    <span class="bubble bubble-5">🥋</span>
+    <span class="bubble bubble-6">🥨</span>
+    <span class="bubble bubble-7">🚀</span>
+    <span class="bubble bubble-8">🎉</span>
   </div>
 
+  <!-- Smart Board Teacher Utility Controls (Always accessible in top corner) -->
+  <aside class="board-top-controls">
+    <button class="icon-tool-btn" id="btn-sound-toggle" title="Toggle Sound / Voice" aria-label="Toggle Sound">
+      <span id="sound-icon">🔊</span>
+    </button>
+    <button class="icon-tool-btn" id="btn-fullscreen-toggle" title="Toggle Fullscreen for Smart Board" aria-label="Fullscreen">
+      <span id="fullscreen-icon">⛶</span>
+    </button>
+  </aside>
+
   <!-- =========================================================
-       MAIN GAME SCREEN VIEWS
+       MAIN SINGLE-PAGE APPLICATION CONTAINER
+       Only ONE screen section is active/visible at any time.
        ========================================================= -->
-  <main class="main-content">
+  <div class="game-viewport">
 
-    <!-- 1. WELCOME SCREEN -->
-    <section class="screen-view active-screen" id="welcome-screen">
-      <div class="welcome-screen-layout">
-        <div class="hero-safari-badge animate-float">🦁 🐘 🐒 🐰</div>
-        <h2 class="hero-title">Welcome, Junior Ranger!</h2>
-        <p class="hero-subtitle">Animals are loose in the safari park! Use your English skills to rescue them and bring them to safety.</p>
+    <!-- =========================================================
+         STATE 1: START SCREEN
+         ========================================================= -->
+    <section class="game-screen active" id="screen-start">
+      <div class="screen-content start-content animate-pop">
+        <div class="hero-emoji-ring">
+          <span class="hero-emoji-icon animate-bounce">⭐</span>
+        </div>
         
-        <div class="hero-highlights">
-          <div class="highlight-chip">🎧 Clear Spoken English</div>
-          <div class="highlight-chip">⭐ 8 Exciting Missions</div>
-          <div class="highlight-chip">🏅 Earn Ranger Badges</div>
-          <div class="highlight-chip">💖 100% Encouraging</div>
-        </div>
-
-        <button class="btn-primary btn-large btn-bounce" id="btn-start-adventure">
-          <span>Start Rescue Adventure ⭐</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- 2. MISSION WORLD MAP -->
-    <section class="screen-view" id="map-screen">
-      <div class="map-header">
-        <h2 class="map-title">Safari Rescue Map</h2>
-        <p class="map-subtitle">Complete missions in order to unlock new safari zones and animal friends!</p>
-      </div>
-      
-      <div class="map-nodes-grid" id="map-nodes-container">
-        <!-- Rendered dynamically by js/ui.js -->
-      </div>
-    </section>
-
-    <!-- 3. MISSION ARENA (Dynamic Stage) -->
-    <section class="screen-view" id="mission-arena">
-      <div class="arena-top-bar">
-        <button class="btn-back" id="arena-back-btn">
-          <span>◀</span>
-          <span>Map</span>
-        </button>
+        <h1 class="game-main-title">
+          <span class="title-star">⭐</span>
+          EMOJI EXPERTS
+          <span class="title-star">⭐</span>
+        </h1>
         
-        <div class="arena-mission-info">
-          <h2 id="arena-mission-title">Mission 1: Meet the Animals</h2>
-          <p id="arena-mission-sub">Recognition & Pronunciation</p>
+        <h2 class="game-subtitle">HELP THE TEACHER!</h2>
+        
+        <div class="start-btn-wrapper">
+          <button class="btn-giant btn-play-primary animate-pulse" id="btn-start-play">
+            <span class="btn-icon">🎮</span>
+            <span class="btn-text">LET'S PLAY!</span>
+          </button>
         </div>
 
-        <div class="arena-progress-container">
-          <div class="arena-progress-track">
-            <div class="arena-progress-fill" id="arena-progress-fill"></div>
+        <div class="grade-tag">Grade 3 A1+ • Classroom Smart Board Game</div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 2: INTRODUCTION SCREEN (Teacher Story Screen)
+         ========================================================= -->
+    <section class="game-screen" id="screen-intro">
+      <div class="screen-content intro-content animate-pop">
+        <div class="teacher-avatar-card">
+          <div class="huge-thinking-emoji animate-wobble">🤔</div>
+          <div class="speech-speechmark">HELP ME!</div>
+        </div>
+
+        <div class="teacher-prompt-box">
+          <p class="teacher-quote">“Guys! We are going to make our profiles! But I have a problem... I don't understand these emojis! Can you help me?”</p>
+        </div>
+
+        <div class="intro-actions">
+          <button class="btn-giant btn-success animate-pulse" id="btn-intro-help">
+            <span class="btn-text">YES! LET'S HELP!</span>
+            <span class="btn-icon">🎉</span>
+          </button>
+        </div>
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 3: EMOJI EXPERTS — MAIN GAME (15 Questions, 1 per screen)
+         ========================================================= -->
+    <section class="game-screen" id="screen-game">
+      <div class="screen-content game-play-content">
+        
+        <!-- Header Bar: Question Counter & Live Score -->
+        <header class="game-top-bar">
+          <div class="game-title-pill">
+            <span class="pill-star">⭐</span>
+            <span class="pill-title">EMOJI EXPERTS</span>
           </div>
-          <span class="arena-progress-text" id="arena-progress-text">0 / 4 Rescued</span>
-        </div>
-      </div>
 
-      <div class="arena-content-box" id="arena-content">
-        <!-- Dynamic mission step content rendered by js/missions.js -->
-      </div>
-    </section>
-
-    <!-- 4. FREE ANIMAL SANCTUARY (Explore & Learn Mode) -->
-    <section class="screen-view" id="explore-screen">
-      <div class="sanctuary-header">
-        <h2 class="sanctuary-title">🌿 Animal Sanctuary</h2>
-        <p class="sanctuary-subtitle">Explore your rescued animals! Tap any card to hear pronunciation and model sentences.</p>
-      </div>
-
-      <div class="sanctuary-grid" id="explore-grid-container">
-        <!-- Dynamic animal cards rendered by js/ui.js -->
-      </div>
-    </section>
-
-    <!-- 5. SMART REVIEW SCREEN (Adaptive Spaced Repetition) -->
-    <section class="screen-view" id="smart-review-screen">
-      <div class="review-overview-layout">
-        <div class="sanctuary-header">
-          <h2 class="sanctuary-title">🎯 Smart Review Clinic</h2>
-          <p class="sanctuary-subtitle">Personalized practice tailored to help you master tricky animal words!</p>
-        </div>
-
-        <div id="strongest-animal-banner"></div>
-
-        <h3 style="font-size: 1.3rem; font-weight: 800; margin-bottom: 12px;">Animals Needing Extra Practice:</h3>
-        <div class="review-focus-list" id="review-focus-list">
-          <!-- Rendered dynamically -->
-        </div>
-
-        <button class="btn-accent btn-large" id="btn-start-smart-review" style="margin-top: 16px;">
-          <span>Start Smart Review Mission 🚀</span>
-        </button>
-      </div>
-    </section>
-
-    <!-- 6. TEACHER & PARENT DASHBOARD -->
-    <section class="screen-view" id="teacher-screen">
-      <div class="teacher-dashboard-layout">
-        <div class="teacher-header">
-          <div>
-            <h2 class="teacher-title">📊 Teacher & Parent Dashboard</h2>
-            <p style="color: var(--color-text-muted); font-weight: 700;">CEFR A1 Learning Analytics & Mastery Report</p>
+          <!-- Question Progress & Visual Bar -->
+          <div class="question-progress-wrap">
+            <span class="progress-label" id="q-counter-text">Question 1 / 15</span>
+            <div class="progress-bar-track">
+              <div class="progress-bar-fill" id="progress-fill" style="width: 6.66%;"></div>
+            </div>
           </div>
+
+          <!-- Live Star Score -->
+          <div class="score-pill" id="score-pill">
+            <span class="score-star animate-spin-slow">⭐</span>
+            <span class="score-number" id="game-score-display">0</span>
+          </div>
+        </header>
+
+        <!-- Question Prompt Area -->
+        <div class="question-header-area">
+          <div class="target-emoji-stage" id="target-emoji-container">
+            <span class="target-emoji" id="target-emoji-char">🥱</span>
+          </div>
+          <h2 class="question-prompt-text" id="question-prompt-text">WHAT'S THIS?</h2>
+        </div>
+
+        <!-- 3 Large Realistic Photograph Answer Cards -->
+        <div class="cards-grid-trio" id="photo-cards-container">
           
-          <div class="teacher-controls">
-            <button class="btn-secondary" id="btn-teacher-certificate">🎓 Print Certificate</button>
-            <button class="btn-secondary" id="btn-teacher-unlock-all">🔓 Unlock All Missions</button>
-            <button class="btn-secondary" id="btn-teacher-reset" style="color: #dc2626;">↺ Reset Data</button>
-          </div>
+          <!-- Card A -->
+          <button class="photo-card" id="card-opt-a" data-choice="A" aria-label="Choice A">
+            <div class="card-letter-badge badge-a">A</div>
+            <div class="photo-frame">
+              <img src="" alt="Option A photograph" class="photo-img" id="img-opt-a" loading="eager">
+              <div class="photo-fallback" id="fallback-opt-a">📷 Option A</div>
+            </div>
+            <div class="card-status-overlay">
+              <span class="status-icon icon-correct">⭐</span>
+              <span class="status-icon icon-wrong">❌</span>
+            </div>
+          </button>
+
+          <!-- Card B -->
+          <button class="photo-card" id="card-opt-b" data-choice="B" aria-label="Choice B">
+            <div class="card-letter-badge badge-b">B</div>
+            <div class="photo-frame">
+              <img src="" alt="Option B photograph" class="photo-img" id="img-opt-b" loading="eager">
+              <div class="photo-fallback" id="fallback-opt-b">📷 Option B</div>
+            </div>
+            <div class="card-status-overlay">
+              <span class="status-icon icon-correct">⭐</span>
+              <span class="status-icon icon-wrong">❌</span>
+            </div>
+          </button>
+
+          <!-- Card C -->
+          <button class="photo-card" id="card-opt-c" data-choice="C" aria-label="Choice C">
+            <div class="card-letter-badge badge-c">C</div>
+            <div class="photo-frame">
+              <img src="" alt="Option C photograph" class="photo-img" id="img-opt-c" loading="eager">
+              <div class="photo-fallback" id="fallback-opt-c">📷 Option C</div>
+            </div>
+            <div class="card-status-overlay">
+              <span class="status-icon icon-correct">⭐</span>
+              <span class="status-icon icon-wrong">❌</span>
+            </div>
+          </button>
+
         </div>
 
-        <!-- Summary Metric Cards -->
-        <div class="teacher-summary-cards">
-          <div class="summary-card">
-            <div class="summary-num" id="teacher-mastered-count">0</div>
-            <div class="summary-label">Words Mastered</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-num" id="teacher-learning-count">0</div>
-            <div class="summary-label">Words in Practice</div>
-          </div>
-          <div class="summary-card">
-            <div class="summary-num" id="teacher-total-rescues">0</div>
-            <div class="summary-label">Total Rescues Completed</div>
-          </div>
-        </div>
-
-        <!-- Skill Accuracy Bars -->
-        <div class="skill-radar-box">
-          <h3 style="font-size: 1.25rem; font-weight: 800; margin-bottom: 16px;">Skill Accuracy Breakdown</h3>
+        <!-- Bottom Feedback & Teacher Next Control Bar -->
+        <footer class="game-bottom-bar">
           
-          <div class="skill-bar-row">
-            <div class="skill-bar-info">
-              <span>🎧 Listening Comprehension</span>
-              <span id="teacher-listening-pct">100%</span>
-            </div>
-            <div class="skill-progress-track">
-              <div class="skill-progress-fill" id="teacher-listening-bar" style="width: 100%; background: #3b82f6;"></div>
-            </div>
+          <!-- Try Again Banner on Wrong Answer -->
+          <div class="feedback-banner banner-wrong" id="banner-wrong" aria-live="polite">
+            <span class="banner-icon">❌</span>
+            <span class="banner-msg">TRY AGAIN!</span>
           </div>
 
-          <div class="skill-bar-row">
-            <div class="skill-bar-info">
-              <span>👁️ Visual & Sight Word Matching</span>
-              <span id="teacher-matching-pct">100%</span>
-            </div>
-            <div class="skill-progress-track">
-              <div class="skill-progress-fill" id="teacher-matching-bar" style="width: 100%; background: #10b981;"></div>
-            </div>
+          <!-- Correct Answer Vocabulary Reveal Banner -->
+          <div class="feedback-banner banner-correct" id="banner-correct" aria-live="polite">
+            <span class="banner-star">⭐</span>
+            <span class="banner-emoji" id="revealed-emoji">🥱</span>
+            <span class="revealed-word" id="revealed-word-text">TIRED</span>
+            <button class="btn-pronounce" id="btn-pronounce-word" title="Listen to pronunciation">
+              <span>🔊</span>
+            </button>
+            <span class="banner-star">⭐</span>
           </div>
 
-          <div class="skill-bar-row">
-            <div class="skill-bar-info">
-              <span>🧩 Sentence Construction & Syntax</span>
-              <span id="teacher-sentence-pct">100%</span>
-            </div>
-            <div class="skill-progress-track">
-              <div class="skill-progress-fill" id="teacher-sentence-bar" style="width: 100%; background: #8b5cf6;"></div>
-            </div>
+          <!-- Teacher Controlled NEXT Button -->
+          <button class="btn-giant btn-next" id="btn-next-question" disabled>
+            <span class="btn-text">NEXT</span>
+            <span class="btn-icon">➔</span>
+          </button>
+
+        </footer>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 4: MEMORY GAME
+         ========================================================= -->
+    <section class="game-screen" id="screen-memory">
+      <div class="screen-content memory-content">
+        
+        <!-- Phase 4A: Memory Intro Transition Screen -->
+        <div class="memory-intro-view" id="memory-intro-view">
+          <div class="celebrate-badge animate-bounce">🎉</div>
+          <h1 class="memory-congrats-title">GREAT JOB!</h1>
+          <h2 class="memory-congrats-subtitle">YOU ARE EMOJI EXPERTS!</h2>
+          <div class="memory-launch-wrap">
+            <button class="btn-giant btn-memory-start animate-pulse" id="btn-start-memory-game">
+              <span class="btn-icon">🧠</span>
+              <span class="btn-text">MEMORY GAME</span>
+            </button>
           </div>
         </div>
 
-        <!-- Granular Word Mastery Table -->
-        <div class="teacher-table-wrapper">
-          <table class="teacher-vocab-table">
-            <thead>
-              <tr>
-                <th>Animal Word</th>
-                <th>Mastery State</th>
-                <th>Exposures</th>
-                <th>Correct</th>
-                <th>Mistakes</th>
-                <th>Accuracy</th>
-              </tr>
-            </thead>
-            <tbody id="teacher-vocab-tbody">
-              <!-- Rendered dynamically by js/ui.js -->
-            </tbody>
-          </table>
+        <!-- Phase 4B: Active Memory Play Area -->
+        <div class="memory-play-view hidden" id="memory-play-view">
+          
+          <!-- Header -->
+          <div class="memory-top-bar">
+            <div class="memory-badge-pill">
+              <span>🧠 MEMORY GAME</span>
+            </div>
+            <div class="memory-round-pill" id="memory-round-indicator">
+              Round 1 / 4
+            </div>
+          </div>
+
+          <!-- Memorization Countdown State -->
+          <div class="memory-memorize-phase" id="memory-memorize-phase">
+            <h2 class="memory-instruction-title">👀 REMEMBER THE EMOJIS!</h2>
+            
+            <div class="memory-timer-container">
+              <div class="memory-timer-bar" id="memory-timer-bar"></div>
+              <span class="memory-countdown-num" id="memory-countdown-num">5</span>
+            </div>
+
+            <div class="memory-grid-display" id="memory-grid-container">
+              <!-- Rendered via JS dynamically -->
+            </div>
+          </div>
+
+          <!-- Question & Guess Phase -->
+          <div class="memory-question-phase hidden" id="memory-question-phase">
+            <div class="memory-mystery-box animate-pop">
+              <div class="mystery-badge">❓</div>
+              <h2 class="memory-query-text" id="memory-query-text">WAS THERE SUSHI?</h2>
+              <div class="memory-query-emoji" id="memory-query-emoji">🍣</div>
+            </div>
+
+            <!-- Two Huge Smart Board YES / NO Buttons -->
+            <div class="yes-no-choice-grid">
+              <button class="btn-giant btn-yes" id="btn-mem-yes" data-answer="yes">
+                <span class="btn-icon">👍</span>
+                <span class="btn-text">YES</span>
+              </button>
+              <button class="btn-giant btn-no" id="btn-mem-no" data-answer="no">
+                <span class="btn-icon">👎</span>
+                <span class="btn-text">NO</span>
+              </button>
+            </div>
+
+            <!-- Memory Result Feedback Banner -->
+            <div class="memory-feedback-box hidden" id="memory-feedback-box">
+              <div class="mem-feedback-text" id="mem-feedback-text">CORRECT! ⭐</div>
+              <button class="btn-giant btn-next animate-pulse" id="btn-memory-next">
+                <span>NEXT ➔</span>
+              </button>
+            </div>
+          </div>
+
         </div>
 
       </div>
     </section>
 
-  </main>
-
-  <!-- =========================================================
-       MODALS & POPUPS
-       ========================================================= -->
-
-  <!-- Mission Complete Modal -->
-  <div class="modal-overlay" id="mission-complete-modal">
-    <div class="modal-dialog">
-      <div class="modal-star-trio">⭐⭐⭐</div>
-      <h3 class="modal-title" id="complete-modal-title">Mission Complete! 🎉</h3>
-      <p class="modal-praise" id="complete-modal-praise">You rescued all the animals with amazing English skills!</p>
-      
-      <div class="modal-strongest-box" id="complete-modal-strong">
-        Strongest Animal: Lion 🐾
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn-secondary" id="btn-complete-map">Safari Map 🗺️</button>
-        <button class="btn-primary" id="btn-complete-next">Next Mission ➔</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Badge Earned Modal -->
-  <div class="modal-overlay" id="badge-earned-modal">
-    <div class="modal-dialog">
-      <div class="badge-modal-icon" id="badge-modal-icon">🏅</div>
-      <h3 class="modal-title" id="badge-modal-title">New Badge Earned!</h3>
-      <p class="modal-praise" id="badge-modal-desc">You are a fantastic learner!</p>
-      <div class="modal-actions">
-        <button class="btn-primary" id="btn-badge-ok">Awesome! ⭐</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Badges Drawer Modal -->
-  <div class="modal-overlay" id="badges-drawer-modal">
-    <div class="modal-dialog" style="max-width: 650px;">
-      <h3 class="modal-title">🏅 Ranger Trophy Room</h3>
-      <p class="modal-praise">Collect all 6 badges as you advance through the Academy!</p>
-      
-      <div class="badges-grid-container" id="badges-grid-container">
-        <!-- Rendered dynamically by js/app.js -->
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn-primary" id="btn-badges-drawer-close">Back to Adventure</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Teacher Gate Modal (Parental / Teacher Arithmetic Challenge) -->
-  <div class="modal-overlay" id="teacher-gate-modal">
-    <div class="modal-dialog" style="max-width: 400px;">
-      <div style="font-size: 3rem; margin-bottom: 8px;">🔒</div>
-      <h3 class="modal-title">Teacher Area</h3>
-      <p class="modal-praise">Please solve this quick problem to continue:</p>
-      
-      <div style="font-size: 2rem; font-weight: 900; color: var(--color-primary-dark); margin-bottom: 16px;" id="gate-math-question">
-        4 + 3 = ?
-      </div>
-
-      <input type="number" id="gate-math-answer" placeholder="Answer" style="font-size: 1.4rem; font-family: var(--font-main); font-weight: 800; padding: 10px; width: 120px; text-align: center; border: 3px solid #86efac; border-radius: var(--radius-md); margin-bottom: 12px;">
-
-      <div id="gate-error-msg" style="color: #dc2626; font-weight: 700; font-size: 0.9rem; margin-bottom: 12px; display: none;">
-        Incorrect answer. Please try again!
-      </div>
-
-      <div class="modal-actions">
-        <button class="btn-secondary" id="btn-gate-cancel">Cancel</button>
-        <button class="btn-primary" id="btn-gate-submit">Enter Dashboard</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Printable Rescuer Certificate Modal -->
-  <div class="modal-overlay" id="certificate-modal">
-    <div class="modal-dialog" style="max-width: 700px;">
-      <div class="certificate-paper">
-        <div style="font-size: 3rem;">🏅</div>
-        <h2 class="cert-header">ANIMAL RESCUE ACADEMY</h2>
-        <div class="cert-sub">CERTIFICATE OF ENGLISH ACHIEVEMENT</div>
+    <!-- =========================================================
+         STATE 5: GUESS WHAT I LIKE (Classroom Interactive Game)
+         ========================================================= -->
+    <section class="game-screen" id="screen-guess">
+      <div class="screen-content guess-content">
         
-        <p style="font-size: 1rem; color: #78350f; margin-bottom: 12px;">This certifies that</p>
-        <div class="cert-name">Junior Ranger Rescuer</div>
-        
-        <p class="cert-body">
-          Has demonstrated outstanding English vocabulary recognition, listening accuracy, and sentence building skills on the Safari Reserve!
-        </p>
+        <header class="guess-top-bar">
+          <div class="guess-title-pill">
+            <span>🕵️ GUESS WHAT I LIKE?</span>
+          </div>
+          <div class="guess-step-pill" id="guess-step-indicator">
+            Emoji 1 / 6
+          </div>
+        </header>
 
-        <div class="cert-footer">
-          <div id="cert-rescues">0 Animals Rescued</div>
-          <div id="cert-date">August 2026</div>
-          <div id="cert-stars">0 Stars Earned</div>
+        <div class="guess-center-stage animate-pop">
+          
+          <div class="guess-teacher-callout">
+            <span>Classroom Interactive: Tap YES or NO!</span>
+          </div>
+
+          <!-- Huge Target Emoji -->
+          <div class="guess-emoji-bubble animate-float" id="guess-target-emoji">
+            ⚽
+          </div>
+
+          <!-- Prompt Question -->
+          <h2 class="guess-question-title" id="guess-question-title">
+            DO YOU LIKE FOOTBALL?
+          </h2>
+
+          <!-- Massive YES / NO Buttons -->
+          <div class="yes-no-choice-grid">
+            <button class="btn-giant btn-yes animate-scale-click" id="btn-guess-yes">
+              <span class="btn-text">YES</span>
+              <span class="btn-icon">👍</span>
+            </button>
+            <button class="btn-giant btn-no animate-scale-click" id="btn-guess-no">
+              <span class="btn-text">NO</span>
+              <span class="btn-icon">👎</span>
+            </button>
+          </div>
+
+          <!-- Teacher Step Advance Button -->
+          <div class="guess-controls-row">
+            <button class="btn-giant btn-next hidden" id="btn-guess-next">
+              <span class="btn-text">NEXT EMOJI</span>
+              <span class="btn-icon">➔</span>
+            </button>
+            <button class="btn-giant btn-finish hidden" id="btn-guess-finish">
+              <span class="btn-text">FINISH MISSION!</span>
+              <span class="btn-icon">🎉</span>
+            </button>
+          </div>
+
         </div>
-      </div>
 
-      <div class="modal-actions">
-        <button class="btn-secondary" id="btn-cert-close">Close</button>
-        <button class="btn-primary" id="btn-cert-print">🖨️ Print Certificate</button>
       </div>
-    </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 6: FINAL TRANSITION & PROFILE HANDOFF
+         ========================================================= -->
+    <section class="game-screen" id="screen-profile">
+      <div class="screen-content profile-content animate-pop">
+        
+        <div class="celebrate-trophy-ring animate-bounce">
+          <span>🎉</span>
+        </div>
+
+        <h1 class="final-huge-title">YOU DID IT!</h1>
+        <h2 class="final-huge-subtitle">⭐ YOU ARE EMOJI EXPERTS! ⭐</h2>
+
+        <!-- Score & Achievement Summary -->
+        <div class="final-score-card">
+          <div class="stars-awarded">⭐⭐⭐</div>
+          <div class="final-score-text">Total Score: <strong id="final-score-num">15</strong> Stars!</div>
+        </div>
+
+        <!-- Classroom Worksheet Transition Callout -->
+        <div class="profile-worksheet-banner animate-pulse">
+          <div class="worksheet-icon">📋</div>
+          <div class="worksheet-message">
+            <h3>LET'S MAKE OUR PROFILES!</h3>
+            <p>Take out your profile worksheets & draw your favorite emojis!</p>
+          </div>
+        </div>
+
+        <!-- Play Again / Replay Button for Teacher -->
+        <div class="final-actions">
+          <button class="btn-giant btn-replay" id="btn-replay-game">
+            <span class="btn-icon">🔄</span>
+            <span class="btn-text">PLAY AGAIN</span>
+          </button>
+        </div>
+
+      </div>
+    </section>
+
   </div>
 
-  <!-- =========================================================
-       SCRIPTS (Modular Pure Vanilla JS Architecture)
-       ========================================================= -->
-  <script src="js/data.js"></script>
-  <script src="js/audio.js"></script>
-  <script src="js/mastery.js"></script>
-  <script src="js/missions.js"></script>
-  <script src="js/ui.js"></script>
-  <script src="js/app.js"></script>
-
+  <!-- Audio Synthesizer & Game Scripts -->
+  <script src="app.js"></script>
 </body>
 </html>
