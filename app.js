@@ -840,1159 +840,581 @@
   window.MONOPOLY_BOARD_TILES = MONOPOLY_BOARD_TILES;
 
   // =========================================================================
-  // 4. STRUCTURED PREDEFINED QUESTION BANK FOR EMOJI MONOPOLY (67 QUESTIONS)
-  // Strict Schema: id, category, categoryName, categoryIcon, visualType, visual,
-  // question, options (exactly 3, exactly 1 correct), difficulty, time, spokenWord.
-  // NO BROKEN QUESTIONS, NO MISSING VISUALS, NO "❓" FALLBACKS.
+  // 4. FIXED PREDEFINED QUESTION BANK FOR EMOJI MONOPOLY (35 FIXED QUESTIONS)
+  // Each question has:
+  // - exactly ONE visible emoji
+  // - exactly ONE question prompt
+  // - exactly THREE answer choices
+  // - exactly ONE correct answer
+  // NO DYNAMIC COMBINATIONS, NO "❓" PLACEHOLDERS.
   // =========================================================================
   const MONOPOLY_QUESTION_BANK = [
-    // --- CATEGORY: ACTIVITIES (19 Questions) ---
+    // --- 1. FOOD QUESTIONS ---
     {
-      id: 101,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🎮',
-      question: 'What is this?',
-      options: [
-        { text: 'PLAY GAMES', correct: true },
-        { text: 'READ BOOKS', correct: false },
-        { text: 'SWIM', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'play games'
-    },
-    {
-      id: 102,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🎧',
-      question: 'What is this?',
-      options: [
-        { text: 'LISTEN TO MUSIC', correct: true },
-        { text: 'WATCH VIDEOS', correct: false },
-        { text: 'SING', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'listen to music'
-    },
-    {
-      id: 103,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '📱',
-      question: 'What is this?',
-      options: [
-        { text: 'WATCH VIDEOS', correct: true },
-        { text: 'PLAY GAMES', correct: false },
-        { text: 'TAKE PHOTOS', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'watch videos'
-    },
-    {
-      id: 104,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '📷',
-      question: 'What is this?',
-      options: [
-        { text: 'TAKE PHOTOS', correct: true },
-        { text: 'DRAW', correct: false },
-        { text: 'DANCE', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'take photos'
-    },
-    {
-      id: 105,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🎨',
-      question: 'What is this?',
-      options: [
-        { text: 'DRAW', correct: true },
-        { text: 'DANCE', correct: false },
-        { text: 'BUILD THINGS', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'draw'
-    },
-    {
-      id: 106,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '⚽',
-      question: 'What is this?',
-      options: [
-        { text: 'PLAY FOOTBALL', correct: true },
-        { text: 'PLAY BASKETBALL', correct: false },
-        { text: 'SKATEBOARD', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'play football'
-    },
-    {
-      id: 107,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🏀',
-      question: 'What is this?',
-      options: [
-        { text: 'PLAY BASKETBALL', correct: true },
-        { text: 'PLAY FOOTBALL', correct: false },
-        { text: 'SWIM', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'play basketball'
-    },
-    {
-      id: 108,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🛹',
-      question: 'What is this?',
-      options: [
-        { text: 'SKATEBOARD', correct: true },
-        { text: 'RIDE A BIKE', correct: false },
-        { text: 'CAMP', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'skateboard'
-    },
-    {
-      id: 109,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🚲',
-      question: 'What is this?',
-      options: [
-        { text: 'RIDE A BIKE', correct: true },
-        { text: 'SKATEBOARD', correct: false },
-        { text: 'SWIM', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'ride a bike'
-    },
-    {
-      id: 110,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '📖',
-      question: 'What is this?',
-      options: [
-        { text: 'READ BOOKS', correct: true },
-        { text: 'PLAY GAMES', correct: false },
-        { text: 'DRAW', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'read books'
-    },
-    {
-      id: 111,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '💃',
-      question: 'What is this?',
-      options: [
-        { text: 'DANCE', correct: true },
-        { text: 'SING', correct: false },
-        { text: 'SWIM', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'dance'
-    },
-    {
-      id: 112,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🏊',
-      question: 'What is this?',
-      options: [
-        { text: 'SWIM', correct: true },
-        { text: 'CAMP', correct: false },
-        { text: 'DANCE', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'swim'
-    },
-    {
-      id: 113,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🧱',
-      question: 'What is this?',
-      options: [
-        { text: 'BUILD THINGS', correct: true },
-        { text: 'DO PUZZLES', correct: false },
-        { text: 'DRAW', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'build things'
-    },
-    {
-      id: 114,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🧩',
-      question: 'What is this?',
-      options: [
-        { text: 'DO PUZZLES', correct: true },
-        { text: 'BUILD THINGS', correct: false },
-        { text: 'READ BOOKS', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'do puzzles'
-    },
-    {
-      id: 115,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🎤',
-      question: 'What is this?',
-      options: [
-        { text: 'SING', correct: true },
-        { text: 'LISTEN TO MUSIC', correct: false },
-        { text: 'DANCE', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'sing'
-    },
-    {
-      id: 116,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🏕️',
-      question: 'What is this?',
-      options: [
-        { text: 'CAMP', correct: true },
-        { text: 'SWIM', correct: false },
-        { text: 'FLY A DRONE', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'camp'
-    },
-    {
-      id: 117,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🚁',
-      question: 'What is this?',
-      options: [
-        { text: 'FLY A DRONE', correct: true },
-        { text: 'EXPLORE SPACE', correct: false },
-        { text: 'RIDE A BIKE', correct: false }
-      ],
-      difficulty: 'hard',
-      time: 10,
-      spokenWord: 'fly a drone'
-    },
-    {
-      id: 118,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '🪐',
-      question: 'What is this?',
-      options: [
-        { text: 'EXPLORE SPACE', correct: true },
-        { text: 'DAYDREAM', correct: false },
-        { text: 'CAMP', correct: false }
-      ],
-      difficulty: 'hard',
-      time: 10,
-      spokenWord: 'explore space'
-    },
-    {
-      id: 119,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'emoji',
-      visual: '☁️',
-      question: 'What is this?',
-      options: [
-        { text: 'DAYDREAM', correct: true },
-        { text: 'SLEEP', correct: false },
-        { text: 'DO PUZZLES', correct: false }
-      ],
-      difficulty: 'hard',
-      time: 10,
-      spokenWord: 'daydream'
-    },
-
-    // --- CATEGORY: FOOD (20 Questions) ---
-    {
-      id: 201,
+      id: 1,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍎',
+      visual: '🥑',
       question: 'What is this?',
       options: [
-        { text: 'APPLE', correct: true },
-        { text: 'BANANA', correct: false },
-        { text: 'STRAWBERRY', correct: false }
+        { text: 'apple', correct: false },
+        { text: 'avocado', correct: true },
+        { text: 'banana', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'apple'
+      spokenWord: 'avocado'
     },
     {
-      id: 202,
+      id: 2,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍌',
+      visual: '🍕',
       question: 'What is this?',
       options: [
-        { text: 'BANANA', correct: true },
-        { text: 'APPLE', correct: false },
-        { text: 'ICE CREAM', correct: false }
+        { text: 'pizza', correct: true },
+        { text: 'sandwich', correct: false },
+        { text: 'soup', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'banana'
+      spokenWord: 'pizza'
     },
     {
-      id: 203,
+      id: 3,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍓',
-      question: 'What is this?',
-      options: [
-        { text: 'STRAWBERRY', correct: true },
-        { text: 'BLUEBERRIES', correct: false },
-        { text: 'WATERMELON', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'strawberry'
-    },
-    {
-      id: 204,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🫐',
-      question: 'What is this?',
-      options: [
-        { text: 'BLUEBERRIES', correct: true },
-        { text: 'STRAWBERRY', correct: false },
-        { text: 'TOMATOES', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'blueberries'
-    },
-    {
-      id: 205,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍉',
-      question: 'What is this?',
-      options: [
-        { text: 'WATERMELON', correct: true },
-        { text: 'APPLE', correct: false },
-        { text: 'CARROT', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'watermelon'
-    },
-    {
-      id: 206,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥕',
-      question: 'What is this?',
-      options: [
-        { text: 'CARROT', correct: true },
-        { text: 'CUCUMBER', correct: false },
-        { text: 'BROCCOLI', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'carrot'
-    },
-    {
-      id: 207,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
       visual: '🥦',
       question: 'What is this?',
       options: [
-        { text: 'BROCCOLI', correct: true },
-        { text: 'AVOCADO', correct: false },
-        { text: 'PIZZA', correct: false }
+        { text: 'carrot', correct: false },
+        { text: 'broccoli', correct: true },
+        { text: 'banana', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'broccoli'
     },
     {
-      id: 208,
+      id: 4,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥒',
+      visual: '🍎',
       question: 'What is this?',
       options: [
-        { text: 'CUCUMBER', correct: true },
-        { text: 'CARROT', correct: false },
-        { text: 'SALAD', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'cucumber'
-    },
-    {
-      id: 209,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍅',
-      question: 'What is this?',
-      options: [
-        { text: 'TOMATOES', correct: true },
-        { text: 'APPLE', correct: false },
-        { text: 'SOUP', correct: false }
+        { text: 'apple', correct: true },
+        { text: 'watermelon', correct: false },
+        { text: 'strawberry', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'tomatoes'
+      spokenWord: 'apple'
     },
     {
-      id: 210,
+      id: 5,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥑',
+      visual: '🍌',
       question: 'What is this?',
       options: [
-        { text: 'AVOCADO', correct: true },
-        { text: 'APPLE', correct: false },
-        { text: 'KIWI', correct: false }
+        { text: 'banana', correct: true },
+        { text: 'avocado', correct: false },
+        { text: 'ice cream', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'avocado'
+      spokenWord: 'banana'
     },
     {
-      id: 211,
+      id: 6,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥗',
+      visual: '🍓',
       question: 'What is this?',
       options: [
-        { text: 'SALAD', correct: true },
-        { text: 'SANDWICH', correct: false },
-        { text: 'SOUP', correct: false }
+        { text: 'blueberries', correct: false },
+        { text: 'strawberry', correct: true },
+        { text: 'tomatoes', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'salad'
+      spokenWord: 'strawberry'
     },
     {
-      id: 212,
+      id: 7,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥛',
+      visual: '🍦',
       question: 'What is this?',
       options: [
-        { text: 'YOGURT', correct: true },
-        { text: 'OATMEAL', correct: false },
-        { text: 'ICE CREAM', correct: false }
+        { text: 'ice cream', correct: true },
+        { text: 'yogurt', correct: false },
+        { text: 'sandwich', correct: false }
       ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'yogurt'
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'ice cream'
     },
     {
-      id: 213,
+      id: 8,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥣',
-      question: 'What is this?',
-      options: [
-        { text: 'OATMEAL', correct: true },
-        { text: 'SOUP', correct: false },
-        { text: 'YOGURT', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'oatmeal'
-    },
-    {
-      id: 214,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
       visual: '🥪',
       question: 'What is this?',
       options: [
-        { text: 'SANDWICH', correct: true },
-        { text: 'PIZZA', correct: false },
-        { text: 'GRILLED CHICKEN', correct: false }
+        { text: 'pizza', correct: false },
+        { text: 'salad', correct: false },
+        { text: 'sandwich', correct: true }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'sandwich'
     },
     {
-      id: 215,
+      id: 9,
       category: 'food',
       categoryName: 'FOOD',
       categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍗',
+      visual: '🥗',
       question: 'What is this?',
       options: [
-        { text: 'GRILLED CHICKEN', correct: true },
-        { text: 'SALMON', correct: false },
-        { text: 'SANDWICH', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'grilled chicken'
-    },
-    {
-      id: 216,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍲',
-      question: 'What is this?',
-      options: [
-        { text: 'SOUP', correct: true },
-        { text: 'SALAD', correct: false },
-        { text: 'OATMEAL', correct: false }
+        { text: 'salad', correct: true },
+        { text: 'soup', correct: false },
+        { text: 'oatmeal', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'soup'
-    },
-    {
-      id: 217,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🐟',
-      question: 'What is this?',
-      options: [
-        { text: 'SALMON', correct: true },
-        { text: 'GRILLED CHICKEN', correct: false },
-        { text: 'NUTS', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'salmon'
-    },
-    {
-      id: 218,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🥜',
-      question: 'What is this?',
-      options: [
-        { text: 'NUTS', correct: true },
-        { text: 'BROCCOLI', correct: false },
-        { text: 'BLUEBERRIES', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'nuts'
-    },
-    {
-      id: 219,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍕',
-      question: 'What is this?',
-      options: [
-        { text: 'PIZZA', correct: true },
-        { text: 'SANDWICH', correct: false },
-        { text: 'ICE CREAM', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'pizza'
-    },
-    {
-      id: 220,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'emoji',
-      visual: '🍦',
-      question: 'What is this?',
-      options: [
-        { text: 'ICE CREAM', correct: true },
-        { text: 'YOGURT', correct: false },
-        { text: 'BANANA', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'ice cream'
+      spokenWord: 'salad'
     },
 
-    // --- CATEGORY: COLORS (12 Questions) ---
+    // --- 2. COLOR QUESTIONS ---
     {
-      id: 301,
+      id: 10,
       category: 'colors',
       categoryName: 'COLOR',
       categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🔴',
-      question: 'What color is this?',
-      options: [
-        { text: 'RED', correct: true },
-        { text: 'BLUE', correct: false },
-        { text: 'GREEN', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'red'
-    },
-    {
-      id: 302,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🟠',
-      question: 'What color is this?',
-      options: [
-        { text: 'ORANGE', correct: true },
-        { text: 'YELLOW', correct: false },
-        { text: 'RED', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'orange'
-    },
-    {
-      id: 303,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🟡',
-      question: 'What color is this?',
-      options: [
-        { text: 'YELLOW', correct: true },
-        { text: 'ORANGE', correct: false },
-        { text: 'GREEN', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'yellow'
-    },
-    {
-      id: 304,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🟢',
-      question: 'What color is this?',
-      options: [
-        { text: 'GREEN', correct: true },
-        { text: 'BLUE', correct: false },
-        { text: 'YELLOW', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'green'
-    },
-    {
-      id: 305,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
       visual: '🔵',
       question: 'What color is this?',
       options: [
-        { text: 'BLUE', correct: true },
-        { text: 'RED', correct: false },
-        { text: 'PURPLE', correct: false }
+        { text: 'pink', correct: false },
+        { text: 'orange', correct: false },
+        { text: 'blue', correct: true }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'blue'
     },
     {
-      id: 306,
+      id: 11,
       category: 'colors',
       categoryName: 'COLOR',
       categoryIcon: '💙',
-      visualType: 'emoji',
+      visual: '🔴',
+      question: 'What color is this?',
+      options: [
+        { text: 'red', correct: true },
+        { text: 'green', correct: false },
+        { text: 'yellow', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'red'
+    },
+    {
+      id: 12,
+      category: 'colors',
+      categoryName: 'COLOR',
+      categoryIcon: '💙',
+      visual: '🟢',
+      question: 'What color is this?',
+      options: [
+        { text: 'purple', correct: false },
+        { text: 'green', correct: true },
+        { text: 'blue', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'green'
+    },
+    {
+      id: 13,
+      category: 'colors',
+      categoryName: 'COLOR',
+      categoryIcon: '💙',
+      visual: '🟡',
+      question: 'What color is this?',
+      options: [
+        { text: 'orange', correct: false },
+        { text: 'yellow', correct: true },
+        { text: 'pink', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'yellow'
+    },
+    {
+      id: 14,
+      category: 'colors',
+      categoryName: 'COLOR',
+      categoryIcon: '💙',
       visual: '🟣',
       question: 'What color is this?',
       options: [
-        { text: 'PURPLE', correct: true },
-        { text: 'BLUE', correct: false },
-        { text: 'PINK', correct: false }
+        { text: 'blue', correct: false },
+        { text: 'purple', correct: true },
+        { text: 'black', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'purple'
     },
     {
-      id: 307,
+      id: 15,
       category: 'colors',
       categoryName: 'COLOR',
       categoryIcon: '💙',
-      visualType: 'emoji',
+      visual: '🟠',
+      question: 'What color is this?',
+      options: [
+        { text: 'orange', correct: true },
+        { text: 'red', correct: false },
+        { text: 'brown', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'orange'
+    },
+    {
+      id: 16,
+      category: 'colors',
+      categoryName: 'COLOR',
+      categoryIcon: '💙',
       visual: '🩷',
       question: 'What color is this?',
       options: [
-        { text: 'PINK', correct: true },
-        { text: 'RED', correct: false },
-        { text: 'PURPLE', correct: false }
+        { text: 'pink', correct: true },
+        { text: 'purple', correct: false },
+        { text: 'teal', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'pink'
     },
     {
-      id: 308,
+      id: 17,
       category: 'colors',
       categoryName: 'COLOR',
       categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🟤',
-      question: 'What color is this?',
-      options: [
-        { text: 'BROWN', correct: true },
-        { text: 'BLACK', correct: false },
-        { text: 'GRAY', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'brown'
-    },
-    {
-      id: 309,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
       visual: '⚫',
       question: 'What color is this?',
       options: [
-        { text: 'BLACK', correct: true },
-        { text: 'WHITE', correct: false },
-        { text: 'GRAY', correct: false }
+        { text: 'white', correct: false },
+        { text: 'black', correct: true },
+        { text: 'gray', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'black'
     },
-    {
-      id: 310,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '⚪',
-      question: 'What color is this?',
-      options: [
-        { text: 'WHITE', correct: true },
-        { text: 'BLACK', correct: false },
-        { text: 'GRAY', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'white'
-    },
-    {
-      id: 311,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🩶',
-      question: 'What color is this?',
-      options: [
-        { text: 'GRAY', correct: true },
-        { text: 'BLACK', correct: false },
-        { text: 'WHITE', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'gray'
-    },
-    {
-      id: 312,
-      category: 'colors',
-      categoryName: 'COLOR',
-      categoryIcon: '💙',
-      visualType: 'emoji',
-      visual: '🩵',
-      question: 'What color is this?',
-      options: [
-        { text: 'TEAL', correct: true },
-        { text: 'BLUE', correct: false },
-        { text: 'GREEN', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'teal'
-    },
 
-    // --- CATEGORY: FEELINGS (10 Questions) ---
+    // --- 3. ACTIVITY QUESTIONS ---
     {
-      id: 401,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '🤩',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'EXCITED', correct: true },
-        { text: 'HAPPY', correct: false },
-        { text: 'NERVOUS', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'excited'
-    },
-    {
-      id: 402,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😁',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'HAPPY', correct: true },
-        { text: 'SAD', correct: false },
-        { text: 'TIRED', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'happy'
-    },
-    {
-      id: 403,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😊',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'GOOD', correct: true },
-        { text: 'OKAY', correct: false },
-        { text: 'SAD', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'good'
-    },
-    {
-      id: 404,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😐',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'OKAY', correct: true },
-        { text: 'GOOD', correct: false },
-        { text: 'EXCITED', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'okay'
-    },
-    {
-      id: 405,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '🤔',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'CURIOUS', correct: true },
-        { text: 'TIRED', correct: false },
-        { text: 'NERVOUS', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'curious'
-    },
-    {
-      id: 406,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😟',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'NERVOUS', correct: true },
-        { text: 'EXCITED', correct: false },
-        { text: 'HAPPY', correct: false }
-      ],
-      difficulty: 'medium',
-      time: 12,
-      spokenWord: 'nervous'
-    },
-    {
-      id: 407,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😢',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'SAD', correct: true },
-        { text: 'HAPPY', correct: false },
-        { text: 'GOOD', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'sad'
-    },
-    {
-      id: 408,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😫',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'DIFFICULT', correct: true },
-        { text: 'EASY', correct: false },
-        { text: 'OKAY', correct: false }
-      ],
-      difficulty: 'hard',
-      time: 10,
-      spokenWord: 'difficult'
-    },
-    {
-      id: 409,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '😭',
-      question: 'What does this person need?',
-      options: [
-        { text: 'NEED HELP', correct: true },
-        { text: 'EXCITED', correct: false },
-        { text: 'GOOD', correct: false }
-      ],
-      difficulty: 'hard',
-      time: 10,
-      spokenWord: 'need help'
-    },
-    {
-      id: 410,
-      category: 'feelings',
-      categoryName: 'FEELING',
-      categoryIcon: '💜',
-      visualType: 'emoji',
-      visual: '🥱',
-      question: 'How does this person feel?',
-      options: [
-        { text: 'TIRED', correct: true },
-        { text: 'CURIOUS', correct: false },
-        { text: 'HAPPY', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'tired'
-    },
-
-    // --- CATEGORY: REAL PHOTOS (6 Verified & Preloaded Questions) ---
-    {
-      id: 501,
+      id: 18,
       category: 'activities',
       categoryName: 'ACTIVITY',
       categoryIcon: '💚',
-      visualType: 'photo',
-      visual: 'https://images.unsplash.com/photo-1550745165-9bc0b252726f?auto=format&fit=crop&w=800&q=80',
-      question: 'What is the child doing?',
+      visual: '🎧',
+      question: 'What is this?',
       options: [
-        { text: 'PLAY GAMES', correct: true },
-        { text: 'READ BOOKS', correct: false },
-        { text: 'SWIM', correct: false }
+        { text: 'listen to music', correct: true },
+        { text: 'play football', correct: false },
+        { text: 'draw', correct: false }
       ],
-      difficulty: 'medium',
-      time: 12,
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'listen to music'
+    },
+    {
+      id: 19,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '🎮',
+      question: 'What is this?',
+      options: [
+        { text: 'read books', correct: false },
+        { text: 'play games', correct: true },
+        { text: 'swim', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
       spokenWord: 'play games'
     },
     {
-      id: 502,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'photo',
-      visual: 'https://images.unsplash.com/photo-1523049673857-eb18f1d7b578?auto=format&fit=crop&w=800&q=80',
-      question: 'What is this food?',
-      options: [
-        { text: 'AVOCADO', correct: true },
-        { text: 'KIWI', correct: false },
-        { text: 'APPLE', correct: false }
-      ],
-      difficulty: 'easy',
-      time: 15,
-      spokenWord: 'avocado'
-    },
-    {
-      id: 503,
+      id: 20,
       category: 'activities',
       categoryName: 'ACTIVITY',
       categoryIcon: '💚',
-      visualType: 'photo',
-      visual: 'https://images.unsplash.com/photo-1502744688674-c619d1586c9e?auto=format&fit=crop&w=800&q=80',
-      question: 'What is the child doing?',
+      visual: '🚲',
+      question: 'What is this?',
       options: [
-        { text: 'RIDE A BIKE', correct: true },
-        { text: 'SKATEBOARD', correct: false },
-        { text: 'PLAY FOOTBALL', correct: false }
+        { text: 'ride a bike', correct: true },
+        { text: 'skateboard', correct: false },
+        { text: 'dance', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
       spokenWord: 'ride a bike'
     },
     {
-      id: 504,
-      category: 'food',
-      categoryName: 'FOOD',
-      categoryIcon: '❤️',
-      visualType: 'photo',
-      visual: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?auto=format&fit=crop&w=800&q=80',
-      question: 'What is this food?',
+      id: 21,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '📷',
+      question: 'What is this?',
       options: [
-        { text: 'PIZZA', correct: true },
-        { text: 'SANDWICH', correct: false },
-        { text: 'PANCAKES', correct: false }
+        { text: 'take photos', correct: true },
+        { text: 'watch videos', correct: false },
+        { text: 'sing', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'pizza'
+      spokenWord: 'take photos'
     },
     {
-      id: 505,
+      id: 22,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '📖',
+      question: 'What is this?',
+      options: [
+        { text: 'draw', correct: false },
+        { text: 'read books', correct: true },
+        { text: 'camp', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'read books'
+    },
+    {
+      id: 23,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '🎨',
+      question: 'What is this?',
+      options: [
+        { text: 'dance', correct: false },
+        { text: 'draw', correct: true },
+        { text: 'swim', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'draw'
+    },
+    {
+      id: 24,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '⚽',
+      question: 'What is this?',
+      options: [
+        { text: 'play football', correct: true },
+        { text: 'play basketball', correct: false },
+        { text: 'skateboard', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'play football'
+    },
+    {
+      id: 25,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '🏊',
+      question: 'What is this?',
+      options: [
+        { text: 'swim', correct: true },
+        { text: 'camp', correct: false },
+        { text: 'ride a bike', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'swim'
+    },
+    {
+      id: 26,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '🎤',
+      question: 'What is this?',
+      options: [
+        { text: 'listen to music', correct: false },
+        { text: 'sing', correct: true },
+        { text: 'play games', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'sing'
+    },
+    {
+      id: 27,
+      category: 'activities',
+      categoryName: 'ACTIVITY',
+      categoryIcon: '💚',
+      visual: '🧩',
+      question: 'What is this?',
+      options: [
+        { text: 'build things', correct: false },
+        { text: 'do puzzles', correct: true },
+        { text: 'take photos', correct: false }
+      ],
+      difficulty: 'medium',
+      time: 12,
+      spokenWord: 'do puzzles'
+    },
+
+    // --- 4. FEELINGS QUESTIONS ---
+    {
+      id: 28,
       category: 'feelings',
       categoryName: 'FEELING',
       categoryIcon: '💜',
-      visualType: 'photo',
-      visual: 'https://images.unsplash.com/photo-1516627145497-ae6968895b74?auto=format&fit=crop&w=800&q=80',
-      question: 'How does the child feel?',
+      visual: '🤩',
+      question: 'How does this person feel?',
       options: [
-        { text: 'CURIOUS', correct: true },
-        { text: 'SAD', correct: false },
-        { text: 'TIRED', correct: false }
+        { text: 'excited', correct: true },
+        { text: 'tired', correct: false },
+        { text: 'sad', correct: false }
+      ],
+      difficulty: 'medium',
+      time: 12,
+      spokenWord: 'excited'
+    },
+    {
+      id: 29,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '😁',
+      question: 'How does this person feel?',
+      options: [
+        { text: 'happy', correct: true },
+        { text: 'nervous', correct: false },
+        { text: 'tired', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'happy'
+    },
+    {
+      id: 30,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '🤔',
+      question: 'How does this person feel?',
+      options: [
+        { text: 'curious', correct: true },
+        { text: 'excited', correct: false },
+        { text: 'sad', correct: false }
       ],
       difficulty: 'medium',
       time: 12,
       spokenWord: 'curious'
     },
     {
-      id: 506,
-      category: 'activities',
-      categoryName: 'ACTIVITY',
-      categoryIcon: '💚',
-      visualType: 'photo',
-      visual: 'https://images.unsplash.com/photo-1503676260728-1c00da094a0b?auto=format&fit=crop&w=800&q=80',
-      question: 'What is the child doing?',
+      id: 31,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '😟',
+      question: 'How does this person feel?',
       options: [
-        { text: 'READ BOOKS', correct: true },
-        { text: 'PLAY GAMES', correct: false },
-        { text: 'DANCE', correct: false }
+        { text: 'happy', correct: false },
+        { text: 'nervous', correct: true },
+        { text: 'good', correct: false }
+      ],
+      difficulty: 'medium',
+      time: 12,
+      spokenWord: 'nervous'
+    },
+    {
+      id: 32,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '😢',
+      question: 'How does this person feel?',
+      options: [
+        { text: 'sad', correct: true },
+        { text: 'happy', correct: false },
+        { text: 'okay', correct: false }
       ],
       difficulty: 'easy',
       time: 15,
-      spokenWord: 'read books'
+      spokenWord: 'sad'
+    },
+    {
+      id: 33,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '🥱',
+      question: 'How does this person feel?',
+      options: [
+        { text: 'curious', correct: false },
+        { text: 'tired', correct: true },
+        { text: 'excited', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'tired'
+    },
+    {
+      id: 34,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '😊',
+      question: 'How does this person feel?',
+      options: [
+        { text: 'good', correct: true },
+        { text: 'sad', correct: false },
+        { text: 'nervous', correct: false }
+      ],
+      difficulty: 'easy',
+      time: 15,
+      spokenWord: 'good'
+    },
+    {
+      id: 35,
+      category: 'feelings',
+      categoryName: 'FEELING',
+      categoryIcon: '💜',
+      visual: '😭',
+      question: 'What does this person need?',
+      options: [
+        { text: 'need help', correct: true },
+        { text: 'good', correct: false },
+        { text: 'happy', correct: false }
+      ],
+      difficulty: 'hard',
+      time: 10,
+      spokenWord: 'need help'
     }
   ];
 
@@ -2002,24 +1424,24 @@
    * Strict Validation Helper:
    * A question is ONLY valid if:
    * 1. visual exists, non-empty, and NOT a fallback ("?", "❓", "undefined", "null")
-   * 2. visualType is 'emoji' or 'photo'
-   * 3. question prompt exists and is non-empty
-   * 4. options has exactly 3 non-empty items
-   * 5. exactly ONE option has correct === true
+   * 2. question prompt exists and is non-empty
+   * 3. options has exactly 3 non-empty items
+   * 4. exactly ONE option has correct === true
    */
   function validateQuestion(q) {
     if (!q || typeof q !== 'object') return false;
     if (!q.id || typeof q.category !== 'string' || !q.categoryIcon || !q.categoryName) return false;
     if (!q.visual || typeof q.visual !== 'string' || q.visual.trim() === '') return false;
     if (q.visual === '?' || q.visual === '❓' || q.visual === 'null' || q.visual === 'undefined') return false;
-    if (q.visualType !== 'emoji' && q.visualType !== 'photo') return false;
     if (!q.question || typeof q.question !== 'string' || q.question.trim() === '') return false;
     if (!Array.isArray(q.options) || q.options.length !== 3) return false;
 
     let correctCount = 0;
     for (const opt of q.options) {
-      if (!opt || typeof opt.text !== 'string' || opt.text.trim() === '') return false;
-      if (opt.correct === true) correctCount++;
+      if (!opt) return false;
+      const txt = opt.text || opt.label;
+      if (!txt || typeof txt !== 'string' || txt.trim() === '') return false;
+      if (opt.correct === true || opt.isCorrect === true) correctCount++;
     }
     if (correctCount !== 1) return false;
 
@@ -2462,9 +1884,9 @@
       const teamName = this.activeTeam === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
       const teamDot = this.activeTeam === 'blue' ? '🔵' : '🔴';
 
-      // Pick a verified valid question from the question bank
+      // Pick a verified valid question from the fixed question bank
       this.currentQuestion = this.getNextValidQuestion();
-      this.renderQuestionData(this.currentQuestion, `${teamDot} ${teamName}: ANSWER TO EARN ROLL!`);
+      this.renderQuestionData(this.currentQuestion);
 
       // Timer scaling: Easy = 15s, Medium = 12s, Hard = 10s
       const duration = this.currentQuestion.time || 12;
@@ -2472,8 +1894,8 @@
     }
 
     /**
-     * Retrieves a strictly validated question from the question bank.
-     * Randomizes option order and sets explicit 'A', 'B', 'C' positions.
+     * Retrieves a strictly validated question from the fixed predefined bank.
+     * Randomizes ONLY question order and ONLY option positions (A, B, C).
      */
     getNextValidQuestion(forcedCategory = null, forcedDiff = null) {
       let pool = MONOPOLY_QUESTION_BANK.filter(q => validateQuestion(q));
@@ -2487,10 +1909,10 @@
         if (diffPool.length > 0) pool = diffPool;
       }
 
-      // Pick question from pool
+      // Randomize ONLY question order
       const rawQ = pool[Math.floor(Math.random() * pool.length)] || MONOPOLY_QUESTION_BANK[0];
 
-      // Shuffle options and assign A, B, C positions
+      // Randomize ONLY the 3 option positions
       const shuffledOptions = [...rawQ.options].sort(() => 0.5 - Math.random());
       const correctIndex = shuffledOptions.findIndex(o => o.correct === true);
       const correctChoiceLetter = ['A', 'B', 'C'][correctIndex];
@@ -2500,13 +1922,12 @@
         category: rawQ.category,
         categoryName: rawQ.categoryName,
         categoryIcon: rawQ.categoryIcon,
-        visualType: rawQ.visualType,
         visual: rawQ.visual,
         question: rawQ.question,
         options: shuffledOptions.map((opt, i) => ({
           letter: ['A', 'B', 'C'][i],
-          label: opt.text.toUpperCase(),
-          isCorrect: opt.correct === true
+          text: opt.text.toUpperCase(),
+          correct: opt.correct === true
         })),
         correctChoice: correctChoiceLetter,
         difficulty: rawQ.difficulty,
@@ -2538,30 +1959,17 @@
         this.qDiffBadge.textContent = `🟢 EASY (${q.time}s) (+1 ⭐)`;
       }
 
-      // Visual rendering: Photo or Emoji (STRICTLY NEVER '?' or '❓')
-      if (q.visualType === 'photo' && q.visual && q.visual.startsWith('http')) {
-        this.qEmoji.classList.add('hidden');
-        this.qPhoto.classList.remove('hidden');
-        this.qPhoto.src = q.visual;
-        this.qPhoto.onerror = () => {
-          // If image fails to load, immediately switch to emoji
-          this.qPhoto.classList.add('hidden');
-          this.qEmoji.classList.remove('hidden');
-          this.qEmoji.textContent = '⭐';
-        };
-      } else {
-        this.qPhoto.classList.add('hidden');
-        this.qEmoji.classList.remove('hidden');
-        // Large verified emoji from approved vocabulary
-        this.qEmoji.textContent = q.visual;
-      }
+      // Visual rendering: Large Emoji (STRICTLY NEVER '?' or '❓')
+      this.qPhoto.classList.add('hidden');
+      this.qEmoji.classList.remove('hidden');
+      this.qEmoji.textContent = q.visual;
 
       // Render exactly 3 choices
       this.choiceButtons.forEach((btn, i) => {
         btn.disabled = false;
         btn.classList.remove('is-correct', 'is-wrong', 'is-dimmed');
         if (q.options && q.options[i]) {
-          this.choiceLabels[i].textContent = q.options[i].label;
+          this.choiceLabels[i].textContent = q.options[i].text;
           btn.style.display = 'flex';
         } else {
           btn.style.display = 'none';
