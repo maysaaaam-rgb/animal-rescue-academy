@@ -2533,17 +2533,18 @@
       setTimeout(() => {
         this.diceBox.classList.remove('rolling');
         
-        // Orient dice face with clean 3D perspective
+        // Orient dice face directly and cleanly
         const rotations = {
-          1: 'rotateX(-12deg) rotateY(16deg)',
-          6: 'rotateX(-12deg) rotateY(196deg)',
-          3: 'rotateX(-12deg) rotateY(-74deg)',
-          4: 'rotateX(-12deg) rotateY(106deg)',
-          5: 'rotateX(-102deg) rotateY(0deg) rotateZ(16deg)',
-          2: 'rotateX(78deg) rotateY(0deg) rotateZ(-16deg)'
+          1: 'rotateX(0deg) rotateY(0deg)',
+          6: 'rotateX(0deg) rotateY(180deg)',
+          3: 'rotateX(0deg) rotateY(-90deg)',
+          4: 'rotateX(0deg) rotateY(90deg)',
+          5: 'rotateX(-90deg) rotateY(0deg)',
+          2: 'rotateX(90deg) rotateY(0deg)'
         };
-        this.diceBox.style.transform = rotations[roll] || 'rotateX(-12deg) rotateY(16deg)';
+        this.diceBox.style.transform = rotations[roll] || 'rotateX(0deg) rotateY(0deg)';
 
+        this.diceHeading.textContent = `🎲 ${this.activeTeam.toUpperCase()} ROLLED A ${roll}!`;
         this.moveToast.classList.remove('hidden');
         this.toastSteps.textContent = roll;
 
