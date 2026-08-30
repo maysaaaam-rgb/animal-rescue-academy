@@ -804,37 +804,37 @@
   const MONOPOLY_BOARD_TILES = [
     // Top Row: Spaces 0 to 7 (Moving Right ➡️)
     { index: 0, type: 'start', name: 'START', icon: '🏁', label: '+2 ⭐', arrow: '➡️', gridCol: 1, gridRow: 1 },
-    { index: 1, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'PLAY GAMES', emoji: '🎮', arrow: '➡️', difficulty: 'easy', gridCol: 2, gridRow: 1 },
-    { index: 2, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'AVOCADO', emoji: '🥑', arrow: '➡️', difficulty: 'easy', gridCol: 3, gridRow: 1 },
-    { index: 3, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'BLUE', emoji: '🔵', arrow: '➡️', difficulty: 'easy', gridCol: 4, gridRow: 1 },
-    { index: 4, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'EXCITED', emoji: '🤩', arrow: '➡️', difficulty: 'medium', gridCol: 5, gridRow: 1 },
+    { index: 1, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'ACTIVITY', targetName: 'PLAY GAMES', emoji: '🎮', arrow: '➡️', difficulty: 'easy', gridCol: 2, gridRow: 1 },
+    { index: 2, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'FOOD', targetName: 'AVOCADO', emoji: '🥑', arrow: '➡️', difficulty: 'easy', gridCol: 3, gridRow: 1 },
+    { index: 3, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'COLOR', targetName: 'BLUE', emoji: '🔵', arrow: '➡️', difficulty: 'easy', gridCol: 4, gridRow: 1 },
+    { index: 4, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'FEELING', targetName: 'EXCITED', emoji: '🤩', arrow: '➡️', difficulty: 'medium', gridCol: 5, gridRow: 1 },
     { index: 5, type: 'special_bonus', name: 'BONUS', icon: '⭐', label: '+2 Stars!', arrow: '➡️', gridCol: 6, gridRow: 1 },
-    { index: 6, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'RIDE A BIKE', emoji: '🚲', arrow: '➡️', difficulty: 'easy', gridCol: 7, gridRow: 1 },
+    { index: 6, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'ACTIVITY', targetName: 'RIDE A BIKE', emoji: '🚲', arrow: '➡️', difficulty: 'easy', gridCol: 7, gridRow: 1 },
     { index: 7, type: 'special_mystery', name: 'MYSTERY', icon: '🎁', label: 'Surprise Box!', arrow: '⬇️', gridCol: 8, gridRow: 1 },
 
     // Right Column: Spaces 8 to 12 (Moving Down ⬇️)
-    { index: 8, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'PIZZA', emoji: '🍕', arrow: '⬇️', difficulty: 'easy', gridCol: 8, gridRow: 2 },
-    { index: 9, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'RED', emoji: '🔴', arrow: '⬇️', difficulty: 'easy', gridCol: 8, gridRow: 3 },
-    { index: 10, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'CURIOUS', emoji: '🤔', arrow: '⬇️', difficulty: 'medium', gridCol: 8, gridRow: 4 },
+    { index: 8, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'FOOD', targetName: 'PIZZA', emoji: '🍕', arrow: '⬇️', difficulty: 'easy', gridCol: 8, gridRow: 2 },
+    { index: 9, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'COLOR', targetName: 'RED', emoji: '🔴', arrow: '⬇️', difficulty: 'easy', gridCol: 8, gridRow: 3 },
+    { index: 10, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'FEELING', targetName: 'CURIOUS', emoji: '🤔', arrow: '⬇️', difficulty: 'medium', gridCol: 8, gridRow: 4 },
     { index: 11, type: 'special_boost', name: 'BOOST', icon: '🚀', label: '+2 Spaces!', arrow: '⬇️', gridCol: 8, gridRow: 5 },
-    { index: 12, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'TAKE PHOTOS', emoji: '📷', arrow: '⬇️', difficulty: 'medium', gridCol: 8, gridRow: 6 },
+    { index: 12, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'ACTIVITY', targetName: 'TAKE PHOTOS', emoji: '📷', arrow: '⬇️', difficulty: 'medium', gridCol: 8, gridRow: 6 },
 
     // Bottom Row: Spaces 13 to 19 (Moving Left ⬅️)
     { index: 13, type: 'special_challenge', name: 'CHALLENGE', icon: '⚡', label: 'Hard +2 ⭐', arrow: '⬅️', gridCol: 8, gridRow: 7 },
-    { index: 14, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'STRAWBERRY', emoji: '🍓', arrow: '⬅️', difficulty: 'easy', gridCol: 7, gridRow: 7 },
-    { index: 15, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'YELLOW', emoji: '🟡', arrow: '⬅️', difficulty: 'easy', gridCol: 6, gridRow: 7 },
-    { index: 16, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'HAPPY', emoji: '😁', arrow: '⬅️', difficulty: 'easy', gridCol: 5, gridRow: 7 },
+    { index: 14, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'FOOD', targetName: 'STRAWBERRY', emoji: '🍓', arrow: '⬅️', difficulty: 'easy', gridCol: 7, gridRow: 7 },
+    { index: 15, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'COLOR', targetName: 'YELLOW', emoji: '🟡', arrow: '⬅️', difficulty: 'easy', gridCol: 6, gridRow: 7 },
+    { index: 16, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'FEELING', targetName: 'HAPPY', emoji: '😁', arrow: '⬅️', difficulty: 'easy', gridCol: 5, gridRow: 7 },
     { index: 17, type: 'special_lucky', name: 'LUCKY', icon: '🎲', label: 'Roll Again!', arrow: '⬅️', gridCol: 4, gridRow: 7 },
-    { index: 18, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'SING', emoji: '🎤', arrow: '⬅️', gridCol: 3, gridRow: 7 },
-    { index: 19, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'ICE CREAM', emoji: '🍦', arrow: '⬅️', difficulty: 'easy', gridCol: 2, gridRow: 7 },
+    { index: 18, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'ACTIVITY', targetName: 'SING', emoji: '🎤', arrow: '⬅️', gridCol: 3, gridRow: 7 },
+    { index: 19, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'FOOD', targetName: 'ICE CREAM', emoji: '🍦', arrow: '⬅️', gridCol: 2, gridRow: 7 },
 
     // Left Column: Spaces 20 to 25 (Moving Up ⬆️)
     { index: 20, type: 'special_miss', name: 'MISS A TURN', icon: '⏸️', label: 'Skip Turn', arrow: '⬆️', gridCol: 1, gridRow: 7 },
-    { index: 21, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'GREEN', emoji: '🟢', arrow: '⬆️', difficulty: 'easy', gridCol: 1, gridRow: 6 },
-    { index: 22, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'TIRED', emoji: '🥱', arrow: '⬆️', difficulty: 'medium', gridCol: 1, gridRow: 5 },
+    { index: 21, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'COLOR', targetName: 'GREEN', emoji: '🟢', arrow: '⬆️', difficulty: 'easy', gridCol: 1, gridRow: 6 },
+    { index: 22, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'FEELING', targetName: 'TIRED', emoji: '🥱', arrow: '⬆️', difficulty: 'medium', gridCol: 1, gridRow: 5 },
     { index: 23, type: 'special_trap', name: 'TRAP', icon: '🐌', label: '-2 Spaces!', arrow: '⬆️', gridCol: 1, gridRow: 4 },
     { index: 24, type: 'special_bonus', name: 'BONUS', icon: '⭐', label: '+2 Stars!', arrow: '⬆️', gridCol: 1, gridRow: 3 },
-    { index: 25, type: 'finish', name: 'FINISH', icon: '🏆', label: 'DESTINATION! (+5 ⭐)', arrow: '🏁', gridCol: 1, gridRow: 2 }
+    { index: 25, type: 'finish', name: 'FINISH', icon: '🏁', label: '🏁 DESTINATION! (+5 ⭐)', arrow: '🏁', gridCol: 1, gridRow: 2 }
   ];
 
   window.MONOPOLY_BOARD_TILES = MONOPOLY_BOARD_TILES;
@@ -892,14 +892,21 @@
       this.btnReturnMain = document.getElementById('btn-monopoly-return-main');
       this.btnResetMatch = document.getElementById('btn-monopoly-reset');
 
+      // In-Card Turn Banner Directly Above Central Question
+      this.cardTurnBanner = document.getElementById('m-card-turn-banner');
+      this.cardTurnIcon = document.getElementById('m-card-turn-icon');
+      this.cardTurnText = document.getElementById('m-card-turn-text');
+      this.cardRoundBadge = document.getElementById('m-card-round-badge');
+
       // Progress Tracker Elements
       this.trackPinBlue = document.getElementById('m-track-pin-blue');
       this.trackPinRed = document.getElementById('m-track-pin-red');
       this.trackBluePos = document.getElementById('m-track-blue-pos');
       this.trackRedPos = document.getElementById('m-track-red-pos');
 
-      // Board Grid
+      // Board Grid & Center Arena
       this.boardGrid = document.getElementById('monopoly-board-grid');
+      this.centerArena = document.getElementById('monopoly-center-arena');
 
       // Arena Stages
       this.stageQuestion = document.getElementById('m-stage-question');
@@ -1089,7 +1096,9 @@
     }
 
     renderBoard() {
-      this.boardGrid.innerHTML = '';
+      // Remove old tile elements while keeping the center arena intact!
+      this.boardGrid.querySelectorAll('.m-tile').forEach(tileElem => tileElem.remove());
+
       MONOPOLY_BOARD_TILES.forEach(tile => {
         const cell = document.createElement('div');
         cell.className = `m-tile tile-${tile.type}`;
@@ -1107,11 +1116,11 @@
         const numBadge = document.createElement('span');
         numBadge.className = 'm-tile-num-badge';
         if (tile.type === 'start') {
-          numBadge.textContent = '🏁 START';
+          numBadge.textContent = 'START';
         } else if (tile.type === 'finish') {
-          numBadge.textContent = '🏆 FINISH';
+          numBadge.textContent = 'FINISH';
         } else {
-          numBadge.textContent = `#${tile.index}`;
+          numBadge.textContent = `${tile.index}`;
         }
         headerRow.appendChild(numBadge);
 
@@ -1129,10 +1138,10 @@
         icon.textContent = tile.icon || '⭐';
         cell.appendChild(icon);
 
-        // Clean Name / Category Label
+        // Clean Category Label (e.g. ACTIVITY, FOOD, COLOR, FEELING, BONUS, etc.)
         const name = document.createElement('span');
         name.className = 'm-tile-name';
-        name.textContent = tile.name;
+        name.textContent = tile.categoryName || tile.name;
         cell.appendChild(name);
 
         // Ownership Badge
@@ -1187,14 +1196,14 @@
         this.trackPinBlue.style.left = `${(bluePos / 25) * 100}%`;
       }
       if (this.trackBluePos) {
-        this.trackBluePos.textContent = bluePos === 25 ? '🏆 FINISH' : (bluePos === 0 ? 'START' : bluePos);
+        this.trackBluePos.textContent = bluePos === 25 ? '🏁 FINISH' : (bluePos === 0 ? 'START' : bluePos);
       }
 
       if (this.trackPinRed) {
         this.trackPinRed.style.left = `${(redPos / 25) * 100}%`;
       }
       if (this.trackRedPos) {
-        this.trackRedPos.textContent = redPos === 25 ? '🏆 FINISH' : (redPos === 0 ? 'START' : redPos);
+        this.trackRedPos.textContent = redPos === 25 ? '🏁 FINISH' : (redPos === 0 ? 'START' : redPos);
       }
     }
 
@@ -1213,6 +1222,22 @@
         this.turnBanner.className = 'm-turn-banner banner-turn-red';
         this.turnIcon.textContent = '🔴';
         this.turnText.textContent = "RED TEAM'S TURN";
+      }
+
+      // Update in-card turn banner directly above central question
+      if (this.cardTurnBanner) {
+        if (this.activeTeam === 'blue') {
+          this.cardTurnBanner.className = 'm-card-turn-banner banner-turn-blue';
+          if (this.cardTurnIcon) this.cardTurnIcon.textContent = '🔵';
+          if (this.cardTurnText) this.cardTurnText.textContent = "BLUE TEAM'S TURN";
+        } else {
+          this.cardTurnBanner.className = 'm-card-turn-banner banner-turn-red';
+          if (this.cardTurnIcon) this.cardTurnIcon.textContent = '🔴';
+          if (this.cardTurnText) this.cardTurnText.textContent = "RED TEAM'S TURN";
+        }
+      }
+      if (this.cardRoundBadge) {
+        this.cardRoundBadge.textContent = `ROUND ${this.currentRound} / ${this.maxRounds}`;
       }
     }
 
