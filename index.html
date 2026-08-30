@@ -3,9 +3,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>⭐ EMOJI EXPERTS ⭐ — Classroom Smart Board Game</title>
+  <title>⭐ EMOJI EXPERTS ⭐ — All About Me Classroom Game</title>
   
-  <!-- High-legibility Google Fonts for young learners -->
+  <!-- High-legibility Google Fonts for Grade 3 learners -->
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700;800&family=Nunito:wght@700;800;900;1000&display=swap" rel="stylesheet">
@@ -19,17 +19,17 @@
 
   <!-- Floating Background Ambient Emojis -->
   <div class="ambient-background" id="ambient-bg" aria-hidden="true">
-    <span class="bubble bubble-1">⭐</span>
+    <span class="bubble bubble-1">🎮</span>
     <span class="bubble bubble-2">🥑</span>
     <span class="bubble bubble-3">🤩</span>
-    <span class="bubble bubble-4">🍣</span>
-    <span class="bubble bubble-5">🥋</span>
-    <span class="bubble bubble-6">🥨</span>
-    <span class="bubble bubble-7">🚀</span>
-    <span class="bubble bubble-8">🎉</span>
+    <span class="bubble bubble-4">🍕</span>
+    <span class="bubble bubble-5">🎨</span>
+    <span class="bubble bubble-6">🚲</span>
+    <span class="bubble bubble-7">🍓</span>
+    <span class="bubble bubble-8">⭐</span>
   </div>
 
-  <!-- Smart Board Teacher Utility Controls (Always accessible in top corner) -->
+  <!-- Smart Board Teacher Utility Controls (Top Right) -->
   <aside class="board-top-controls">
     <button class="icon-tool-btn" id="btn-sound-toggle" title="Toggle Sound / Voice" aria-label="Toggle Sound">
       <span id="sound-icon">🔊</span>
@@ -61,6 +61,10 @@
         </h1>
         
         <h2 class="game-subtitle">HELP THE TEACHER!</h2>
+
+        <div class="profile-preview-badge">
+          <span>📝 ALL ABOUT ME! PROFILE GAME</span>
+        </div>
         
         <div class="start-btn-wrapper">
           <button class="btn-giant btn-play-primary animate-pulse" id="btn-start-play">
@@ -69,7 +73,7 @@
           </button>
         </div>
 
-        <div class="grade-tag">Grade 3 A1+ • Classroom Smart Board Game</div>
+        <div class="grade-tag">Grade 3 A1+ • Official Profile Vocabulary</div>
       </div>
     </section>
 
@@ -84,7 +88,7 @@
         </div>
 
         <div class="teacher-prompt-box">
-          <p class="teacher-quote">“Guys! We are going to make our profiles! But I have a problem... I don't understand these emojis! Can you help me?”</p>
+          <p class="teacher-quote">“Guys! We are going to make our <strong>ALL ABOUT ME!</strong> profiles!<br>But I have a problem... I don't understand these emojis! Can you help me?”</p>
         </div>
 
         <div class="intro-actions">
@@ -97,23 +101,23 @@
     </section>
 
     <!-- =========================================================
-         STATE 3: EMOJI EXPERTS — MAIN GAME (15 Questions, 1 per screen)
+         STATE 3: EMOJI EXPERTS — MAIN GAME (18 Curated Questions)
          ========================================================= -->
     <section class="game-screen" id="screen-game">
       <div class="screen-content game-play-content">
         
-        <!-- Header Bar: Question Counter & Live Score -->
+        <!-- Header Bar: Category Tag, Question Counter & Score -->
         <header class="game-top-bar">
-          <div class="game-title-pill">
-            <span class="pill-star">⭐</span>
-            <span class="pill-title">EMOJI EXPERTS</span>
+          <div class="game-category-tag" id="game-category-tag">
+            <span id="category-badge-icon">💚</span>
+            <span id="category-badge-text">Things I love to do</span>
           </div>
 
-          <!-- Question Progress & Visual Bar -->
+          <!-- Question Progress Bar -->
           <div class="question-progress-wrap">
-            <span class="progress-label" id="q-counter-text">Question 1 / 15</span>
+            <span class="progress-label" id="q-counter-text">Question 1 / 18</span>
             <div class="progress-bar-track">
-              <div class="progress-bar-fill" id="progress-fill" style="width: 6.66%;"></div>
+              <div class="progress-bar-fill" id="progress-fill" style="width: 5.5%;"></div>
             </div>
           </div>
 
@@ -124,10 +128,10 @@
           </div>
         </header>
 
-        <!-- Question Prompt Area -->
+        <!-- Question Header: Big Emoji + WHAT'S THIS? -->
         <div class="question-header-area">
           <div class="target-emoji-stage" id="target-emoji-container">
-            <span class="target-emoji" id="target-emoji-char">🥱</span>
+            <span class="target-emoji" id="target-emoji-char">🎮</span>
           </div>
           <h2 class="question-prompt-text" id="question-prompt-text">WHAT'S THIS?</h2>
         </div>
@@ -188,8 +192,8 @@
           <!-- Correct Answer Vocabulary Reveal Banner -->
           <div class="feedback-banner banner-correct" id="banner-correct" aria-live="polite">
             <span class="banner-star">⭐</span>
-            <span class="banner-emoji" id="revealed-emoji">🥱</span>
-            <span class="revealed-word" id="revealed-word-text">TIRED</span>
+            <span class="banner-emoji" id="revealed-emoji">🎮</span>
+            <span class="revealed-word" id="revealed-word-text">PLAY GAMES</span>
             <button class="btn-pronounce" id="btn-pronounce-word" title="Listen to pronunciation">
               <span>🔊</span>
             </button>
@@ -232,7 +236,7 @@
           <!-- Header -->
           <div class="memory-top-bar">
             <div class="memory-badge-pill">
-              <span>🧠 MEMORY GAME</span>
+              <span>🧠 PROFILE MEMORY GAME</span>
             </div>
             <div class="memory-round-pill" id="memory-round-indicator">
               Round 1 / 4
@@ -249,7 +253,7 @@
             </div>
 
             <div class="memory-grid-display" id="memory-grid-container">
-              <!-- Rendered via JS dynamically -->
+              <!-- Rendered dynamically -->
             </div>
           </div>
 
@@ -257,8 +261,8 @@
           <div class="memory-question-phase hidden" id="memory-question-phase">
             <div class="memory-mystery-box animate-pop">
               <div class="mystery-badge">❓</div>
-              <h2 class="memory-query-text" id="memory-query-text">WAS THERE SUSHI?</h2>
-              <div class="memory-query-emoji" id="memory-query-emoji">🍣</div>
+              <h2 class="memory-query-text" id="memory-query-text">WAS THERE PIZZA?</h2>
+              <div class="memory-query-emoji" id="memory-query-emoji">🍕</div>
             </div>
 
             <!-- Two Huge Smart Board YES / NO Buttons -->
@@ -305,7 +309,7 @@
         <div class="guess-center-stage animate-pop">
           
           <div class="guess-teacher-callout">
-            <span>Classroom Interactive: Tap YES or NO!</span>
+            <span>Classroom Interactive: Stand at the Smart Board & Answer!</span>
           </div>
 
           <!-- Huge Target Emoji -->
@@ -348,7 +352,7 @@
     </section>
 
     <!-- =========================================================
-         STATE 6: FINAL TRANSITION & PROFILE HANDOFF
+         STATE 6: FINAL TRANSITION & ALL ABOUT ME PROFILE HANDOFF
          ========================================================= -->
     <section class="game-screen" id="screen-profile">
       <div class="screen-content profile-content animate-pop">
@@ -357,21 +361,45 @@
           <span>🎉</span>
         </div>
 
-        <h1 class="final-huge-title">YOU DID IT!</h1>
-        <h2 class="final-huge-subtitle">⭐ YOU ARE EMOJI EXPERTS! ⭐</h2>
+        <h1 class="final-huge-title">YOU KNOW THE EMOJIS!</h1>
+        <h2 class="final-huge-subtitle">⭐ YOU ARE ALL ABOUT ME EXPERTS! ⭐</h2>
 
         <!-- Score & Achievement Summary -->
         <div class="final-score-card">
           <div class="stars-awarded">⭐⭐⭐</div>
-          <div class="final-score-text">Total Score: <strong id="final-score-num">15</strong> Stars!</div>
+          <div class="final-score-text">Total Score: <strong id="final-score-num">18</strong> Stars!</div>
+        </div>
+
+        <!-- 4 Profile Category Cards Matching Physical Worksheet -->
+        <div class="profile-sections-grid">
+          <div class="profile-cat-chip cat-green">
+            <span class="chip-num">1</span>
+            <span class="chip-icon">💚</span>
+            <span class="chip-text">Things I love to do</span>
+          </div>
+          <div class="profile-cat-chip cat-orange">
+            <span class="chip-num">2</span>
+            <span class="chip-icon">🧡</span>
+            <span class="chip-text">My favorite food</span>
+          </div>
+          <div class="profile-cat-chip cat-blue">
+            <span class="chip-num">3</span>
+            <span class="chip-icon">💙</span>
+            <span class="chip-text">My favorite color</span>
+          </div>
+          <div class="profile-cat-chip cat-purple">
+            <span class="chip-num">4</span>
+            <span class="chip-icon">💜</span>
+            <span class="chip-text">How do you feel about English?</span>
+          </div>
         </div>
 
         <!-- Classroom Worksheet Transition Callout -->
         <div class="profile-worksheet-banner animate-pulse">
           <div class="worksheet-icon">📋</div>
           <div class="worksheet-message">
-            <h3>LET'S MAKE OUR PROFILES!</h3>
-            <p>Take out your profile worksheets & draw your favorite emojis!</p>
+            <h3>NOW LET'S MAKE OUR PROFILES!</h3>
+            <p>Take out your "ALL ABOUT ME!" worksheets & circle your favorite emojis!</p>
           </div>
         </div>
 
