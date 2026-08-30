@@ -1863,6 +1863,7 @@
       this.diceHeading = document.getElementById('m-dice-heading');
       this.diceSub = document.getElementById('m-dice-sub');
       this.diceBox = document.getElementById('m-dice-box');
+      this.diceResultBadge = document.getElementById('m-dice-result-badge');
       this.btnRollDice = document.getElementById('btn-monopoly-roll');
       this.moveToast = document.getElementById('m-move-toast');
       this.toastSteps = document.getElementById('m-toast-steps');
@@ -2237,6 +2238,7 @@
 
       this.stageQuestion.classList.remove('hidden');
       this.stageDice.classList.add('hidden');
+      if (this.diceResultBadge) this.diceResultBadge.classList.add('hidden');
       this.feedbackBanner.classList.add('hidden');
       this.feedbackBanner.classList.remove('fb-wrong');
 
@@ -2527,6 +2529,7 @@
       this.updateDiceButtonState();
 
       const roll = Math.floor(Math.random() * 6) + 1;
+      if (this.diceResultBadge) this.diceResultBadge.classList.add('hidden');
       this.diceBox.classList.add('rolling');
       this.audio.playDiceRoll();
 
@@ -2544,14 +2547,25 @@
         };
         this.diceBox.style.transform = rotations[roll] || 'rotateX(0deg) rotateY(0deg)';
 
+        // Reveal big number badge on the dice
+        if (this.diceResultBadge) {
+          this.diceResultBadge.textContent = roll;
+          this.diceResultBadge.classList.remove('hidden');
+        }
+
         this.diceHeading.textContent = `🎲 ${this.activeTeam.toUpperCase()} ROLLED A ${roll}!`;
         this.moveToast.classList.remove('hidden');
         this.toastSteps.textContent = roll;
 
+        // Speak the number for the whole class to hear
+        if (this.audio && typeof this.audio.speak === 'function') {
+          this.audio.speak(String(roll));
+        }
+
         // Step-by-step movement along the linear path
         setTimeout(() => {
           this.animateTokenStepByStep(this.activeTeam, roll);
-        }, 600);
+        }, 700);
       }, 900);
     }
 
