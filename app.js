@@ -1,5 +1,5 @@
 /**
- * ⭐ EMOJI EXPERTS ⭐ — ALL ABOUT ME PROFILE CLASSROOM GAME ENGINE
+ * ⭐ EMOJI EXPERTS ⭐ — ALL ABOUT ME CLASSROOM SMART BOARD GAME ENGINE
  * Strictly powered by the official "ALL ABOUT ME!" & "EMOJI WORDS" reference vocabulary.
  */
 
@@ -7,12 +7,20 @@
   'use strict';
 
   // =========================================================================
-  // 1. DATA: 18 CURATED QUESTIONS FROM THE 4 OFFICIAL PROFILE CATEGORIES
-  // 1. 💚 Things I love to do
-  // 2. 🧡 My favorite food
-  // 3. 💙 My favorite color
-  // 4. 💜 How do you feel about English?
+  // 1. DATA: QUICK WARM-UP & MAIN GAME DATA FROM OFFICIAL SHEETS
   // =========================================================================
+  
+  // Warm-up flashcard items
+  const WARMUP_DATA = [
+    { emoji: '🎮', word: 'PLAY GAMES' },
+    { emoji: '🥑', word: 'AVOCADO' },
+    { emoji: '🎤', word: 'SING' },
+    { emoji: '🥦', word: 'BROCCOLI' },
+    { emoji: '🍕', word: 'PIZZA' },
+    { emoji: '🚲', word: 'RIDE A BIKE' }
+  ];
+
+  // 18 Curated Questions mixing all 4 profile categories
   const QUESTIONS_DATA = [
     {
       id: 1,
@@ -552,7 +560,7 @@
       this.init();
       if (!this.ctx) return;
       const now = this.ctx.currentTime;
-      const notes = [523.25, 659.25, 783.99, 1046.5]; // C5, E5, G5, C6
+      const notes = [523.25, 659.25, 783.99, 1046.5];
       notes.forEach((freq, i) => {
         const osc = this.ctx.createOscillator();
         const gain = this.ctx.createGain();
@@ -720,7 +728,13 @@
       this.confetti = new ConfettiEngine();
 
       // State variables
-      this.currentScreen = 'screen-start';
+      this.currentScreen = 'screen-welcome';
+      this.isZoomed = false;
+
+      // Warm-up state
+      this.warmupIndex = 0;
+
+      // Main game state
       this.currentQuestionIndex = 0;
       this.score = 0;
       this.currentQuestionAnswered = false;
@@ -740,21 +754,39 @@
     cacheDOMElements() {
       // Screens
       this.screens = {
-        start: document.getElementById('screen-start'),
-        intro: document.getElementById('screen-intro'),
+        welcome: document.getElementById('screen-welcome'),
+        lookLearn: document.getElementById('screen-look-learn'),
+        warmup: document.getElementById('screen-warmup'),
         game: document.getElementById('screen-game'),
         memory: document.getElementById('screen-memory'),
         guess: document.getElementById('screen-guess'),
         profile: document.getElementById('screen-profile')
       };
 
-      // Start screen
+      // Screen 1: Welcome
       this.btnStartPlay = document.getElementById('btn-start-play');
 
-      // Intro screen
-      this.btnIntroHelp = document.getElementById('btn-intro-help');
+      // Screen 2: Look & Learn
+      this.tabBtnEmojiWords = document.getElementById('tab-btn-emoji-words');
+      this.tabBtnProfileSheet = document.getElementById('tab-btn-profile-sheet');
+      this.viewerEmojiWords = document.getElementById('viewer-emoji-words');
+      this.viewerProfileSheet = document.getElementById('viewer-profile-sheet');
+      this.referenceStage = document.getElementById('reference-stage');
+      this.btnZoomImage = document.getElementById('btn-zoom-image');
+      this.btnReadAloud = document.getElementById('btn-read-aloud');
+      this.btnLookReady = document.getElementById('btn-look-ready');
 
-      // Main Game UI
+      // Screen 2B: Warmup
+      this.warmupCounterText = document.getElementById('warmup-counter-text');
+      this.warmupEmojiChar = document.getElementById('warmup-emoji-char');
+      this.btnWarmupReveal = document.getElementById('btn-warmup-reveal');
+      this.warmupRevealedBanner = document.getElementById('warmup-revealed-banner');
+      this.warmupWordText = document.getElementById('warmup-word-text');
+      this.btnWarmupPronounce = document.getElementById('btn-warmup-pronounce');
+      this.btnWarmupNext = document.getElementById('btn-warmup-next');
+      this.btnWarmupStartMain = document.getElementById('btn-warmup-start-main');
+
+      // Screen 3: Main Game UI
       this.categoryBadgeIcon = document.getElementById('category-badge-icon');
       this.categoryBadgeText = document.getElementById('category-badge-text');
       this.qCounterText = document.getElementById('q-counter-text');
@@ -778,7 +810,7 @@
       this.btnPronounceWord = document.getElementById('btn-pronounce-word');
       this.btnNextQuestion = document.getElementById('btn-next-question');
 
-      // Memory Game UI
+      // Screen 4: Memory Game UI
       this.memoryIntroView = document.getElementById('memory-intro-view');
       this.memoryPlayView = document.getElementById('memory-play-view');
       this.btnStartMemoryGame = document.getElementById('btn-start-memory-game');
@@ -796,7 +828,7 @@
       this.memFeedbackText = document.getElementById('mem-feedback-text');
       this.btnMemoryNext = document.getElementById('btn-memory-next');
 
-      // Guess What I Like UI
+      // Screen 5: Guess What I Like UI
       this.guessStepIndicator = document.getElementById('guess-step-indicator');
       this.guessTargetEmoji = document.getElementById('guess-target-emoji');
       this.guessQuestionTitle = document.getElementById('guess-question-title');
@@ -805,7 +837,7 @@
       this.btnGuessNext = document.getElementById('btn-guess-next');
       this.btnGuessFinish = document.getElementById('btn-guess-finish');
 
-      // Profile Screen UI
+      // Screen 6: Profile Screen UI
       this.finalScoreNum = document.getElementById('final-score-num');
       this.btnReplayGame = document.getElementById('btn-replay-game');
 
@@ -817,18 +849,74 @@
     }
 
     bindEvents() {
-      // 1. Navigation / State buttons
+      // 1. Welcome Screen
       this.btnStartPlay.addEventListener('click', () => {
         this.audio.playPop();
-        this.switchScreen('intro');
+        this.switchScreen('lookLearn');
       });
 
-      this.btnIntroHelp.addEventListener('click', () => {
+      // 2. Look & Learn Tabs & Tools
+      this.tabBtnEmojiWords.addEventListener('click', () => {
+        this.audio.playPop();
+        this.tabBtnEmojiWords.classList.add('active');
+        this.tabBtnProfileSheet.classList.remove('active');
+        this.viewerEmojiWords.classList.add('active');
+        this.viewerProfileSheet.classList.remove('active');
+      });
+
+      this.tabBtnProfileSheet.addEventListener('click', () => {
+        this.audio.playPop();
+        this.tabBtnProfileSheet.classList.add('active');
+        this.tabBtnEmojiWords.classList.remove('active');
+        this.viewerProfileSheet.classList.add('active');
+        this.viewerEmojiWords.classList.remove('active');
+      });
+
+      this.btnZoomImage.addEventListener('click', () => {
+        this.audio.playPop();
+        this.isZoomed = !this.isZoomed;
+        if (this.isZoomed) {
+          this.referenceStage.classList.add('zoomed');
+          this.btnZoomImage.style.background = '#22c55e';
+        } else {
+          this.referenceStage.classList.remove('zoomed');
+          this.btnZoomImage.style.background = 'rgba(0,0,0,0.35)';
+        }
+      });
+
+      this.btnReadAloud.addEventListener('click', () => {
+        this.audio.playPop();
+        this.audio.speak("Look at the emoji words and repeat with your teacher!");
+      });
+
+      this.btnLookReady.addEventListener('click', () => {
+        this.audio.playPop();
+        this.startWarmup();
+      });
+
+      // 2B. Warm-Up Controls
+      this.btnWarmupReveal.addEventListener('click', () => {
+        this.revealWarmupWord();
+      });
+
+      this.btnWarmupPronounce.addEventListener('click', () => {
+        const item = WARMUP_DATA[this.warmupIndex];
+        if (item) {
+          this.audio.speak(item.word);
+        }
+      });
+
+      this.btnWarmupNext.addEventListener('click', () => {
+        this.audio.playPop();
+        this.advanceWarmup();
+      });
+
+      this.btnWarmupStartMain.addEventListener('click', () => {
         this.audio.playPop();
         this.startMainGame();
       });
 
-      // 2. Choice Cards (A, B, C)
+      // 3. Choice Cards (A, B, C)
       [this.cardOptA, this.cardOptB, this.cardOptC].forEach(card => {
         card.addEventListener('click', () => {
           const choice = card.getAttribute('data-choice');
@@ -836,7 +924,7 @@
         });
       });
 
-      // 3. Pronunciation button
+      // Main Game Pronunciation button
       this.btnPronounceWord.addEventListener('click', () => {
         const q = QUESTIONS_DATA[this.currentQuestionIndex];
         if (q) {
@@ -844,13 +932,13 @@
         }
       });
 
-      // 4. Teacher NEXT button
+      // Teacher NEXT button
       this.btnNextQuestion.addEventListener('click', () => {
         this.audio.playPop();
         this.goToNextQuestion();
       });
 
-      // 5. Memory Game buttons
+      // 4. Memory Game buttons
       this.btnStartMemoryGame.addEventListener('click', () => {
         this.audio.playPop();
         this.memoryIntroView.classList.add('hidden');
@@ -866,7 +954,7 @@
         this.advanceMemoryRound();
       });
 
-      // 6. Guess What I Like buttons
+      // 5. Guess What I Like buttons
       this.btnGuessYes.addEventListener('click', () => this.handleGuessResponse('yes'));
       this.btnGuessNo.addEventListener('click', () => this.handleGuessResponse('no'));
 
@@ -881,13 +969,13 @@
         this.showFinalProfileScreen();
       });
 
-      // 7. Replay button
+      // 6. Replay button
       this.btnReplayGame.addEventListener('click', () => {
         this.audio.playPop();
         this.resetEntireGame();
       });
 
-      // 8. Teacher Top Utilities
+      // 7. Teacher Top Utilities
       this.btnSoundToggle.addEventListener('click', () => {
         const isSound = this.audio.toggleSound();
         this.soundIcon.textContent = isSound ? '🔊' : '🔇';
@@ -897,7 +985,7 @@
         this.toggleFullscreen();
       });
 
-      // 9. Keyboard Shortcuts for Teacher Smart Board Clicker
+      // 8. Keyboard Shortcuts for Teacher Clicker
       window.addEventListener('keydown', (e) => {
         if (this.currentScreen === 'game') {
           if (e.key === '1' || e.key === 'a' || e.key === 'A') this.cardOptA.click();
@@ -905,6 +993,16 @@
           if (e.key === '3' || e.key === 'c' || e.key === 'C') this.cardOptC.click();
           if ((e.key === ' ' || e.key === 'Enter' || e.key === 'ArrowRight') && !this.btnNextQuestion.disabled) {
             this.btnNextQuestion.click();
+          }
+        } else if (this.currentScreen === 'warmup') {
+          if (e.key === ' ' || e.key === 'Enter') {
+            if (!this.btnWarmupReveal.classList.contains('hidden')) {
+              this.btnWarmupReveal.click();
+            } else if (!this.btnWarmupNext.classList.contains('hidden')) {
+              this.btnWarmupNext.click();
+            } else if (!this.btnWarmupStartMain.classList.contains('hidden')) {
+              this.btnWarmupStartMain.click();
+            }
           }
         } else if (this.currentScreen === 'memory') {
           if (e.key === 'y' || e.key === 'Y' || e.key === '1') this.btnMemYes.click();
@@ -942,12 +1040,60 @@
 
     switchScreen(screenKey) {
       Object.values(this.screens).forEach(screen => {
-        screen.classList.remove('active');
+        if (screen) screen.classList.remove('active');
       });
 
       if (this.screens[screenKey]) {
         this.screens[screenKey].classList.add('active');
         this.currentScreen = screenKey;
+      }
+    }
+
+    // =========================================================================
+    // STATE 2B: QUICK PRACTICE / WARM-UP
+    // =========================================================================
+    startWarmup() {
+      this.warmupIndex = 0;
+      this.renderWarmup(0);
+      this.switchScreen('warmup');
+    }
+
+    renderWarmup(index) {
+      const item = WARMUP_DATA[index];
+      if (!item) return;
+
+      this.warmupCounterText.textContent = `Word ${index + 1} / ${WARMUP_DATA.length}`;
+      this.warmupEmojiChar.textContent = item.emoji;
+      this.warmupWordText.textContent = item.word;
+
+      this.btnWarmupReveal.classList.remove('hidden');
+      this.warmupRevealedBanner.classList.add('hidden');
+      this.btnWarmupNext.classList.add('hidden');
+      this.btnWarmupStartMain.classList.add('hidden');
+    }
+
+    revealWarmupWord() {
+      const item = WARMUP_DATA[this.warmupIndex];
+      if (!item) return;
+
+      this.audio.playSuccess();
+      this.audio.speak(item.word);
+      this.confetti.fire(35);
+
+      this.btnWarmupReveal.classList.add('hidden');
+      this.warmupRevealedBanner.classList.remove('hidden');
+
+      if (this.warmupIndex < WARMUP_DATA.length - 1) {
+        this.btnWarmupNext.classList.remove('hidden');
+      } else {
+        this.btnWarmupStartMain.classList.remove('hidden');
+      }
+    }
+
+    advanceWarmup() {
+      if (this.warmupIndex < WARMUP_DATA.length - 1) {
+        this.warmupIndex++;
+        this.renderWarmup(this.warmupIndex);
       }
     }
 
@@ -1223,7 +1369,10 @@
       this.score = 0;
       this.memoryRoundIndex = 0;
       this.guessStepIndex = 0;
-      this.switchScreen('start');
+      this.warmupIndex = 0;
+      this.isZoomed = false;
+      if (this.referenceStage) this.referenceStage.classList.remove('zoomed');
+      this.switchScreen('welcome');
     }
   }
 
