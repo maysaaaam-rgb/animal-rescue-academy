@@ -2529,6 +2529,7 @@
       this.updateDiceButtonState();
 
       const roll = Math.floor(Math.random() * 6) + 1;
+      if (this.diceResultBadge) this.diceResultBadge.classList.add('hidden');
       this.audio.playDiceRoll();
 
       // 1. Start spinning fast in 3D around both axes
@@ -2551,6 +2552,12 @@
         this.diceBox.style.transform = faceRotations[roll] || 'rotateX(0deg) rotateY(0deg)';
 
         setTimeout(() => {
+          // Show giant glowing number badge
+          if (this.diceResultBadge) {
+            this.diceResultBadge.textContent = roll;
+            this.diceResultBadge.classList.remove('hidden');
+          }
+
           this.diceHeading.textContent = `🎲 ${this.activeTeam.toUpperCase()} ROLLED A ${roll}!`;
           this.moveToast.classList.remove('hidden');
           this.toastSteps.textContent = roll;
