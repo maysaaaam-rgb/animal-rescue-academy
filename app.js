@@ -2529,44 +2529,43 @@
       this.updateDiceButtonState();
 
       const roll = Math.floor(Math.random() * 6) + 1;
-      this.diceRotationIndex = (this.diceRotationIndex || 0) + 1;
       this.audio.playDiceRoll();
 
-      // Base rotations to bring each face squarely to the front
-      const faceRotations = {
-        1: { x: 0, y: 0 },
-        6: { x: 0, y: 180 },
-        3: { x: 0, y: -90 },
-        4: { x: 0, y: 90 },
-        5: { x: -90, y: 0 },
-        2: { x: 90, y: 0 }
-      };
+      // 1. Start spinning fast in 3D around both axes
+      this.diceBox.classList.add('rolling');
 
-      const target = faceRotations[roll] || { x: 0, y: 0 };
-      const spinsX = 720 * this.diceRotationIndex;
-      const spinsY = 1080 * this.diceRotationIndex;
-      const finalRotX = target.x + spinsX;
-      const finalRotY = target.y + spinsY;
-
-      // Apply fast start, multiple 3D revolutions, and smooth natural deceleration
-      this.diceBox.style.transition = 'transform 1.3s cubic-bezier(0.2, 0.85, 0.35, 1.0)';
-      this.diceBox.style.transform = `rotateX(${finalRotX}deg) rotateY(${finalRotY}deg)`;
-
+      // 2. Slow down and stop smoothly with the correct face facing the user
       setTimeout(() => {
-        this.diceHeading.textContent = `🎲 ${this.activeTeam.toUpperCase()} ROLLED A ${roll}!`;
-        this.moveToast.classList.remove('hidden');
-        this.toastSteps.textContent = roll;
+        this.diceBox.classList.remove('rolling');
+        this.diceBox.style.transition = 'transform 0.65s cubic-bezier(0.175, 0.885, 0.32, 1.25)';
 
-        // Speak the number for the whole class to hear
-        if (this.audio && typeof this.audio.speak === 'function') {
-          this.audio.speak(String(roll));
-        }
+        const faceRotations = {
+          1: 'rotateX(0deg) rotateY(0deg)',
+          6: 'rotateX(0deg) rotateY(180deg)',
+          3: 'rotateX(0deg) rotateY(-90deg)',
+          4: 'rotateX(0deg) rotateY(90deg)',
+          5: 'rotateX(-90deg) rotateY(0deg)',
+          2: 'rotateX(90deg) rotateY(0deg)'
+        };
 
-        // Step-by-step movement along the linear path
+        this.diceBox.style.transform = faceRotations[roll] || 'rotateX(0deg) rotateY(0deg)';
+
         setTimeout(() => {
-          this.animateTokenStepByStep(this.activeTeam, roll);
-        }, 600);
-      }, 1350);
+          this.diceHeading.textContent = `🎲 ${this.activeTeam.toUpperCase()} ROLLED A ${roll}!`;
+          this.moveToast.classList.remove('hidden');
+          this.toastSteps.textContent = roll;
+
+          // Speak the number for the whole class to hear
+          if (this.audio && typeof this.audio.speak === 'function') {
+            this.audio.speak(String(roll));
+          }
+
+          // Step-by-step movement along the linear path
+          setTimeout(() => {
+            this.animateTokenStepByStep(this.activeTeam, roll);
+          }, 600);
+        }, 700);
+      }, 850);
     }
 
     animateTokenStepByStep(teamKey, totalSteps) {
