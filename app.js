@@ -2529,30 +2529,30 @@
       this.updateDiceButtonState();
 
       const roll = Math.floor(Math.random() * 6) + 1;
-      if (this.diceResultBadge) this.diceResultBadge.classList.add('hidden');
-      this.diceBox.classList.add('rolling');
+      this.diceRotationIndex = (this.diceRotationIndex || 0) + 1;
       this.audio.playDiceRoll();
 
+      // Base rotations to bring each face squarely to the front
+      const faceRotations = {
+        1: { x: 0, y: 0 },
+        6: { x: 0, y: 180 },
+        3: { x: 0, y: -90 },
+        4: { x: 0, y: 90 },
+        5: { x: -90, y: 0 },
+        2: { x: 90, y: 0 }
+      };
+
+      const target = faceRotations[roll] || { x: 0, y: 0 };
+      const spinsX = 720 * this.diceRotationIndex;
+      const spinsY = 1080 * this.diceRotationIndex;
+      const finalRotX = target.x + spinsX;
+      const finalRotY = target.y + spinsY;
+
+      // Apply fast start, multiple 3D revolutions, and smooth natural deceleration
+      this.diceBox.style.transition = 'transform 1.3s cubic-bezier(0.2, 0.85, 0.35, 1.0)';
+      this.diceBox.style.transform = `rotateX(${finalRotX}deg) rotateY(${finalRotY}deg)`;
+
       setTimeout(() => {
-        this.diceBox.classList.remove('rolling');
-        
-        // Orient dice face directly and cleanly
-        const rotations = {
-          1: 'rotateX(0deg) rotateY(0deg)',
-          6: 'rotateX(0deg) rotateY(180deg)',
-          3: 'rotateX(0deg) rotateY(-90deg)',
-          4: 'rotateX(0deg) rotateY(90deg)',
-          5: 'rotateX(-90deg) rotateY(0deg)',
-          2: 'rotateX(90deg) rotateY(0deg)'
-        };
-        this.diceBox.style.transform = rotations[roll] || 'rotateX(0deg) rotateY(0deg)';
-
-        // Reveal big number badge on the dice
-        if (this.diceResultBadge) {
-          this.diceResultBadge.textContent = roll;
-          this.diceResultBadge.classList.remove('hidden');
-        }
-
         this.diceHeading.textContent = `🎲 ${this.activeTeam.toUpperCase()} ROLLED A ${roll}!`;
         this.moveToast.classList.remove('hidden');
         this.toastSteps.textContent = roll;
@@ -2565,8 +2565,8 @@
         // Step-by-step movement along the linear path
         setTimeout(() => {
           this.animateTokenStepByStep(this.activeTeam, roll);
-        }, 700);
-      }, 900);
+        }, 600);
+      }, 1350);
     }
 
     animateTokenStepByStep(teamKey, totalSteps) {
