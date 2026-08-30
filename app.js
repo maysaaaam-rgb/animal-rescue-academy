@@ -1771,6 +1771,7 @@
       this.currentRound = 1;
       this.activeTeam = 'blue'; // 'blue' or 'red'
       this.isStealChallenge = false;
+      this.isBonusChallenge = false;
       this.stealTargetTileIndex = null;
       this.diceUnlocked = false;
       this.isRollingOrMoving = false;
@@ -2227,8 +2228,12 @@
       this.diceUnlocked = false;
       this.isRollingOrMoving = false;
       this.isStealChallenge = false;
+      this.isBonusChallenge = false;
       this.stealTargetTileIndex = null;
+      this.modalOpen = false;
       this.updateDiceButtonState();
+      unlockGameUI();
+      this.logState('Start Turn');
 
       this.stageQuestion.classList.remove('hidden');
       this.stageDice.classList.add('hidden');
@@ -2382,6 +2387,10 @@
       }, 1000);
     }
 
+    logState(action) {
+      console.log(`[STATE] Action: ${action} | Round: ${this.currentRound}/${this.maxRounds} | Team: ${this.activeTeam} | Pos: B:${this.teams.blue.position} R:${this.teams.red.position} | diceUnlocked: ${this.diceUnlocked} | isRollingOrMoving: ${this.isRollingOrMoving} | modalOpen: ${this.modalOpen} | isSteal: ${this.isStealChallenge} | isBonus: ${this.isBonusChallenge}`);
+    }
+
     handleChoiceClick(choiceLetter, cardElement) {
       if (this.currentQuestionAnswered) return;
       clearInterval(this.countdownInterval);
@@ -2392,7 +2401,6 @@
       if (choiceLetter === q.correctChoice) {
         // === CORRECT ANSWER ===
         this.currentQuestionAnswered = true;
-        this.diceUnlocked = true;
         cardElement.classList.add('is-correct');
         this.choiceButtons.forEach(b => {
           if (b !== cardElement) b.classList.add('is-dimmed');
@@ -2407,15 +2415,31 @@
         this.confetti.fire(35);
         if (q.spokenWord) this.audio.speak(q.spokenWord);
 
-        this.fbIcon.textContent = '🎉';
-        this.fbText.textContent = `CORRECT! (+${pts} ⭐) 🔓 DICE UNLOCKED!`;
-        this.feedbackBanner.classList.remove('hidden', 'fb-wrong');
-
         if (this.isStealChallenge) {
-          // Steal resolution
+          // Steal challenge resolution
+          this.fbIcon.textContent = '🎉';
+          this.fbText.textContent = `CORRECT! (+${pts} ⭐) STEAL WON!`;
+          this.feedbackBanner.classList.remove('hidden', 'fb-wrong');
+          this.logState('Steal Correct');
           setTimeout(() => this.resolveStealChallenge(true), 1200);
+
+        } else if (this.isBonusChallenge) {
+          // Space 18 Bonus Challenge resolution
+          this.isBonusChallenge = false;
+          this.fbIcon.textContent = '⚡';
+          this.fbText.textContent = `CHALLENGE WON! (+${pts} ⭐)`;
+          this.feedbackBanner.classList.remove('hidden', 'fb-wrong');
+          this.logState('Bonus Challenge Correct');
+          setTimeout(() => this.advanceTurn(), 1400);
+
         } else {
           // Pre-roll success -> Switch to dice stage with unlocked state
+          this.diceUnlocked = true;
+          this.fbIcon.textContent = '🎉';
+          this.fbText.textContent = `CORRECT! (+${pts} ⭐) 🔓 DICE UNLOCKED!`;
+          this.feedbackBanner.classList.remove('hidden', 'fb-wrong');
+          this.logState('Pre-Roll Correct -> Dice Unlocked');
+
           setTimeout(() => {
             this.stageQuestion.classList.add('hidden');
             this.stageDice.classList.remove('hidden');
@@ -2432,14 +2456,29 @@
         this.audio.playWrong();
         cardElement.classList.add('is-wrong');
 
-        this.fbIcon.textContent = '❌';
-        this.fbText.textContent = 'NO ROLL! TURN OVER';
-        this.feedbackBanner.classList.remove('hidden');
-        this.feedbackBanner.classList.add('fb-wrong');
-
         if (this.isStealChallenge) {
+          this.fbIcon.textContent = '❌';
+          this.fbText.textContent = 'STEAL FAILED!';
+          this.feedbackBanner.classList.remove('hidden');
+          this.feedbackBanner.classList.add('fb-wrong');
+          this.logState('Steal Wrong');
           setTimeout(() => this.resolveStealChallenge(false), 1400);
+
+        } else if (this.isBonusChallenge) {
+          this.isBonusChallenge = false;
+          this.fbIcon.textContent = '❌';
+          this.fbText.textContent = 'CHALLENGE MISSED!';
+          this.feedbackBanner.classList.remove('hidden');
+          this.feedbackBanner.classList.add('fb-wrong');
+          this.logState('Bonus Challenge Wrong');
+          setTimeout(() => this.advanceTurn(), 1400);
+
         } else {
+          this.fbIcon.textContent = '❌';
+          this.fbText.textContent = 'NO ROLL! TURN OVER';
+          this.feedbackBanner.classList.remove('hidden');
+          this.feedbackBanner.classList.add('fb-wrong');
+          this.logState('Pre-Roll Wrong');
           setTimeout(() => this.advanceTurn(), 1600);
         }
       }
@@ -2451,14 +2490,29 @@
       this.audio.playWrong();
       this.choiceButtons.forEach(b => (b.disabled = true));
 
-      this.fbIcon.textContent = '⏰';
-      this.fbText.textContent = "TIME'S UP! NO ROLL!";
-      this.feedbackBanner.classList.remove('hidden');
-      this.feedbackBanner.classList.add('fb-wrong');
-
       if (this.isStealChallenge) {
+        this.fbIcon.textContent = '⏰';
+        this.fbText.textContent = "TIME'S UP! STEAL FAILED!";
+        this.feedbackBanner.classList.remove('hidden');
+        this.feedbackBanner.classList.add('fb-wrong');
+        this.logState('Steal Timeout');
         setTimeout(() => this.resolveStealChallenge(false), 1400);
+
+      } else if (this.isBonusChallenge) {
+        this.isBonusChallenge = false;
+        this.fbIcon.textContent = '⏰';
+        this.fbText.textContent = "TIME'S UP! CHALLENGE MISSED!";
+        this.feedbackBanner.classList.remove('hidden');
+        this.feedbackBanner.classList.add('fb-wrong');
+        this.logState('Bonus Challenge Timeout');
+        setTimeout(() => this.advanceTurn(), 1400);
+
       } else {
+        this.fbIcon.textContent = '⏰';
+        this.fbText.textContent = "TIME'S UP! NO ROLL!";
+        this.feedbackBanner.classList.remove('hidden');
+        this.feedbackBanner.classList.add('fb-wrong');
+        this.logState('Pre-Roll Timeout');
         setTimeout(() => this.advanceTurn(), 1600);
       }
     }
@@ -2624,11 +2678,12 @@
       if (tile.type === 'special_boost') {
         // 🚀 BOOST (+2 Spaces)
         this.showEventModal('🚀', 'ROCKET BOOST!', `${teamName} blasts forward 2 spaces!`, null, () => {
+          this.isRollingOrMoving = false;
           const nextPos = Math.min(25, this.teams[teamKey].position + 2);
           this.teams[teamKey].position = nextPos;
           this.updateTokensOnBoard();
           this.audio.playHop();
-          setTimeout(() => this.handleSpaceLanding(teamKey, nextPos), 400);
+          this.handleSpaceLanding(teamKey, nextPos);
         });
         return;
       }
@@ -2636,11 +2691,12 @@
       if (tile.type === 'special_trap') {
         // 🐌 TRAP (-2 Spaces)
         this.showEventModal('🐌', 'SLIME TRAP!', `Oh no! ${teamName} slips back 2 spaces!`, null, () => {
+          this.isRollingOrMoving = false;
           const nextPos = Math.max(0, this.teams[teamKey].position - 2);
           this.teams[teamKey].position = nextPos;
           this.updateTokensOnBoard();
           this.audio.playHop();
-          setTimeout(() => this.advanceTurn(), 400);
+          this.advanceTurn();
         });
         return;
       }
@@ -2673,6 +2729,7 @@
           `${teamName}: Answer a 🔴 HARD Question for +2 Bonus Stars!`,
           null,
           () => {
+            this.isBonusChallenge = true;
             this.currentQuestionAnswered = false;
             this.stageQuestion.classList.remove('hidden');
             this.stageDice.classList.add('hidden');
@@ -2680,10 +2737,7 @@
 
             this.currentQuestion = this.getNextValidQuestion(null, 'hard');
             this.renderQuestionData(this.currentQuestion);
-            this.startCountdown(10, () => {
-              this.audio.playWrong();
-              setTimeout(() => this.advanceTurn(), 1400);
-            });
+            this.startCountdown(10, () => this.handleTimeout());
           }
         );
         return;
@@ -2793,11 +2847,12 @@
           this.audio.playSuccess();
           this.advanceTurn();
         } else if (r.boost) {
+          this.isRollingOrMoving = false;
           const nextPos = Math.min(25, this.teams[teamKey].position + 2);
           this.teams[teamKey].position = nextPos;
           this.updateTokensOnBoard();
           this.audio.playHop();
-          setTimeout(() => this.handleSpaceLanding(teamKey, nextPos), 400);
+          this.handleSpaceLanding(teamKey, nextPos);
         } else if (r.extraRoll) {
           this.stageQuestion.classList.add('hidden');
           this.stageDice.classList.remove('hidden');
@@ -2856,6 +2911,12 @@
     // =========================================================================
     advanceTurn() {
       clearInterval(this.countdownInterval);
+      this.modalOpen = false;
+      this.isRollingOrMoving = false;
+      this.isStealChallenge = false;
+      this.isBonusChallenge = false;
+      this.stealTargetTileIndex = null;
+      unlockGameUI();
 
       // Check if any team has reached Space 25 (FINISH) or if max rounds met
       if (this.teams.blue.position >= 25 || this.teams.red.position >= 25) {
@@ -2872,6 +2933,8 @@
       }
 
       this.activeTeam = this.activeTeam === 'blue' ? 'red' : 'blue';
+      this.logState('Advance Turn Complete');
+      this.updateHUD();
 
       // Check if team has missTurn
       if (this.teams[this.activeTeam].missTurn) {
