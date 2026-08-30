@@ -799,41 +799,45 @@
   // =========================================================================
   // 3. EMOJI MONOPOLY BOARD GAME ENGINE (NEW MODULE)
   // =========================================================================
+  // 26 Spaces: Strict Continuous Linear Path from START (0) to FINISH (25).
+  // There are NO spaces after FINISH.
   const MONOPOLY_BOARD_TILES = [
-    // Top Row: 0 to 7
-    { index: 0, type: 'start', name: 'START', icon: '🏁', label: 'Pass or Land: +2 ⭐', gridCol: 1, gridRow: 1 },
-    { index: 1, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'PLAY GAMES', emoji: '🎮', icon: '🎮', word: 'PLAY GAMES', difficulty: 'easy', gridCol: 2, gridRow: 1 },
-    { index: 2, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'AVOCADO', emoji: '🥑', icon: '🥑', word: 'AVOCADO', difficulty: 'easy', gridCol: 3, gridRow: 1 },
-    { index: 3, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'BLUE', emoji: '🔵', icon: '🔵', word: 'BLUE', difficulty: 'easy', gridCol: 4, gridRow: 1 },
-    { index: 4, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'EXCITED', emoji: '🤩', icon: '🤩', word: 'EXCITED', difficulty: 'medium', gridCol: 5, gridRow: 1 },
-    { index: 5, type: 'special_speed', name: 'SPEED ROUND', icon: '⚡', label: '5s Challenge: +2 ⭐', gridCol: 6, gridRow: 1 },
-    { index: 6, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'RIDE A BIKE', emoji: '🚲', icon: '🚲', word: 'RIDE A BIKE', difficulty: 'easy', gridCol: 7, gridRow: 1 },
-    { index: 7, type: 'special_mystery', name: 'MYSTERY BOX', icon: '🎁', label: 'Random Reward!', gridCol: 8, gridRow: 1 },
+    // Top Row: Spaces 0 to 7 (Moving Right ➡️)
+    { index: 0, type: 'start', name: 'START', icon: '🏁', label: '+2 ⭐', arrow: '➡️', gridCol: 1, gridRow: 1 },
+    { index: 1, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'PLAY GAMES', emoji: '🎮', arrow: '➡️', difficulty: 'easy', gridCol: 2, gridRow: 1 },
+    { index: 2, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'AVOCADO', emoji: '🥑', arrow: '➡️', difficulty: 'easy', gridCol: 3, gridRow: 1 },
+    { index: 3, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'BLUE', emoji: '🔵', arrow: '➡️', difficulty: 'easy', gridCol: 4, gridRow: 1 },
+    { index: 4, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'EXCITED', emoji: '🤩', arrow: '➡️', difficulty: 'medium', gridCol: 5, gridRow: 1 },
+    { index: 5, type: 'special_bonus', name: 'BONUS', icon: '⭐', label: '+2 Stars!', arrow: '➡️', gridCol: 6, gridRow: 1 },
+    { index: 6, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'RIDE A BIKE', emoji: '🚲', arrow: '➡️', difficulty: 'easy', gridCol: 7, gridRow: 1 },
+    { index: 7, type: 'special_mystery', name: 'MYSTERY', icon: '🎁', label: 'Surprise Box!', arrow: '⬇️', gridCol: 8, gridRow: 1 },
 
-    // Right Column: 8 to 12
-    { index: 8, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'PIZZA', emoji: '🍕', icon: '🍕', word: 'PIZZA', difficulty: 'easy', gridCol: 8, gridRow: 2 },
-    { index: 9, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'RED', emoji: '🔴', icon: '🔴', word: 'RED', difficulty: 'easy', gridCol: 8, gridRow: 3 },
-    { index: 10, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'CURIOUS', emoji: '🤔', icon: '🤔', word: 'CURIOUS', difficulty: 'medium', gridCol: 8, gridRow: 4 },
-    { index: 11, type: 'special_boost', name: 'BOOST +2', icon: '🚀', label: 'Move Ahead 2!', gridCol: 8, gridRow: 5 },
-    { index: 12, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'TAKE PHOTOS', emoji: '📷', icon: '📷', word: 'TAKE PHOTOS', difficulty: 'medium', gridCol: 8, gridRow: 6 },
+    // Right Column: Spaces 8 to 12 (Moving Down ⬇️)
+    { index: 8, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'PIZZA', emoji: '🍕', arrow: '⬇️', difficulty: 'easy', gridCol: 8, gridRow: 2 },
+    { index: 9, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'RED', emoji: '🔴', arrow: '⬇️', difficulty: 'easy', gridCol: 8, gridRow: 3 },
+    { index: 10, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'CURIOUS', emoji: '🤔', arrow: '⬇️', difficulty: 'medium', gridCol: 8, gridRow: 4 },
+    { index: 11, type: 'special_boost', name: 'BOOST', icon: '🚀', label: '+2 Spaces!', arrow: '⬇️', gridCol: 8, gridRow: 5 },
+    { index: 12, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'TAKE PHOTOS', emoji: '📷', arrow: '⬇️', difficulty: 'medium', gridCol: 8, gridRow: 6 },
 
-    // Bottom Row: 13 to 19 (Right to Left)
-    { index: 13, type: 'special_double', name: 'DOUBLE / 0', icon: '💰', label: 'Correct +3 / Wrong -1', gridCol: 8, gridRow: 7 },
-    { index: 14, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'STRAWBERRY', emoji: '🍓', icon: '🍓', word: 'STRAWBERRY', difficulty: 'easy', gridCol: 7, gridRow: 7 },
-    { index: 15, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'YELLOW', emoji: '🟡', icon: '🟡', word: 'YELLOW', difficulty: 'easy', gridCol: 6, gridRow: 7 },
-    { index: 16, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'HAPPY', emoji: '😁', icon: '😁', word: 'HAPPY', difficulty: 'easy', gridCol: 5, gridRow: 7 },
-    { index: 17, type: 'special_memory', name: 'MEMORY TEST', icon: '🧠', label: 'Remember Emojis!', gridCol: 4, gridRow: 7 },
-    { index: 18, type: 'category', category: 'activities', categoryName: 'Activities', categoryIcon: '💚', name: 'SING', emoji: '🎤', icon: '🎤', word: 'SING', difficulty: 'easy', gridCol: 3, gridRow: 7 },
-    { index: 19, type: 'category', category: 'food', categoryName: 'Food', categoryIcon: '❤️', name: 'ICE CREAM', emoji: '🍦', icon: '🍦', word: 'ICE CREAM', difficulty: 'easy', gridCol: 2, gridRow: 7 },
+    // Bottom Row: Spaces 13 to 19 (Moving Left ⬅️)
+    { index: 13, type: 'special_challenge', name: 'CHALLENGE', icon: '⚡', label: 'Hard +2 ⭐', arrow: '⬅️', gridCol: 8, gridRow: 7 },
+    { index: 14, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'STRAWBERRY', emoji: '🍓', arrow: '⬅️', difficulty: 'easy', gridCol: 7, gridRow: 7 },
+    { index: 15, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'YELLOW', emoji: '🟡', arrow: '⬅️', difficulty: 'easy', gridCol: 6, gridRow: 7 },
+    { index: 16, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'HAPPY', emoji: '😁', arrow: '⬅️', difficulty: 'easy', gridCol: 5, gridRow: 7 },
+    { index: 17, type: 'special_lucky', name: 'LUCKY', icon: '🎲', label: 'Roll Again!', arrow: '⬅️', gridCol: 4, gridRow: 7 },
+    { index: 18, type: 'category', category: 'activities', categoryName: 'ACTIVITY', icon: '💚', name: 'SING', emoji: '🎤', arrow: '⬅️', gridCol: 3, gridRow: 7 },
+    { index: 19, type: 'category', category: 'food', categoryName: 'FOOD', icon: '❤️', name: 'ICE CREAM', emoji: '🍦', arrow: '⬅️', difficulty: 'easy', gridCol: 2, gridRow: 7 },
 
-    // Left Column: 20 to 25 (Bottom to Top)
-    { index: 20, type: 'special_miss', name: 'MISS A TURN', icon: '⏸️', label: 'Chill & Rest', gridCol: 1, gridRow: 7 },
-    { index: 21, type: 'category', category: 'colors', categoryName: 'Colors', categoryIcon: '💙', name: 'GREEN', emoji: '🟢', icon: '🟢', word: 'GREEN', difficulty: 'easy', gridCol: 1, gridRow: 6 },
-    { index: 22, type: 'category', category: 'feelings', categoryName: 'Feelings', categoryIcon: '💜', name: 'TIRED', emoji: '🥱', icon: '🥱', word: 'TIRED', difficulty: 'medium', gridCol: 1, gridRow: 5 },
-    { index: 23, type: 'special_trap', name: 'TRAP -2', icon: '🐌', label: 'Move Back 2!', gridCol: 1, gridRow: 4 },
-    { index: 24, type: 'special_lucky', name: 'LUCKY ROLL', icon: '🎲', label: 'Roll Again!', gridCol: 1, gridRow: 3 },
-    { index: 25, type: 'special_bonus', name: 'BONUS STAR', icon: '⭐', label: '+1 Free Star!', gridCol: 1, gridRow: 2 }
+    // Left Column: Spaces 20 to 25 (Moving Up ⬆️)
+    { index: 20, type: 'special_miss', name: 'MISS A TURN', icon: '⏸️', label: 'Skip Turn', arrow: '⬆️', gridCol: 1, gridRow: 7 },
+    { index: 21, type: 'category', category: 'colors', categoryName: 'COLOR', icon: '💙', name: 'GREEN', emoji: '🟢', arrow: '⬆️', difficulty: 'easy', gridCol: 1, gridRow: 6 },
+    { index: 22, type: 'category', category: 'feelings', categoryName: 'FEELING', icon: '💜', name: 'TIRED', emoji: '🥱', arrow: '⬆️', difficulty: 'medium', gridCol: 1, gridRow: 5 },
+    { index: 23, type: 'special_trap', name: 'TRAP', icon: '🐌', label: '-2 Spaces!', arrow: '⬆️', gridCol: 1, gridRow: 4 },
+    { index: 24, type: 'special_bonus', name: 'BONUS', icon: '⭐', label: '+2 Stars!', arrow: '⬆️', gridCol: 1, gridRow: 3 },
+    { index: 25, type: 'finish', name: 'FINISH', icon: '🏆', label: 'DESTINATION! (+5 ⭐)', arrow: '🏁', gridCol: 1, gridRow: 2 }
   ];
+
+  window.MONOPOLY_BOARD_TILES = MONOPOLY_BOARD_TILES;
 
   class EmojiMonopolyEngine {
     constructor(gameApp) {
@@ -887,6 +891,12 @@
       this.roundBadge = document.getElementById('m-round-badge');
       this.btnReturnMain = document.getElementById('btn-monopoly-return-main');
       this.btnResetMatch = document.getElementById('btn-monopoly-reset');
+
+      // Progress Tracker Elements
+      this.trackPinBlue = document.getElementById('m-track-pin-blue');
+      this.trackPinRed = document.getElementById('m-track-pin-red');
+      this.trackBluePos = document.getElementById('m-track-blue-pos');
+      this.trackRedPos = document.getElementById('m-track-red-pos');
 
       // Board Grid
       this.boardGrid = document.getElementById('monopoly-board-grid');
@@ -1090,21 +1100,48 @@
         cell.style.gridColumn = tile.gridCol;
         cell.style.gridRow = tile.gridRow;
 
+        // Tile Header: Number Badge & Directional Arrow
+        const headerRow = document.createElement('div');
+        headerRow.className = 'm-tile-header-row';
+
+        const numBadge = document.createElement('span');
+        numBadge.className = 'm-tile-num-badge';
+        if (tile.type === 'start') {
+          numBadge.textContent = '🏁 START';
+        } else if (tile.type === 'finish') {
+          numBadge.textContent = '🏆 FINISH';
+        } else {
+          numBadge.textContent = `#${tile.index}`;
+        }
+        headerRow.appendChild(numBadge);
+
+        if (tile.arrow && tile.type !== 'finish') {
+          const arrow = document.createElement('span');
+          arrow.className = 'm-tile-arrow';
+          arrow.textContent = tile.arrow;
+          headerRow.appendChild(arrow);
+        }
+        cell.appendChild(headerRow);
+
+        // Icon
         const icon = document.createElement('span');
         icon.className = 'm-tile-icon';
         icon.textContent = tile.icon || '⭐';
         cell.appendChild(icon);
 
+        // Clean Name / Category Label
         const name = document.createElement('span');
         name.className = 'm-tile-name';
         name.textContent = tile.name;
         cell.appendChild(name);
 
+        // Ownership Badge
         const ownerBadge = document.createElement('div');
         ownerBadge.className = 'm-owner-badge';
         ownerBadge.id = `owner-badge-${tile.index}`;
         cell.appendChild(ownerBadge);
 
+        // Token Avatars Tray
         const tokensTray = document.createElement('div');
         tokensTray.className = 'm-tile-tokens-tray';
         tokensTray.id = `tokens-tray-${tile.index}`;
@@ -1117,13 +1154,15 @@
     }
 
     updateTokensOnBoard() {
+      // Clear board trays
       for (let i = 0; i < 26; i++) {
         const tray = document.getElementById(`tokens-tray-${i}`);
         if (tray) tray.innerHTML = '';
       }
 
       // Blue Token
-      const blueTray = document.getElementById(`tokens-tray-${this.teams.blue.position}`);
+      const bluePos = Math.min(25, Math.max(0, this.teams.blue.position));
+      const blueTray = document.getElementById(`tokens-tray-${bluePos}`);
       if (blueTray) {
         const blueToken = document.createElement('div');
         blueToken.className = 'm-token-avatar token-blue';
@@ -1133,13 +1172,29 @@
       }
 
       // Red Token
-      const redTray = document.getElementById(`tokens-tray-${this.teams.red.position}`);
+      const redPos = Math.min(25, Math.max(0, this.teams.red.position));
+      const redTray = document.getElementById(`tokens-tray-${redPos}`);
       if (redTray) {
         const redToken = document.createElement('div');
         redToken.className = 'm-token-avatar token-red';
         redToken.id = 'avatar-token-red';
         redToken.textContent = '🔴';
         redTray.appendChild(redToken);
+      }
+
+      // Update Linear "You Are Here" Progress Tracker
+      if (this.trackPinBlue) {
+        this.trackPinBlue.style.left = `${(bluePos / 25) * 100}%`;
+      }
+      if (this.trackBluePos) {
+        this.trackBluePos.textContent = bluePos === 25 ? '🏆 FINISH' : (bluePos === 0 ? 'START' : bluePos);
+      }
+
+      if (this.trackPinRed) {
+        this.trackPinRed.style.left = `${(redPos / 25) * 100}%`;
+      }
+      if (this.trackRedPos) {
+        this.trackRedPos.textContent = redPos === 25 ? '🏆 FINISH' : (redPos === 0 ? 'START' : redPos);
       }
     }
 
@@ -1162,7 +1217,7 @@
     }
 
     // =========================================================================
-    // PRE-ROLL QUESTION SYSTEM (8-Second Challenge)
+    // PRE-ROLL QUESTION SYSTEM (15s Easy / 12s Medium / 10s Hard)
     // =========================================================================
     startPreRollTurn() {
       clearInterval(this.countdownInterval);
@@ -1183,8 +1238,16 @@
       this.currentQuestion = this.generateQuestion('normal');
       this.renderQuestionData(this.currentQuestion, `${teamDot} ${teamName}: ANSWER TO EARN ROLL!`);
 
-      // Start 8-second countdown
-      const duration = this.currentQuestion.isSpeed ? 5 : 8;
+      // Timer scaling: Easy = 15s, Medium = 12s, Hard = 10s
+      let duration = 12;
+      if (this.currentQuestion.difficulty === 'easy') {
+        duration = 15;
+      } else if (this.currentQuestion.difficulty === 'hard') {
+        duration = 10;
+      } else if (this.currentQuestion.isSpeed) {
+        duration = 5;
+      }
+
       this.startCountdown(duration, () => this.handleTimeout());
     }
 
@@ -1211,12 +1274,10 @@
           items: [
             { emoji: '🥑', word: 'AVOCADO' },
             { emoji: '🍕', word: 'PIZZA' },
-            { emoji: '🥦', word: 'BROCCOLI' },
             { emoji: '🍓', word: 'STRAWBERRY' },
-            { emoji: '🥪', word: 'SANDWICH' },
-            { emoji: '🥗', word: 'SALAD' },
             { emoji: '🍦', word: 'ICE CREAM' },
-            { emoji: '🍏', word: 'GREEN APPLE' },
+            { emoji: '🥦', word: 'BROCCOLI' },
+            { emoji: '🍎', word: 'APPLE' },
             { emoji: '🍌', word: 'BANANA' }
           ]
         },
@@ -1377,13 +1438,13 @@
 
       if (q.difficulty === 'hard') {
         this.qDiffBadge.className = 'm-q-diff-tag diff-hard';
-        this.qDiffBadge.textContent = '🔴 HARD (+2 ⭐)';
+        this.qDiffBadge.textContent = '🔴 HARD (10s) (+2 ⭐)';
       } else if (q.difficulty === 'medium') {
         this.qDiffBadge.className = 'm-q-diff-tag diff-medium';
-        this.qDiffBadge.textContent = '🟡 MEDIUM (+2 ⭐)';
+        this.qDiffBadge.textContent = '🟡 MEDIUM (12s) (+2 ⭐)';
       } else {
         this.qDiffBadge.className = 'm-q-diff-tag diff-easy';
-        this.qDiffBadge.textContent = '🟢 EASY (+1 ⭐)';
+        this.qDiffBadge.textContent = '🟢 EASY (15s) (+1 ⭐)';
       }
 
       if (q.photoUrl) {
@@ -1457,21 +1518,21 @@
         if (q.spokenWord) this.audio.speak(q.spokenWord);
 
         this.fbIcon.textContent = '🎉';
-        this.fbText.textContent = `CORRECT! (+${pts} ⭐) ROLL THE DICE!`;
+        this.fbText.textContent = `CORRECT! (+${pts} ⭐) 🔓 DICE UNLOCKED!`;
         this.feedbackBanner.classList.remove('hidden', 'fb-wrong');
 
         if (this.isStealChallenge) {
           // Steal resolution
           setTimeout(() => this.resolveStealChallenge(true), 1200);
         } else {
-          // Pre-roll success -> Switch to dice stage
+          // Pre-roll success -> Switch to dice stage with unlocked state
           setTimeout(() => {
             this.stageQuestion.classList.add('hidden');
             this.stageDice.classList.remove('hidden');
-            this.diceHeading.textContent = `${this.activeTeam.toUpperCase()} TEAM: ROLL THE DICE!`;
-            this.diceSub.textContent = 'Tap below to roll!';
+            this.diceHeading.textContent = `🔓 DICE UNLOCKED: ${this.activeTeam.toUpperCase()} TEAM!`;
+            this.diceSub.textContent = 'Tap ROLL THE DICE below to advance your token!';
             this.btnRollDice.disabled = false;
-          }, 1200);
+          }, 1100);
         }
 
       } else {
@@ -1539,7 +1600,7 @@
         this.moveToast.classList.remove('hidden');
         this.toastSteps.textContent = roll;
 
-        // Step-by-step movement
+        // Step-by-step movement along the linear path
         setTimeout(() => {
           this.animateTokenStepByStep(this.activeTeam, roll);
         }, 600);
@@ -1550,22 +1611,15 @@
       let stepCount = 0;
       const stepInterval = setInterval(() => {
         stepCount++;
-        const nextPos = (this.teams[teamKey].position + 1) % 26;
+        const currentPos = this.teams[teamKey].position;
+        const nextPos = Math.min(25, currentPos + 1);
         this.teams[teamKey].position = nextPos;
 
         this.audio.playHop();
-
-        // Pass START space bonus (+2 Stars)
-        if (nextPos === 0) {
-          this.teams[teamKey].score += 2;
-          this.updateHUD();
-          this.audio.playSuccess();
-          this.confetti.fire(30);
-        }
-
         this.updateTokensOnBoard();
 
-        if (stepCount >= totalSteps) {
+        // Check if reached FINISH (Space 25)
+        if (nextPos === 25 || stepCount >= totalSteps) {
           clearInterval(stepInterval);
           this.moveToast.classList.add('hidden');
           setTimeout(() => {
@@ -1591,7 +1645,7 @@
 
       // 1. START SPACE
       if (tile.type === 'start') {
-        this.showEventModal('🏁', 'LANDED ON START!', `${teamName} landed on START! +2 Bonus Stars!`, null, () => {
+        this.showEventModal('🏁', 'AT START!', `${teamName} is at START! +2 Bonus Stars!`, null, () => {
           this.teams[teamKey].score += 2;
           this.updateHUD();
           this.advanceTurn();
@@ -1599,7 +1653,20 @@
         return;
       }
 
-      // 2. CATEGORY SPACES (Ownership & Steal Mechanic)
+      // 2. FINISH SPACE (Final Destination!)
+      if (tile.type === 'finish') {
+        this.teams[teamKey].score += 5;
+        this.updateHUD();
+        this.audio.playFanfare();
+        this.confetti.fire(100);
+
+        this.showEventModal('🏆', 'REACHED FINISH!', `${teamName} reached FINISH and earns +5 Victory Stars!`, null, () => {
+          this.showWinnerCeremony();
+        });
+        return;
+      }
+
+      // 3. CATEGORY SPACES (Ownership & Steal Mechanic)
       if (tile.type === 'category') {
         const owner = this.tileOwnership[pos];
 
@@ -1614,9 +1681,9 @@
           this.confetti.fire(30);
 
           this.showEventModal(
-            tile.emoji,
+            tile.emoji || tile.icon,
             `${teamName} CLAIMS ${tile.name}!`,
-            `Great job! ${teamName} now owns this space and earns +1 Star!`,
+            `Great job! ${teamName} now owns this ${tile.categoryName} space and earns +1 Star!`,
             null,
             () => this.advanceTurn()
           );
@@ -1638,67 +1705,118 @@
           return;
 
         } else {
-          // Opponent space -> STEAL CHALLENGE!
+          // Landed on opponent's space -> STEAL CHALLENGE!
           this.triggerStealChallenge(pos, teamKey, opponentKey);
           return;
         }
       }
 
-      // 3. SPECIAL EVENT SPACES
-      if (tile.type === 'special_speed') {
-        this.showEventModal('⚡', 'SPEED ZONE!', 'Speed Zone! Keep up the great pace!', null, () => this.advanceTurn());
-      } else if (tile.type === 'special_mystery') {
+      // 4. SPECIAL SPACES
+      if (tile.type === 'special_bonus') {
+        // ⭐ BONUS STAR
+        this.teams[teamKey].score += 2;
+        this.updateHUD();
+        this.audio.playSuccess();
+        this.confetti.fire(40);
+        this.showEventModal('⭐', 'BONUS STARS!', `${teamName} landed on BONUS STAR! +2 Free Stars!`, null, () => this.advanceTurn());
+        return;
+      }
+
+      if (tile.type === 'special_mystery') {
+        // 🎁 MYSTERY BOX
         this.handleMysteryBox(teamKey);
-      } else if (tile.type === 'special_boost') {
-        this.showEventModal('🚀', 'ROCKET BOOST!', `${teamName} hops forward 2 extra spaces!`, null, () => {
-          this.animateTokenStepByStep(teamKey, 2);
-        });
-      } else if (tile.type === 'special_trap') {
-        this.showEventModal('🐌', 'SLIME TRAP!', `${teamName} moves backward 2 spaces!`, null, () => {
-          this.teams[teamKey].position = (this.teams[teamKey].position - 2 + 26) % 26;
+        return;
+      }
+
+      if (tile.type === 'special_boost') {
+        // 🚀 BOOST (+2 Spaces)
+        this.showEventModal('🚀', 'ROCKET BOOST!', `${teamName} blasts forward 2 spaces!`, null, () => {
+          const nextPos = Math.min(25, this.teams[teamKey].position + 2);
+          this.teams[teamKey].position = nextPos;
           this.updateTokensOnBoard();
-          this.advanceTurn();
+          this.audio.playHop();
+          setTimeout(() => this.handleSpaceLanding(teamKey, nextPos), 400);
         });
-      } else if (tile.type === 'special_double') {
-        this.handleDoubleOrNothing(teamKey);
-      } else if (tile.type === 'special_memory') {
-        this.handleMemorySpace(teamKey);
-      } else if (tile.type === 'special_miss') {
-        this.teams[teamKey].missTurn = true;
-        this.showEventModal('⏸️', 'MISS A TURN!', `${teamName} is resting and will miss their next turn!`, null, () => this.advanceTurn());
-      } else if (tile.type === 'special_lucky') {
-        this.showEventModal('🎲', 'LUCKY ROLL!', `${teamName} gets a free extra roll!`, null, () => {
+        return;
+      }
+
+      if (tile.type === 'special_trap') {
+        // 🐌 TRAP (-2 Spaces)
+        this.showEventModal('🐌', 'SLIME TRAP!', `Oh no! ${teamName} slips back 2 spaces!`, null, () => {
+          const nextPos = Math.max(0, this.teams[teamKey].position - 2);
+          this.teams[teamKey].position = nextPos;
+          this.updateTokensOnBoard();
+          this.audio.playHop();
+          setTimeout(() => this.advanceTurn(), 400);
+        });
+        return;
+      }
+
+      if (tile.type === 'special_lucky') {
+        // 🎲 LUCKY ROLL (Roll again!)
+        this.showEventModal('🎲', 'LUCKY ROLL!', `${teamName} earned an immediate FREE DICE ROLL!`, null, () => {
           this.stageQuestion.classList.add('hidden');
           this.stageDice.classList.remove('hidden');
+          this.diceHeading.textContent = `🎲 LUCKY FREE ROLL: ${teamName}!`;
+          this.diceSub.textContent = 'Roll the dice again right now!';
           this.btnRollDice.disabled = false;
           this.isRollingOrMoving = false;
         });
-      } else if (tile.type === 'special_bonus') {
-        this.teams[teamKey].score += 1;
-        this.updateHUD();
-        this.audio.playSuccess();
-        this.showEventModal('⭐', 'FREE BONUS STAR!', `${teamName} found a bonus star on the board! +1 Star!`, null, () => this.advanceTurn());
-      } else {
-        this.advanceTurn();
+        return;
       }
+
+      if (tile.type === 'special_miss') {
+        // ⏸️ MISS A TURN
+        this.teams[teamKey].missTurn = true;
+        this.showEventModal('⏸️', 'MISS A TURN!', `${teamName} needs to rest! Skip your next turn!`, null, () => this.advanceTurn());
+        return;
+      }
+
+      if (tile.type === 'special_challenge') {
+        // ⚡ CHALLENGE (+2 Stars on correct)
+        this.showEventModal(
+          '⚡',
+          'HARD CHALLENGE!',
+          `${teamName}: Answer a 🔴 HARD Question for +2 Bonus Stars!`,
+          null,
+          () => {
+            this.currentQuestionAnswered = false;
+            this.stageQuestion.classList.remove('hidden');
+            this.stageDice.classList.add('hidden');
+            this.feedbackBanner.classList.add('hidden');
+
+            this.currentQuestion = this.generateQuestion('challenge', null, 'hard');
+            this.renderQuestionData(this.currentQuestion, `⚡ HARD CHALLENGE: ${teamName}`);
+            this.startCountdown(10, () => {
+              this.audio.playWrong();
+              setTimeout(() => this.advanceTurn(), 1400);
+            });
+          }
+        );
+        return;
+      }
+
+      // Default fallback
+      this.advanceTurn();
     }
 
     updateTileOwnershipUI(tileIndex, teamKey) {
-      const tileElem = this.boardGrid.querySelector(`[data-index="${tileIndex}"]`);
-      if (!tileElem) return;
-
-      tileElem.classList.remove('owned-blue', 'owned-red');
-      if (teamKey === 'blue') tileElem.classList.add('owned-blue');
-      if (teamKey === 'red') tileElem.classList.add('owned-red');
-
       const badge = document.getElementById(`owner-badge-${tileIndex}`);
-      if (badge) {
-        badge.className = `m-owner-badge m-owner-${teamKey}`;
-        badge.textContent = teamKey === 'blue' ? '🔵' : '🔴';
+      if (!badge) return;
+
+      badge.className = 'm-owner-badge';
+      if (teamKey === 'blue') {
+        badge.classList.add('owner-blue');
+        badge.textContent = '🔵 BLUE';
+      } else if (teamKey === 'red') {
+        badge.classList.add('owner-red');
+        badge.textContent = '🔴 RED';
+      } else {
+        badge.textContent = '';
       }
     }
 
-    // --- Steal Challenge ---
+    // --- Steal Challenge Event ---
     triggerStealChallenge(tileIndex, attackerKey, defenderKey) {
       const tile = MONOPOLY_BOARD_TILES[tileIndex];
       const attackerName = attackerKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
@@ -1707,7 +1825,7 @@
       this.showEventModal(
         '⚡',
         'STEAL CHALLENGE!',
-        `${attackerName} landed on ${defenderName}'s ${tile.name}! Answer the HARD question to STEAL it!`,
+        `${attackerName} landed on ${defenderName}'s space (${tile.name})!\nAnswer this 🔴 HARD question correctly to STEAL it!`,
         null,
         () => {
           this.isStealChallenge = true;
@@ -1718,9 +1836,14 @@
           this.stageDice.classList.add('hidden');
           this.feedbackBanner.classList.add('hidden');
 
-          this.currentQuestion = this.generateQuestion('steal', tile.category, 'hard');
-          this.renderQuestionData(this.currentQuestion, `🔴 STEAL CHALLENGE: ${attackerName}!`);
-          this.startCountdown(8, () => this.handleTimeout());
+          // Hard question for steal
+          this.currentQuestion = this.generateQuestion('steal', tile.category || null, 'hard');
+          this.renderQuestionData(this.currentQuestion, `⚡ STEAL CHALLENGE: ${attackerName}`);
+
+          // 10s Countdown for Hard steal challenge
+          this.startCountdown(10, () => {
+            this.handleTimeout();
+          });
         }
       );
     }
@@ -1777,51 +1900,22 @@
           this.audio.playSuccess();
           this.advanceTurn();
         } else if (r.boost) {
-          this.animateTokenStepByStep(teamKey, r.boost);
+          const nextPos = Math.min(25, this.teams[teamKey].position + 2);
+          this.teams[teamKey].position = nextPos;
+          this.updateTokensOnBoard();
+          this.audio.playHop();
+          setTimeout(() => this.handleSpaceLanding(teamKey, nextPos), 400);
         } else if (r.extraRoll) {
           this.stageQuestion.classList.add('hidden');
           this.stageDice.classList.remove('hidden');
+          this.diceHeading.textContent = `🎲 LUCKY FREE ROLL: ${teamName}!`;
+          this.diceSub.textContent = 'Roll the dice again right now!';
           this.btnRollDice.disabled = false;
           this.isRollingOrMoving = false;
         } else {
           this.advanceTurn();
         }
       });
-    }
-
-    // --- Double or Nothing ---
-    handleDoubleOrNothing(teamKey) {
-      const teamName = teamKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
-      this.showEventModal(
-        '💰',
-        'DOUBLE OR NOTHING!',
-        `${teamName}: Answer correctly for +3 Stars! (Wrong = -1 Star)`,
-        null,
-        () => {
-          this.currentQuestionAnswered = false;
-          this.stageQuestion.classList.remove('hidden');
-          this.stageDice.classList.add('hidden');
-          this.feedbackBanner.classList.add('hidden');
-
-          this.currentQuestion = this.generateQuestion('double', null, 'medium');
-          this.renderQuestionData(this.currentQuestion, `💰 DOUBLE OR NOTHING: ${teamName}`);
-          this.startCountdown(8, () => {
-            this.teams[teamKey].score = Math.max(0, this.teams[teamKey].score - 1);
-            this.updateHUD();
-            this.audio.playWrong();
-            setTimeout(() => this.advanceTurn(), 1400);
-          });
-        }
-      );
-    }
-
-    // --- Memory Space ---
-    handleMemorySpace(teamKey) {
-      const teamName = teamKey === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
-      this.teams[teamKey].score += 2;
-      this.updateHUD();
-      this.audio.playSuccess();
-      this.showEventModal('🧠', 'MEMORY MASTERY!', `${teamName} completed the memory check! +2 Bonus Stars!`, null, () => this.advanceTurn());
     }
 
     showEventModal(badge, title, desc, interactiveHtml, onContinue) {
@@ -1846,6 +1940,12 @@
     advanceTurn() {
       clearInterval(this.countdownInterval);
 
+      // Check if any team has reached Space 25 (FINISH) or if max rounds met
+      if (this.teams.blue.position >= 25 || this.teams.red.position >= 25) {
+        this.showWinnerCeremony();
+        return;
+      }
+
       if (this.activeTeam === 'red') {
         this.currentRound++;
         if (this.currentRound > this.maxRounds) {
@@ -1854,11 +1954,9 @@
         }
       }
 
-      // Switch active team
       this.activeTeam = this.activeTeam === 'blue' ? 'red' : 'blue';
-      this.updateHUD();
 
-      // Check if new active team has missed turn
+      // Check if team has missTurn
       if (this.teams[this.activeTeam].missTurn) {
         this.teams[this.activeTeam].missTurn = false;
         const teamName = this.activeTeam === 'blue' ? 'BLUE TEAM' : 'RED TEAM';
