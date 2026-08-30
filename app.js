@@ -2517,7 +2517,7 @@
       return processedQ;
     }
 
-    renderQuestionData(q, headerPrompt) {
+    renderQuestionData(q) {
       if (!validateQuestion(q)) {
         // Discard invalid question and get a valid one
         q = this.getNextValidQuestion();
@@ -2525,7 +2525,7 @@
 
       this.qCatIcon.textContent = q.categoryIcon || '⭐';
       this.qCatName.textContent = q.categoryName || 'QUESTION';
-      this.qPromptText.textContent = headerPrompt || q.question || 'WHAT IS THIS?';
+      this.qPromptText.textContent = (q.question || 'WHAT IS THIS?').toUpperCase();
 
       if (q.difficulty === 'hard') {
         this.qDiffBadge.className = 'm-q-diff-tag diff-hard';
@@ -2538,7 +2538,7 @@
         this.qDiffBadge.textContent = `🟢 EASY (${q.time}s) (+1 ⭐)`;
       }
 
-      // Visual rendering: Photo or Emoji (NEVER '?' or '❓')
+      // Visual rendering: Photo or Emoji (STRICTLY NEVER '?' or '❓')
       if (q.visualType === 'photo' && q.visual && q.visual.startsWith('http')) {
         this.qEmoji.classList.add('hidden');
         this.qPhoto.classList.remove('hidden');
@@ -2556,7 +2556,7 @@
         this.qEmoji.textContent = q.visual;
       }
 
-      // Render 3 choices
+      // Render exactly 3 choices
       this.choiceButtons.forEach((btn, i) => {
         btn.disabled = false;
         btn.classList.remove('is-correct', 'is-wrong', 'is-dimmed');
@@ -2885,7 +2885,7 @@
             this.feedbackBanner.classList.add('hidden');
 
             this.currentQuestion = this.getNextValidQuestion(null, 'hard');
-            this.renderQuestionData(this.currentQuestion, `⚡ HARD CHALLENGE: ${teamName}`);
+            this.renderQuestionData(this.currentQuestion);
             this.startCountdown(10, () => {
               this.audio.playWrong();
               setTimeout(() => this.advanceTurn(), 1400);
@@ -2937,7 +2937,7 @@
 
           // Hard question for steal
           this.currentQuestion = this.getNextValidQuestion(tile.category || null, 'hard');
-          this.renderQuestionData(this.currentQuestion, `⚡ STEAL CHALLENGE: ${attackerName}`);
+          this.renderQuestionData(this.currentQuestion);
 
           // 10s Countdown for Hard steal challenge
           this.startCountdown(10, () => {
