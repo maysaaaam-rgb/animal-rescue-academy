@@ -3249,6 +3249,1309 @@
   window.EmojiCharadesEngine = EmojiCharadesEngine;
 
   // =========================================================================
+  // 3.6. 🎮 HELP SAM! — TECH ADVENTURE DATASETS & ENGINE
+  // =========================================================================
+  const SAM_STORY_SLIDES = [
+    {
+      slideNum: 1,
+      visual: '🧑💻 🏠',
+      caption: 'THIS IS SAM.',
+      sub: 'Sam lives in Sunnyville!'
+    },
+    {
+      slideNum: 2,
+      visual: '🧑💻 💻',
+      caption: 'SAM HAS A COMPUTER.',
+      sub: 'Sam loves using his computer!'
+    },
+    {
+      slideNum: 3,
+      visual: '🧑💻 🎮',
+      caption: 'SAM LIKES GAMES.',
+      sub: 'Sam plays fun adventure games!'
+    },
+    {
+      slideNum: 4,
+      visual: '🎮 ❌ 😟',
+      caption: 'OH NO! GAME ERROR!',
+      sub: 'The game will not open today!'
+    },
+    {
+      slideNum: 5,
+      visual: '🧑💻 💡 🛠️',
+      caption: "LET'S HELP SAM FIX IT!",
+      sub: 'Follow the tech steps to solve the problem!'
+    }
+  ];
+
+  const SAM_TECH_ICONS = [
+    { icon: '🔐', name: 'PASSWORD', hint: 'Keeps your account safe!' },
+    { icon: '📧', name: 'EMAIL', hint: 'Send and get messages!' },
+    { icon: '📶', name: 'WI-FI', hint: 'Connects you to the internet!' },
+    { icon: '👆', name: 'CLICK', hint: 'Touch or tap the screen!' },
+    { icon: '🗑️', name: 'DELETE', hint: 'Remove old unwanted files!' },
+    { icon: '⬇️', name: 'DOWNLOAD', hint: 'Get new files and updates!' },
+    { icon: '🌐', name: 'WEBSITE', hint: 'Visit pages on the internet!' },
+    { icon: '🎮', name: 'GAME', hint: 'Play and have fun!' },
+    { icon: '🛠️', name: 'FIX', hint: 'Repair tech problems!' },
+    { icon: '⏻', name: 'POWER', hint: 'Turn computer on or restart!' },
+    { icon: '🔑', name: 'RECOVER', hint: 'Get back your lost password!' }
+  ];
+
+  const SAM_PRACTICE_QUESTIONS = [
+    {
+      promptVisual: '🧑💻 😟',
+      promptText: 'PASSWORD?',
+      choices: [
+        { emoji: '🔐', label: 'PASSWORD', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '📶', label: 'WI-FI', correct: false }
+      ]
+    },
+    {
+      promptVisual: '💻 🌐',
+      promptText: 'WEBSITE?',
+      choices: [
+        { emoji: '🎮', label: 'GAME', correct: false },
+        { emoji: '🌐', label: 'WEBSITE', correct: true },
+        { emoji: '📧', label: 'EMAIL', correct: false }
+      ]
+    },
+    {
+      promptVisual: '📶 ❓',
+      promptText: 'WI-FI?',
+      choices: [
+        { emoji: '📶', label: 'WI-FI', correct: true },
+        { emoji: '🔑', label: 'RECOVER', correct: false },
+        { emoji: '⏻', label: 'POWER', correct: false }
+      ]
+    },
+    {
+      promptVisual: '📥 ⬇️',
+      promptText: 'DOWNLOAD?',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '🔐', label: 'PASSWORD', correct: false },
+        { emoji: '⬇️', label: 'DOWNLOAD', correct: true }
+      ]
+    },
+    {
+      promptVisual: '🗑️ ❌',
+      promptText: 'DELETE?',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE', correct: true },
+        { emoji: '🎮', label: 'GAME', correct: false },
+        { emoji: '📧', label: 'EMAIL', correct: false }
+      ]
+    }
+  ];
+
+  const SAM_STORY_STEPS = [
+    {
+      step: 1,
+      promptVisual: '🧑💻 😟 🔐',
+      promptText: 'SAM FORGOT HIS PASSWORD!',
+      subText: 'What does Sam need to recover his account?',
+      choices: [
+        { emoji: '🔑', label: 'RECOVER', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '📶', label: 'WI-FI', correct: false }
+      ]
+    },
+    {
+      step: 2,
+      promptVisual: '🧑💻 📩',
+      promptText: 'HE CLICKS "FORGOT PASSWORD"!',
+      subText: 'Where does Sam get his new password?',
+      choices: [
+        { emoji: '🎮', label: 'GAME', correct: false },
+        { emoji: '📧', label: 'EMAIL', correct: true },
+        { emoji: '⏻', label: 'POWER', correct: false }
+      ]
+    },
+    {
+      step: 3,
+      promptVisual: '💻 📶 ❓',
+      promptText: 'SAM NEEDS THE INTERNET!',
+      subText: 'What does he connect to?',
+      choices: [
+        { emoji: '📶', label: 'WI-FI', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '🔐', label: 'PASSWORD', correct: false }
+      ]
+    },
+    {
+      step: 4,
+      promptVisual: '🎮 ❌ 😟',
+      promptText: "THE GAME STILL DOESN'T WORK!",
+      subText: 'What does Sam need to do?',
+      choices: [
+        { emoji: '🛠️', label: 'FIX IT', correct: true },
+        { emoji: '📧', label: 'EMAIL', correct: false },
+        { emoji: '🔑', label: 'RECOVER', correct: false }
+      ]
+    },
+    {
+      step: 5,
+      promptVisual: '🗑️ 🎮 (OLD)',
+      promptText: 'REMOVE THE BROKEN VERSION!',
+      subText: 'What does Sam do to the old game?',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE', correct: true },
+        { emoji: '📶', label: 'WI-FI', correct: false },
+        { emoji: '🔐', label: 'PASSWORD', correct: false }
+      ]
+    },
+    {
+      step: 6,
+      promptVisual: '💻 🌐',
+      promptText: 'FIND THE OFFICIAL GAME PAGE!',
+      subText: 'Where does Sam go on the internet?',
+      choices: [
+        { emoji: '🌐', label: 'WEBSITE', correct: true },
+        { emoji: '⏻', label: 'POWER', correct: false },
+        { emoji: '🔑', label: 'RECOVER', correct: false }
+      ]
+    },
+    {
+      step: 7,
+      promptVisual: '🌐 ⬇️ 🎮 (NEW)',
+      promptText: 'GET THE LATEST GAME VERSION!',
+      subText: 'What does Sam click on the website?',
+      choices: [
+        { emoji: '⬇️', label: 'DOWNLOAD', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '📧', label: 'EMAIL', correct: false }
+      ]
+    },
+    {
+      step: 8,
+      promptVisual: '🧑💻 🎮 ✅ 🤩',
+      promptText: 'THE NEW GAME IS READY!',
+      subText: 'What can Sam do now?',
+      choices: [
+        { emoji: '🎮', label: 'PLAY GAME', correct: true },
+        { emoji: '🔐', label: 'PASSWORD', correct: false },
+        { emoji: '🛠️', label: 'FIX', correct: false }
+      ]
+    }
+  ];
+
+  const SAM_LEVELUP_CHALLENGES = [
+    {
+      levelBadge: 'LEVEL 1: EMOJIS + WORDS',
+      promptVisual: '🧑💻 🔐 ❓',
+      promptText: 'SAM CANNOT LOG IN!',
+      subText: 'Choose the correct tool to recover password:',
+      choices: [
+        { emoji: '🔑', label: 'RECOVER KEY', correct: true },
+        { emoji: '🗑️', label: 'DELETE TRASH', correct: false },
+        { emoji: '📶', label: 'WI-FI SIGNAL', correct: false }
+      ]
+    },
+    {
+      levelBadge: 'LEVEL 2: PICTURES ONLY',
+      promptVisual: '💻 📶 ❌',
+      promptText: 'NO INTERNET!',
+      subText: 'Touch the correct icon:',
+      choices: [
+        { emoji: '📶', label: '', correct: true },
+        { emoji: '📧', label: '', correct: false },
+        { emoji: '🎮', label: '', correct: false }
+      ]
+    },
+    {
+      levelBadge: 'LEVEL 3: ACTION DECISION',
+      promptVisual: '💻 📁 ❌ 🗑️',
+      promptText: 'OLD BROKEN FILE ON COMPUTER',
+      subText: 'What action should we take?',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE OLD FILE', correct: true },
+        { emoji: '⬇️', label: 'DOWNLOAD MORE', correct: false },
+        { emoji: '🔐', label: 'LOCK SCREEN', correct: false },
+        { emoji: '📧', label: 'SEND EMAIL', correct: false }
+      ]
+    },
+    {
+      levelBadge: 'LEVEL 4: SITUATION CLUES',
+      promptVisual: '🎮 ❌ 🌐 ⬇️',
+      promptText: "SAM CAN'T PLAY HIS GAME.",
+      subText: 'What is the best solution?',
+      choices: [
+        { emoji: '⬇️', label: 'DOWNLOAD NEW VERSION', correct: true },
+        { emoji: '🔐', label: 'CHANGE PASSWORD', correct: false },
+        { emoji: '⏻', label: 'UNPLUG PC', correct: false },
+        { emoji: '📧', label: 'SEND EMAIL', correct: false }
+      ]
+    },
+    {
+      levelBadge: 'LEVEL 5: MULTI-STEP DIAGNOSTIC',
+      promptVisual: '🎮 ❌ 💻 📶 ✅',
+      promptText: 'INTERNET IS OK, BUT GAME CRASHES!',
+      subText: 'Decide what to do next:',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE & REINSTALL', correct: true },
+        { emoji: '🔐', label: 'CHECK PASSWORD', correct: false },
+        { emoji: '📶', label: 'RESET WI-FI', correct: false },
+        { emoji: '🔑', label: 'RECOVER KEY', correct: false }
+      ]
+    }
+  ];
+
+  const SAM_MINI_CHALLENGES = [
+    {
+      promptVisual: '💻 🐌',
+      promptText: 'COMPUTER IS SLOW!',
+      subText: 'How do we fix it?',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE JUNK FILES', correct: true },
+        { emoji: '⬇️', label: 'DOWNLOAD MORE', correct: false },
+        { emoji: '🔐', label: 'LOCK SCREEN', correct: false }
+      ]
+    },
+    {
+      promptVisual: '📄 ❌ 😟',
+      promptText: "CANNOT OPEN A FILE!",
+      subText: 'What do we need?',
+      choices: [
+        { emoji: '⬇️', label: 'DOWNLOAD APP', correct: true },
+        { emoji: '🗑️', label: 'DELETE ALL', correct: false },
+        { emoji: '📶', label: 'WI-FI ONLY', correct: false }
+      ]
+    },
+    {
+      promptVisual: '🌐 ❓',
+      promptText: "CAN'T FIND A WEBSITE!",
+      subText: 'What should we check?',
+      choices: [
+        { emoji: '🌐', label: 'CHECK WEB ADDRESS', correct: true },
+        { emoji: '🎮', label: 'OPEN GAME', correct: false },
+        { emoji: '🔐', label: 'ENTER PASSWORD', correct: false }
+      ]
+    },
+    {
+      promptVisual: '🖥️ 🧊',
+      promptText: 'SCREEN IS FROZEN!',
+      subText: 'What should you press?',
+      choices: [
+        { emoji: '⏻', label: 'RESTART / POWER', correct: true },
+        { emoji: '📧', label: 'CHECK EMAIL', correct: false },
+        { emoji: '⬇️', label: 'DOWNLOAD', correct: false }
+      ]
+    },
+    {
+      promptVisual: '🔊 ❌ 🔇',
+      promptText: 'NO SOUND ON COMPUTER!',
+      subText: 'How do we fix sound?',
+      choices: [
+        { emoji: '🔊', label: 'TURN UP VOLUME', correct: true },
+        { emoji: '🗑️', label: 'DELETE AUDIO', correct: false },
+        { emoji: '🔐', label: 'PASSWORD', correct: false }
+      ]
+    },
+    {
+      promptVisual: '🔋 ⬇️ 🪫',
+      promptText: 'BATTERY DRAINS QUICKLY!',
+      subText: 'What should we do?',
+      choices: [
+        { emoji: '⏻', label: 'CLOSE APPS & CHARGE', correct: true },
+        { emoji: '🎮', label: 'PLAY HEAVY GAME', correct: false },
+        { emoji: '🌐', label: 'OPEN 10 WEBSITES', correct: false }
+      ]
+    },
+    {
+      promptVisual: '📢 📢 📢 ❌',
+      promptText: 'TOO MANY POP-UP ADS!',
+      subText: 'How do we fix pop-ups?',
+      choices: [
+        { emoji: '🗑️', label: 'CLOSE & BLOCK ADS', correct: true },
+        { emoji: '⬇️', label: 'CLICK ALL ADS', correct: false },
+        { emoji: '🔑', label: 'SEND PASSWORD', correct: false }
+      ]
+    },
+    {
+      promptVisual: '🔐 ❓ 😟',
+      promptText: 'FORGOT PASSWORD!',
+      subText: 'Where do you get help?',
+      choices: [
+        { emoji: '📧', label: 'EMAIL RECOVERY', correct: true },
+        { emoji: '🗑️', label: 'DELETE COMPUTER', correct: false },
+        { emoji: '🎮', label: 'PLAY GAME', correct: false }
+      ]
+    }
+  ];
+
+  const SAM_BOARD_SPACES = [
+    { id: 0, icon: '🚩', label: 'START', type: 'start', challenge: null },
+    {
+      id: 1,
+      icon: '🔐',
+      label: 'PASSWORD',
+      type: 'challenge',
+      visual: '🧑💻 🔐 ❓',
+      question: 'SAM FORGOT HIS PASSWORD!',
+      choices: [
+        { emoji: '🔑', label: 'RECOVER', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '📶', label: 'WI-FI', correct: false }
+      ]
+    },
+    {
+      id: 2,
+      icon: '📧',
+      label: 'EMAIL',
+      type: 'challenge',
+      visual: '🧑💻 📩',
+      question: 'GET PASSWORD BY EMAIL!',
+      choices: [
+        { emoji: '📧', label: 'EMAIL', correct: true },
+        { emoji: '🎮', label: 'GAME', correct: false },
+        { emoji: '⏻', label: 'POWER', correct: false }
+      ]
+    },
+    {
+      id: 3,
+      icon: '📶',
+      label: 'WI-FI',
+      type: 'challenge',
+      visual: '💻 📶 ❌',
+      question: 'HOW DO WE FIX WI-FI?',
+      choices: [
+        { emoji: '📶', label: 'CONNECT WI-FI', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '🔐', label: 'PASSWORD', correct: false }
+      ]
+    },
+    {
+      id: 4,
+      icon: '🎁',
+      label: 'BONUS +2',
+      type: 'bonus',
+      visual: '🎁 ⭐ ⭐',
+      question: 'LUCKY TECH BONUS! +2 STARS',
+      choices: []
+    },
+    {
+      id: 5,
+      icon: '🗑️',
+      label: 'DELETE',
+      type: 'challenge',
+      visual: '🗑️ 📁 (OLD)',
+      question: 'REMOVE BROKEN FILES!',
+      choices: [
+        { emoji: '🗑️', label: 'DELETE', correct: true },
+        { emoji: '📶', label: 'WI-FI', correct: false },
+        { emoji: '📧', label: 'EMAIL', correct: false }
+      ]
+    },
+    {
+      id: 6,
+      icon: '🌐',
+      label: 'WEBSITE',
+      type: 'challenge',
+      visual: '💻 🌐',
+      question: 'FIND THE GAME WEBSITE!',
+      choices: [
+        { emoji: '🌐', label: 'WEBSITE', correct: true },
+        { emoji: '⏻', label: 'POWER', correct: false },
+        { emoji: '🔑', label: 'KEY', correct: false }
+      ]
+    },
+    {
+      id: 7,
+      icon: '🔄',
+      label: 'ROLL AGAIN',
+      type: 'roll_again',
+      visual: '🔄 🎲 🚀',
+      question: 'TECH BOOST! ROLL AGAIN!',
+      choices: []
+    },
+    {
+      id: 8,
+      icon: '⬇️',
+      label: 'DOWNLOAD',
+      type: 'challenge',
+      visual: '🌐 ⬇️ 🎮',
+      question: 'DOWNLOAD THE UPDATE!',
+      choices: [
+        { emoji: '⬇️', label: 'DOWNLOAD', correct: true },
+        { emoji: '🗑️', label: 'DELETE', correct: false },
+        { emoji: '🔐', label: 'PASSWORD', correct: false }
+      ]
+    },
+    {
+      id: 9,
+      icon: '🛠️',
+      label: 'FIX IT',
+      type: 'challenge',
+      visual: '💻 🐌 🛠️',
+      question: 'FIX COMPUTER SPEED!',
+      choices: [
+        { emoji: '🛠️', label: 'FIX IT', correct: true },
+        { emoji: '🎮', label: 'PLAY', correct: false },
+        { emoji: '📧', label: 'EMAIL', correct: false }
+      ]
+    },
+    {
+      id: 10,
+      icon: '⭐',
+      label: 'STAR +1',
+      type: 'star',
+      visual: '⭐ 🤩',
+      question: 'SUPER HELPER BONUS! +1 STAR',
+      choices: []
+    },
+    {
+      id: 11,
+      icon: '🏁',
+      label: 'FINISH',
+      type: 'finish',
+      visual: '🏁 🎮 ✅',
+      question: 'SAM CAN PLAY! MISSION COMPLETE!',
+      choices: []
+    }
+  ];
+
+  class HelpSamEngine {
+    constructor(app) {
+      this.app = app;
+      this.audio = app.audio;
+      this.confetti = app.confetti;
+
+      // State
+      this.currentStage = 1;
+      this.currentSlideIndex = 0;
+      this.currentIconIndex = 0;
+
+      // Practice states
+      this.p1Index = 0;
+      this.p1Score = 0;
+
+      this.s4Index = 0;
+      this.s4Score = 0;
+
+      this.s5Index = 0;
+      this.s5Score = 0;
+
+      this.s6Index = 0;
+      this.s6Score = 0;
+
+      // Board Game state
+      this.blueScore = 0;
+      this.redScore = 0;
+      this.bluePos = 0;
+      this.redPos = 0;
+      this.currentTurn = 'blue';
+      this.isRolling = false;
+
+      this.cacheDOMElements();
+      this.bindEvents();
+    }
+
+    cacheDOMElements() {
+      // Top bar & navigation
+      this.btnHome = document.getElementById('btn-sam-home');
+      this.navChips = document.querySelectorAll('.sam-nav-chip');
+      this.substages = {
+        1: document.getElementById('sam-stage-1'),
+        2: document.getElementById('sam-stage-2'),
+        3: document.getElementById('sam-stage-3'),
+        4: document.getElementById('sam-stage-4'),
+        5: document.getElementById('sam-stage-5'),
+        6: document.getElementById('sam-stage-6'),
+        7: document.getElementById('sam-stage-7')
+      };
+
+      // Stage 1: Slides
+      this.slideBadge = document.getElementById('sam-slide-badge');
+      this.storyVisual = document.getElementById('sam-story-visual');
+      this.storyCaption = document.getElementById('sam-story-caption');
+      this.storySub = document.getElementById('sam-story-sub');
+      this.btnSlidePrev = document.getElementById('btn-sam-slide-prev');
+      this.btnSlideNext = document.getElementById('btn-sam-slide-next');
+
+      // Stage 2: Icon Explorer
+      this.iconCounter = document.getElementById('sam-icon-counter');
+      this.iconTouchTarget = document.getElementById('sam-icon-touch-target');
+      this.explorerIcon = document.getElementById('sam-explorer-icon');
+      this.explorerName = document.getElementById('sam-explorer-name');
+      this.iconFeedback = document.getElementById('sam-icon-feedback');
+      this.btnIconPrev = document.getElementById('btn-sam-icon-prev');
+      this.btnIconNext = document.getElementById('btn-sam-icon-next');
+
+      // Stage 3: Easy Practice
+      this.p1Counter = document.getElementById('sam-p1-counter');
+      this.p1ScoreEl = document.getElementById('sam-p1-score');
+      this.p1PromptVisual = document.getElementById('sam-p1-prompt-visual');
+      this.p1PromptText = document.getElementById('sam-p1-prompt-text');
+      this.p1ChoicesGrid = document.getElementById('sam-p1-choices');
+      this.p1Feedback = document.getElementById('sam-p1-feedback');
+      this.btnP1Next = document.getElementById('btn-sam-p1-next');
+
+      // Stage 4: Sam's Problems
+      this.s4StepBadge = document.getElementById('sam-s4-step-badge');
+      this.s4ScoreEl = document.getElementById('sam-s4-score');
+      this.s4PromptVisual = document.getElementById('sam-s4-prompt-visual');
+      this.s4PromptText = document.getElementById('sam-s4-prompt-text');
+      this.s4PromptSub = document.getElementById('sam-s4-prompt-sub');
+      this.s4ChoicesGrid = document.getElementById('sam-s4-choices');
+      this.s4Feedback = document.getElementById('sam-s4-feedback');
+      this.btnS4Next = document.getElementById('btn-sam-s4-next');
+
+      // Stage 5: Level Up
+      this.s5LevelBadge = document.getElementById('sam-s5-level-badge');
+      this.s5ScoreEl = document.getElementById('sam-s5-score');
+      this.s5PromptVisual = document.getElementById('sam-s5-prompt-visual');
+      this.s5PromptText = document.getElementById('sam-s5-prompt-text');
+      this.s5PromptSub = document.getElementById('sam-s5-prompt-sub');
+      this.s5ChoicesGrid = document.getElementById('sam-s5-choices');
+      this.s5Feedback = document.getElementById('sam-s5-feedback');
+      this.btnS5Next = document.getElementById('btn-sam-s5-next');
+
+      // Stage 6: Mini Challenges
+      this.s6Counter = document.getElementById('sam-s6-counter');
+      this.s6ScoreEl = document.getElementById('sam-s6-score');
+      this.s6PromptVisual = document.getElementById('sam-s6-prompt-visual');
+      this.s6PromptText = document.getElementById('sam-s6-prompt-text');
+      this.s6PromptSub = document.getElementById('sam-s6-prompt-sub');
+      this.s6ChoicesGrid = document.getElementById('sam-s6-choices');
+      this.s6Feedback = document.getElementById('sam-s6-feedback');
+      this.btnS6Next = document.getElementById('btn-sam-s6-next');
+
+      // Stage 7: Board Game
+      this.teamBoxBlue = document.getElementById('sam-team-box-blue');
+      this.teamBoxRed = document.getElementById('sam-team-box-red');
+      this.blueScoreEl = document.getElementById('sam-blue-score');
+      this.redScoreEl = document.getElementById('sam-red-score');
+      this.bluePosTag = document.getElementById('sam-blue-pos-tag');
+      this.redPosTag = document.getElementById('sam-red-pos-tag');
+      this.turnLabel = document.getElementById('sam-turn-label');
+      this.diceDisplay = document.getElementById('sam-dice-display');
+      this.btnRoll = document.getElementById('btn-sam-roll');
+      this.trackGrid = document.getElementById('sam-track-grid');
+
+      // Modals
+      this.boardModal = document.getElementById('sam-board-modal');
+      this.modalSpaceTitle = document.getElementById('sam-modal-space-title');
+      this.modalVisual = document.getElementById('sam-modal-visual');
+      this.modalQuestion = document.getElementById('sam-modal-question');
+      this.modalChoices = document.getElementById('sam-modal-choices');
+      this.modalFeedback = document.getElementById('sam-modal-feedback');
+      this.btnModalContinue = document.getElementById('btn-sam-modal-continue');
+
+      this.winnerModal = document.getElementById('sam-winner-modal');
+      this.winnerTitle = document.getElementById('sam-winner-title');
+      this.winnerSub = document.getElementById('sam-winner-sub');
+      this.winnerScores = document.getElementById('sam-winner-scores');
+      this.btnReplay = document.getElementById('btn-sam-replay');
+    }
+
+    bindEvents() {
+      // Home
+      if (this.btnHome) {
+        this.btnHome.addEventListener('click', () => {
+          this.audio.playPop();
+          this.app.switchScreen('start');
+        });
+      }
+
+      // Nav chips
+      this.navChips.forEach(chip => {
+        chip.addEventListener('click', () => {
+          const stage = parseInt(chip.getAttribute('data-stage'), 10);
+          if (stage) {
+            this.audio.playPop();
+            this.switchStage(stage);
+          }
+        });
+      });
+
+      // Stage 1 Slides
+      if (this.btnSlidePrev) {
+        this.btnSlidePrev.addEventListener('click', () => {
+          this.audio.playPop();
+          this.prevSlide();
+        });
+      }
+      if (this.btnSlideNext) {
+        this.btnSlideNext.addEventListener('click', () => {
+          this.audio.playPop();
+          this.nextSlide();
+        });
+      }
+
+      // Stage 2 Icons
+      if (this.iconTouchTarget) {
+        this.iconTouchTarget.addEventListener('click', () => this.handleIconTouch());
+      }
+      if (this.btnIconPrev) {
+        this.btnIconPrev.addEventListener('click', () => {
+          this.audio.playPop();
+          this.prevIcon();
+        });
+      }
+      if (this.btnIconNext) {
+        this.btnIconNext.addEventListener('click', () => {
+          this.audio.playPop();
+          this.nextIcon();
+        });
+      }
+
+      // Stage 3 Practice
+      if (this.btnP1Next) {
+        this.btnP1Next.addEventListener('click', () => {
+          this.audio.playPop();
+          this.nextP1();
+        });
+      }
+
+      // Stage 4 Sam's Problems
+      if (this.btnS4Next) {
+        this.btnS4Next.addEventListener('click', () => {
+          this.audio.playPop();
+          this.nextS4();
+        });
+      }
+
+      // Stage 5 Level Up
+      if (this.btnS5Next) {
+        this.btnS5Next.addEventListener('click', () => {
+          this.audio.playPop();
+          this.nextS5();
+        });
+      }
+
+      // Stage 6 Mini Challenges
+      if (this.btnS6Next) {
+        this.btnS6Next.addEventListener('click', () => {
+          this.audio.playPop();
+          this.nextS6();
+        });
+      }
+
+      // Stage 7 Board Game
+      if (this.btnRoll) {
+        this.btnRoll.addEventListener('click', () => this.rollDice());
+      }
+      if (this.btnModalContinue) {
+        this.btnModalContinue.addEventListener('click', () => this.closeChallengeModal());
+      }
+      if (this.btnReplay) {
+        this.btnReplay.addEventListener('click', () => {
+          this.audio.playPop();
+          this.winnerModal.classList.add('hidden');
+          this.startStage7();
+        });
+      }
+    }
+
+    start() {
+      this.switchStage(1);
+    }
+
+    switchStage(stageNum) {
+      this.currentStage = stageNum;
+      
+      // Update nav chips
+      this.navChips.forEach(chip => {
+        const s = parseInt(chip.getAttribute('data-stage'), 10);
+        if (s === stageNum) chip.classList.add('active');
+        else chip.classList.remove('active');
+      });
+
+      // Update substages
+      Object.keys(this.substages).forEach(key => {
+        if (parseInt(key, 10) === stageNum) {
+          if (this.substages[key]) this.substages[key].classList.add('active');
+        } else {
+          if (this.substages[key]) this.substages[key].classList.remove('active');
+        }
+      });
+
+      // Init stage
+      if (stageNum === 1) this.startStage1();
+      else if (stageNum === 2) this.startStage2();
+      else if (stageNum === 3) this.startStage3();
+      else if (stageNum === 4) this.startStage4();
+      else if (stageNum === 5) this.startStage5();
+      else if (stageNum === 6) this.startStage6();
+      else if (stageNum === 7) this.startStage7();
+    }
+
+    // STAGE 1: Visual Presentation
+    startStage1() {
+      this.currentSlideIndex = 0;
+      this.renderSlide();
+    }
+
+    renderSlide() {
+      const slide = SAM_STORY_SLIDES[this.currentSlideIndex];
+      if (!slide) return;
+
+      if (this.slideBadge) this.slideBadge.textContent = `SLIDE ${slide.slideNum} OF ${SAM_STORY_SLIDES.length}`;
+      if (this.storyVisual) this.storyVisual.textContent = slide.visual;
+      if (this.storyCaption) this.storyCaption.textContent = slide.caption;
+      if (this.storySub) this.storySub.textContent = slide.sub;
+
+      if (this.btnSlidePrev) this.btnSlidePrev.disabled = this.currentSlideIndex === 0;
+      if (this.btnSlideNext) {
+        if (this.currentSlideIndex === SAM_STORY_SLIDES.length - 1) {
+          this.btnSlideNext.innerHTML = '<span>LEARN ICONS ➡️</span>';
+        } else {
+          this.btnSlideNext.innerHTML = '<span>NEXT ▶️</span>';
+        }
+      }
+    }
+
+    prevSlide() {
+      if (this.currentSlideIndex > 0) {
+        this.currentSlideIndex--;
+        this.renderSlide();
+      }
+    }
+
+    nextSlide() {
+      if (this.currentSlideIndex < SAM_STORY_SLIDES.length - 1) {
+        this.currentSlideIndex++;
+        this.renderSlide();
+      } else {
+        this.switchStage(2);
+      }
+    }
+
+    // STAGE 2: Tech Icon Explorer
+    startStage2() {
+      this.currentIconIndex = 0;
+      this.renderIcon();
+    }
+
+    renderIcon() {
+      const item = SAM_TECH_ICONS[this.currentIconIndex];
+      if (!item) return;
+
+      if (this.iconCounter) this.iconCounter.textContent = `ICON ${this.currentIconIndex + 1} OF ${SAM_TECH_ICONS.length}`;
+      if (this.explorerIcon) this.explorerIcon.textContent = item.icon;
+      if (this.explorerName) this.explorerName.textContent = item.name;
+
+      if (this.iconFeedback) this.iconFeedback.classList.add('hidden');
+      if (this.iconTouchTarget) this.iconTouchTarget.classList.remove('touched');
+
+      if (this.btnIconPrev) this.btnIconPrev.disabled = this.currentIconIndex === 0;
+      if (this.btnIconNext) {
+        if (this.currentIconIndex === SAM_TECH_ICONS.length - 1) {
+          this.btnIconNext.innerHTML = '<span>PRACTICE ➡️</span>';
+        } else {
+          this.btnIconNext.innerHTML = '<span>NEXT ICON ▶️</span>';
+        }
+      }
+    }
+
+    handleIconTouch() {
+      const item = SAM_TECH_ICONS[this.currentIconIndex];
+      if (!item) return;
+
+      if (this.iconTouchTarget) this.iconTouchTarget.classList.add('touched');
+      if (this.iconFeedback) this.iconFeedback.classList.remove('hidden');
+
+      this.audio.playSuccess();
+      this.audio.speak(item.name);
+    }
+
+    prevIcon() {
+      if (this.currentIconIndex > 0) {
+        this.currentIconIndex--;
+        this.renderIcon();
+      }
+    }
+
+    nextIcon() {
+      if (this.currentIconIndex < SAM_TECH_ICONS.length - 1) {
+        this.currentIconIndex++;
+        this.renderIcon();
+      } else {
+        this.switchStage(3);
+      }
+    }
+
+    // STAGE 3: Easy Practice
+    startStage3() {
+      this.p1Index = 0;
+      this.p1Score = 0;
+      if (this.p1ScoreEl) this.p1ScoreEl.textContent = '0';
+      this.renderP1();
+    }
+
+    renderP1() {
+      const q = SAM_PRACTICE_QUESTIONS[this.p1Index];
+      if (!q) return;
+
+      if (this.p1Counter) this.p1Counter.textContent = `QUESTION ${this.p1Index + 1} OF ${SAM_PRACTICE_QUESTIONS.length}`;
+      if (this.p1PromptVisual) this.p1PromptVisual.textContent = q.promptVisual;
+      if (this.p1PromptText) this.p1PromptText.textContent = q.promptText;
+
+      if (this.p1Feedback) this.p1Feedback.classList.add('hidden');
+      if (this.btnP1Next) this.btnP1Next.classList.add('hidden');
+
+      if (this.p1ChoicesGrid) {
+        this.p1ChoicesGrid.innerHTML = '';
+        q.choices.forEach(ch => {
+          const card = document.createElement('button');
+          card.className = 'sam-choice-card';
+          card.innerHTML = `<span class="sam-choice-emoji">${ch.emoji}</span><span class="sam-choice-label">${ch.label}</span>`;
+          card.addEventListener('click', () => this.handleQuizChoice(ch, card, 3));
+          this.p1ChoicesGrid.appendChild(card);
+        });
+      }
+    }
+
+    nextP1() {
+      if (this.p1Index < SAM_PRACTICE_QUESTIONS.length - 1) {
+        this.p1Index++;
+        this.renderP1();
+      } else {
+        this.switchStage(4);
+      }
+    }
+
+    // STAGE 4: Sam's Problems
+    startStage4() {
+      this.s4Index = 0;
+      this.s4Score = 0;
+      if (this.s4ScoreEl) this.s4ScoreEl.textContent = '0';
+      this.renderS4();
+    }
+
+    renderS4() {
+      const q = SAM_STORY_STEPS[this.s4Index];
+      if (!q) return;
+
+      if (this.s4StepBadge) this.s4StepBadge.textContent = `STORY STEP ${q.step} OF ${SAM_STORY_STEPS.length}`;
+      if (this.s4PromptVisual) this.s4PromptVisual.textContent = q.promptVisual;
+      if (this.s4PromptText) this.s4PromptText.textContent = q.promptText;
+      if (this.s4PromptSub) this.s4PromptSub.textContent = q.subText;
+
+      if (this.s4Feedback) this.s4Feedback.classList.add('hidden');
+      if (this.btnS4Next) this.btnS4Next.classList.add('hidden');
+
+      if (this.s4ChoicesGrid) {
+        this.s4ChoicesGrid.innerHTML = '';
+        q.choices.forEach(ch => {
+          const card = document.createElement('button');
+          card.className = 'sam-choice-card';
+          card.innerHTML = `<span class="sam-choice-emoji">${ch.emoji}</span><span class="sam-choice-label">${ch.label}</span>`;
+          card.addEventListener('click', () => this.handleQuizChoice(ch, card, 4));
+          this.s4ChoicesGrid.appendChild(card);
+        });
+      }
+    }
+
+    nextS4() {
+      if (this.s4Index < SAM_STORY_STEPS.length - 1) {
+        this.s4Index++;
+        this.renderS4();
+      } else {
+        this.switchStage(5);
+      }
+    }
+
+    // STAGE 5: Level Up
+    startStage5() {
+      this.s5Index = 0;
+      this.s5Score = 0;
+      if (this.s5ScoreEl) this.s5ScoreEl.textContent = '0';
+      this.renderS5();
+    }
+
+    renderS5() {
+      const q = SAM_LEVELUP_CHALLENGES[this.s5Index];
+      if (!q) return;
+
+      if (this.s5LevelBadge) this.s5LevelBadge.textContent = q.levelBadge;
+      if (this.s5PromptVisual) this.s5PromptVisual.textContent = q.promptVisual;
+      if (this.s5PromptText) this.s5PromptText.textContent = q.promptText;
+      if (this.s5PromptSub) this.s5PromptSub.textContent = q.subText;
+
+      if (this.s5Feedback) this.s5Feedback.classList.add('hidden');
+      if (this.btnS5Next) this.btnS5Next.classList.add('hidden');
+
+      if (this.s5ChoicesGrid) {
+        this.s5ChoicesGrid.innerHTML = '';
+        q.choices.forEach(ch => {
+          const card = document.createElement('button');
+          card.className = 'sam-choice-card';
+          card.innerHTML = `<span class="sam-choice-emoji">${ch.emoji}</span>${ch.label ? `<span class="sam-choice-label">${ch.label}</span>` : ''}`;
+          card.addEventListener('click', () => this.handleQuizChoice(ch, card, 5));
+          this.s5ChoicesGrid.appendChild(card);
+        });
+      }
+    }
+
+    nextS5() {
+      if (this.s5Index < SAM_LEVELUP_CHALLENGES.length - 1) {
+        this.s5Index++;
+        this.renderS5();
+      } else {
+        this.switchStage(6);
+      }
+    }
+
+    // STAGE 6: Mini Challenges
+    startStage6() {
+      this.s6Index = 0;
+      this.s6Score = 0;
+      if (this.s6ScoreEl) this.s6ScoreEl.textContent = '0';
+      this.renderS6();
+    }
+
+    renderS6() {
+      const q = SAM_MINI_CHALLENGES[this.s6Index];
+      if (!q) return;
+
+      if (this.s6Counter) this.s6Counter.textContent = `FIX-IT ${this.s6Index + 1} OF ${SAM_MINI_CHALLENGES.length}`;
+      if (this.s6PromptVisual) this.s6PromptVisual.textContent = q.promptVisual;
+      if (this.s6PromptText) this.s6PromptText.textContent = q.promptText;
+      if (this.s6PromptSub) this.s6PromptSub.textContent = q.subText;
+
+      if (this.s6Feedback) this.s6Feedback.classList.add('hidden');
+      if (this.btnS6Next) this.btnS6Next.classList.add('hidden');
+
+      if (this.s6ChoicesGrid) {
+        this.s6ChoicesGrid.innerHTML = '';
+        q.choices.forEach(ch => {
+          const card = document.createElement('button');
+          card.className = 'sam-choice-card';
+          card.innerHTML = `<span class="sam-choice-emoji">${ch.emoji}</span><span class="sam-choice-label">${ch.label}</span>`;
+          card.addEventListener('click', () => this.handleQuizChoice(ch, card, 6));
+          this.s6ChoicesGrid.appendChild(card);
+        });
+      }
+    }
+
+    nextS6() {
+      if (this.s6Index < SAM_MINI_CHALLENGES.length - 1) {
+        this.s6Index++;
+        this.renderS6();
+      } else {
+        this.switchStage(7);
+      }
+    }
+
+    // Generic Quiz Selection Handler for Stages 3, 4, 5, 6
+    handleQuizChoice(choice, cardElement, stageNum) {
+      const feedbackEl = stageNum === 3 ? this.p1Feedback :
+                         stageNum === 4 ? this.s4Feedback :
+                         stageNum === 5 ? this.s5Feedback : this.s6Feedback;
+
+      const nextBtn = stageNum === 3 ? this.btnP1Next :
+                      stageNum === 4 ? this.btnS4Next :
+                      stageNum === 5 ? this.btnS5Next : this.btnS6Next;
+
+      const scoreEl = stageNum === 3 ? this.p1ScoreEl :
+                      stageNum === 4 ? this.s4ScoreEl :
+                      stageNum === 5 ? this.s5ScoreEl : this.s6ScoreEl;
+
+      const grid = stageNum === 3 ? this.p1ChoicesGrid :
+                   stageNum === 4 ? this.s4ChoicesGrid :
+                   stageNum === 5 ? this.s5ChoicesGrid : this.s6ChoicesGrid;
+
+      if (choice.correct) {
+        cardElement.classList.add('is-correct');
+        if (feedbackEl) {
+          feedbackEl.className = 'sam-quiz-feedback';
+          feedbackEl.innerHTML = '<span class="feedback-icon">🎉</span><span class="feedback-text">GREAT JOB!</span>';
+          feedbackEl.classList.remove('hidden');
+        }
+
+        // Lock other cards
+        if (grid) {
+          grid.querySelectorAll('.sam-choice-card').forEach(c => {
+            if (c !== cardElement) c.style.pointerEvents = 'none';
+          });
+        }
+
+        // Update score
+        if (stageNum === 3) this.p1Score++;
+        else if (stageNum === 4) this.s4Score++;
+        else if (stageNum === 5) this.s5Score++;
+        else if (stageNum === 6) this.s6Score++;
+
+        if (scoreEl) {
+          const s = stageNum === 3 ? this.p1Score : stageNum === 4 ? this.s4Score : stageNum === 5 ? this.s5Score : this.s6Score;
+          scoreEl.textContent = s;
+        }
+
+        if (nextBtn) nextBtn.classList.remove('hidden');
+        this.audio.playSuccess();
+      } else {
+        cardElement.classList.add('is-wrong');
+        if (feedbackEl) {
+          feedbackEl.className = 'sam-quiz-feedback is-wrong';
+          feedbackEl.innerHTML = '<span class="feedback-icon">❌</span><span class="feedback-text">TRY AGAIN!</span>';
+          feedbackEl.classList.remove('hidden');
+        }
+        this.audio.playWrong();
+        setTimeout(() => {
+          cardElement.classList.remove('is-wrong');
+        }, 600);
+      }
+    }
+
+    // STAGE 7: Board Game
+    startStage7() {
+      this.blueScore = 0;
+      this.redScore = 0;
+      this.bluePos = 0;
+      this.redPos = 0;
+      this.currentTurn = 'blue';
+      this.isRolling = false;
+
+      this.updateBoardScoreUI();
+      this.renderBoardTrack();
+    }
+
+    renderBoardTrack() {
+      if (!this.trackGrid) return;
+      this.trackGrid.innerHTML = '';
+
+      SAM_BOARD_SPACES.forEach((sp, idx) => {
+        const spaceEl = document.createElement('div');
+        spaceEl.className = `sam-board-space space-${sp.type} ${idx === 0 ? 'space-start' : idx === SAM_BOARD_SPACES.length - 1 ? 'space-finish' : ''}`;
+        spaceEl.id = `sam-space-${idx}`;
+        spaceEl.innerHTML = `
+          <span class="space-num">${idx === 0 ? '🚩' : idx === SAM_BOARD_SPACES.length - 1 ? '🏁' : idx}</span>
+          <span class="space-icon">${sp.icon}</span>
+          <span class="space-label">${sp.label}</span>
+        `;
+        this.trackGrid.appendChild(spaceEl);
+      });
+
+      this.updateTokenPins();
+    }
+
+    updateTokenPins() {
+      // Remove existing pins
+      document.querySelectorAll('.sam-token-pin').forEach(pin => pin.remove());
+
+      const blueSpace = document.getElementById(`sam-space-${this.bluePos}`);
+      if (blueSpace) {
+        const bluePin = document.createElement('div');
+        bluePin.className = 'sam-token-pin token-blue';
+        bluePin.textContent = '🔵';
+        blueSpace.appendChild(bluePin);
+      }
+
+      const redSpace = document.getElementById(`sam-space-${this.redPos}`);
+      if (redSpace) {
+        const redPin = document.createElement('div');
+        redPin.className = 'sam-token-pin token-red';
+        redPin.textContent = '🔴';
+        redSpace.appendChild(redPin);
+      }
+
+      if (this.bluePosTag) this.bluePosTag.textContent = `Space ${this.bluePos} (${SAM_BOARD_SPACES[this.bluePos].label})`;
+      if (this.redPosTag) this.redPosTag.textContent = `Space ${this.redPos} (${SAM_BOARD_SPACES[this.redPos].label})`;
+    }
+
+    updateBoardScoreUI() {
+      if (this.blueScoreEl) this.blueScoreEl.textContent = this.blueScore;
+      if (this.redScoreEl) this.redScoreEl.textContent = this.redScore;
+
+      if (this.currentTurn === 'blue') {
+        if (this.teamBoxBlue) this.teamBoxBlue.classList.add('active-turn');
+        if (this.teamBoxRed) this.teamBoxRed.classList.remove('active-turn');
+        if (this.turnLabel) this.turnLabel.textContent = "🔵 BLUE TEAM'S TURN";
+      } else {
+        if (this.teamBoxRed) this.teamBoxRed.classList.add('active-turn');
+        if (this.teamBoxBlue) this.teamBoxBlue.classList.remove('active-turn');
+        if (this.turnLabel) this.turnLabel.textContent = "🔴 RED TEAM'S TURN";
+      }
+    }
+
+    rollDice() {
+      if (this.isRolling) return;
+      this.isRolling = true;
+      if (this.btnRoll) this.btnRoll.disabled = true;
+
+      this.audio.playDiceRoll();
+
+      // Dice roll animation
+      const diceFaces = ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅'];
+      let rolls = 0;
+      const rollInterval = setInterval(() => {
+        rolls++;
+        const rand = Math.floor(Math.random() * 6);
+        if (this.diceDisplay) this.diceDisplay.textContent = diceFaces[rand];
+        if (rolls > 8) {
+          clearInterval(rollInterval);
+          const finalRoll = Math.floor(Math.random() * 3) + 1;
+          if (this.diceDisplay) this.diceDisplay.textContent = `🎲 ${finalRoll}`;
+          this.movePlayer(finalRoll);
+        }
+      }, 70);
+    }
+
+    movePlayer(steps) {
+      const currentPos = this.currentTurn === 'blue' ? this.bluePos : this.redPos;
+      const targetPos = Math.min(SAM_BOARD_SPACES.length - 1, currentPos + steps);
+
+      let stepCount = currentPos;
+      const moveInterval = setInterval(() => {
+        if (stepCount < targetPos) {
+          stepCount++;
+          if (this.currentTurn === 'blue') this.bluePos = stepCount;
+          else this.redPos = stepCount;
+          this.audio.playHop();
+          this.updateTokenPins();
+        } else {
+          clearInterval(moveInterval);
+          this.handleSpaceLanding(targetPos);
+        }
+      }, 250);
+    }
+
+    handleSpaceLanding(spaceIdx) {
+      const space = SAM_BOARD_SPACES[spaceIdx];
+      if (!space) {
+        this.endTurn();
+        return;
+      }
+
+      if (space.type === 'finish' || spaceIdx >= SAM_BOARD_SPACES.length - 1) {
+        this.showWinner();
+        return;
+      }
+
+      if (space.type === 'bonus') {
+        if (this.currentTurn === 'blue') this.blueScore += 2;
+        else this.redScore += 2;
+        this.audio.playSuccess();
+        this.openSimpleModal('🎁 LUCKY BONUS!', '🎁 ⭐ ⭐', '+2 STARS AWARDED!');
+        return;
+      }
+
+      if (space.type === 'star') {
+        if (this.currentTurn === 'blue') this.blueScore += 1;
+        else this.redScore += 1;
+        this.audio.playSuccess();
+        this.openSimpleModal('⭐ STAR BOOST!', '⭐ 🤩', '+1 STAR AWARDED!');
+        return;
+      }
+
+      if (space.type === 'roll_again') {
+        this.audio.playSuccess();
+        this.openSimpleModal('🔄 TECH BOOST!', '🔄 🚀 🎲', 'ROLL THE DICE AGAIN!', true);
+        return;
+      }
+
+      if (space.type === 'challenge') {
+        this.openChallengeModal(space);
+      } else {
+        this.endTurn();
+      }
+    }
+
+    openSimpleModal(title, visual, question, rollAgain = false) {
+      if (this.boardModal) this.boardModal.classList.remove('hidden');
+      if (this.modalSpaceTitle) this.modalSpaceTitle.textContent = title;
+      if (this.modalVisual) this.modalVisual.textContent = visual;
+      if (this.modalQuestion) this.modalQuestion.textContent = question;
+      if (this.modalChoices) this.modalChoices.innerHTML = '';
+      if (this.modalFeedback) this.modalFeedback.classList.add('hidden');
+      if (this.btnModalContinue) {
+        this.btnModalContinue.classList.remove('hidden');
+        this.btnModalContinue.setAttribute('data-roll-again', rollAgain ? 'true' : 'false');
+      }
+    }
+
+    openChallengeModal(space) {
+      if (this.boardModal) this.boardModal.classList.remove('hidden');
+      if (this.modalSpaceTitle) this.modalSpaceTitle.textContent = `${space.icon} SPACE ${space.id}: ${space.label}`;
+      if (this.modalVisual) this.modalVisual.textContent = space.visual;
+      if (this.modalQuestion) this.modalQuestion.textContent = space.question;
+      if (this.modalFeedback) this.modalFeedback.classList.add('hidden');
+      if (this.btnModalContinue) {
+        this.btnModalContinue.classList.add('hidden');
+        this.btnModalContinue.setAttribute('data-roll-again', 'false');
+      }
+
+      if (this.modalChoices) {
+        this.modalChoices.innerHTML = '';
+        space.choices.forEach(ch => {
+          const btn = document.createElement('button');
+          btn.className = 'sam-choice-card';
+          btn.innerHTML = `<span class="sam-choice-emoji">${ch.emoji}</span><span class="sam-choice-label">${ch.label}</span>`;
+          btn.addEventListener('click', () => {
+            if (ch.correct) {
+              btn.classList.add('is-correct');
+              if (this.modalFeedback) {
+                this.modalFeedback.className = 'sam-quiz-feedback';
+                this.modalFeedback.innerHTML = '<span>✅ GREAT JOB! ⭐ +1 POINT</span>';
+                this.modalFeedback.classList.remove('hidden');
+              }
+              if (this.currentTurn === 'blue') this.blueScore++;
+              else this.redScore++;
+              this.audio.playSuccess();
+              this.updateBoardScoreUI();
+              if (this.btnModalContinue) this.btnModalContinue.classList.remove('hidden');
+            } else {
+              btn.classList.add('is-wrong');
+              if (this.modalFeedback) {
+                this.modalFeedback.className = 'sam-quiz-feedback is-wrong';
+                this.modalFeedback.innerHTML = '<span>❌ TRY AGAIN!</span>';
+                this.modalFeedback.classList.remove('hidden');
+              }
+              this.audio.playWrong();
+              setTimeout(() => btn.classList.remove('is-wrong'), 600);
+            }
+          });
+          this.modalChoices.appendChild(btn);
+        });
+      }
+    }
+
+    closeChallengeModal() {
+      const rollAgain = this.btnModalContinue && this.btnModalContinue.getAttribute('data-roll-again') === 'true';
+      if (this.boardModal) this.boardModal.classList.add('hidden');
+      this.updateBoardScoreUI();
+
+      if (!rollAgain) {
+        this.endTurn();
+      } else {
+        this.isRolling = false;
+        if (this.btnRoll) this.btnRoll.disabled = false;
+      }
+    }
+
+    endTurn() {
+      this.currentTurn = this.currentTurn === 'blue' ? 'red' : 'blue';
+      this.isRolling = false;
+      if (this.btnRoll) this.btnRoll.disabled = false;
+      this.updateBoardScoreUI();
+    }
+
+    showWinner() {
+      this.audio.playFanfare();
+      if (this.confetti) this.confetti.start(4000);
+
+      const winningTeam = this.blueScore > this.redScore ? '🔵 BLUE TEAM' :
+                          this.redScore > this.blueScore ? '🔴 RED TEAM' : '🔵 BOTH TEAMS 🔴';
+
+      if (this.winnerTitle) this.winnerTitle.textContent = `${winningTeam} WINS!`;
+      if (this.winnerScores) this.winnerScores.textContent = `🔵 Blue: ${this.blueScore} ⭐  |  🔴 Red: ${this.redScore} ⭐`;
+      if (this.winnerModal) this.winnerModal.classList.remove('hidden');
+    }
+  }
+
+  window.SAM_STORY_SLIDES = SAM_STORY_SLIDES;
+  window.SAM_TECH_ICONS = SAM_TECH_ICONS;
+  window.SAM_PRACTICE_QUESTIONS = SAM_PRACTICE_QUESTIONS;
+  window.SAM_STORY_STEPS = SAM_STORY_STEPS;
+  window.SAM_LEVELUP_CHALLENGES = SAM_LEVELUP_CHALLENGES;
+  window.SAM_MINI_CHALLENGES = SAM_MINI_CHALLENGES;
+  window.SAM_BOARD_SPACES = SAM_BOARD_SPACES;
+  window.HelpSamEngine = HelpSamEngine;
+
+  // =========================================================================
   // 4. MAIN GAME STATE CONTROLLER (EMOJI EXPERTS & NAVIGATION)
   // =========================================================================
   class GameApp {
@@ -3272,6 +4575,7 @@
       this.cacheDOMElements();
       this.monopolyEngine = new EmojiMonopolyEngine(this);
       this.charadesEngine = new EmojiCharadesEngine(this);
+      this.samEngine = new HelpSamEngine(this);
       this.bindEvents();
       this.preloadImages();
     }
@@ -3286,7 +4590,8 @@
         guess: document.getElementById('screen-guess'),
         profile: document.getElementById('screen-profile'),
         monopoly: document.getElementById('screen-monopoly'),
-        charades: document.getElementById('screen-charades')
+        charades: document.getElementById('screen-charades'),
+        sam: document.getElementById('screen-sam')
       };
 
       // Modal Elements
@@ -3305,6 +4610,7 @@
       this.btnStartPlay = document.getElementById('btn-start-play');
       this.btnStartMonopoly = document.getElementById('btn-start-monopoly');
       this.btnStartCharades = document.getElementById('btn-start-charades');
+      this.btnStartSam = document.getElementById('btn-start-sam');
       this.btnToggleGameMode = document.getElementById('btn-toggle-game-mode');
 
       // Intro screen
@@ -3393,6 +4699,14 @@
           this.audio.playPop();
           this.switchScreen('charades');
           this.charadesEngine.start();
+        });
+      }
+
+      if (this.btnStartSam) {
+        this.btnStartSam.addEventListener('click', () => {
+          this.audio.playPop();
+          this.switchScreen('sam');
+          this.samEngine.start();
         });
       }
 

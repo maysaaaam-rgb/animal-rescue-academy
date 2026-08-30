@@ -110,6 +110,10 @@
                 <span class="btn-icon">🎭</span>
                 <span class="btn-text">EMOJI CHARADES</span>
               </button>
+              <button class="btn-giant btn-play-sam animate-pulse" id="btn-start-sam">
+                <span class="btn-icon">🎮</span>
+                <span class="btn-text">HELP SAM! TECH ADVENTURE</span>
+              </button>
             </div>
 
             <div class="start-sheet-shortcuts">
@@ -893,6 +897,261 @@
                 <span class="action-text">NEXT</span>
                 <span class="action-icon">→</span>
               </button>
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         STATE 8: 🎮 HELP SAM! — TECH ADVENTURE
+         ========================================================= -->
+    <section class="game-screen" id="screen-sam">
+      <div class="screen-content sam-content animate-pop">
+        
+        <!-- Header Bar with Home Button, Stage Breadcrumb & Stage Navigation -->
+        <header class="sam-top-bar">
+          <button class="btn-sam-nav" id="btn-sam-home">
+            <span class="btn-icon">🏠</span>
+            <span class="btn-text">MENU</span>
+          </button>
+          
+          <!-- Stage Indicator Pills -->
+          <div class="sam-stage-nav" id="sam-stage-nav">
+            <button class="sam-nav-chip active" data-stage="1">1. Story</button>
+            <button class="sam-nav-chip" data-stage="2">2. Icons</button>
+            <button class="sam-nav-chip" data-stage="3">3. Practice</button>
+            <button class="sam-nav-chip" data-stage="4">4. Problems</button>
+            <button class="sam-nav-chip" data-stage="5">5. Level Up</button>
+            <button class="sam-nav-chip" data-stage="6">6. Fix-It</button>
+            <button class="sam-nav-chip" data-stage="7">7. Board Game 🎲</button>
+          </div>
+          
+          <div class="sam-title-pill">
+            <span class="sam-title-icon">🎮</span>
+            <span class="sam-title-text">HELP SAM!</span>
+          </div>
+        </header>
+
+        <!-- Dynamic Stage Container Area -->
+        <div class="sam-stage-container" id="sam-stage-container">
+
+          <!-- 🟢 STAGE 1: VISUAL PRESENTATION (Slides) -->
+          <div class="sam-substage active" id="sam-stage-1">
+            <div class="sam-story-card">
+              <div class="sam-story-badge" id="sam-slide-badge">SLIDE 1 OF 5</div>
+              <div class="sam-story-visual" id="sam-story-visual">🧑💻</div>
+              <h2 class="sam-story-caption" id="sam-story-caption">THIS IS SAM.</h2>
+              <p class="sam-story-sub" id="sam-story-sub">Sam lives in Sunnyville! 🏠</p>
+              
+              <div class="sam-story-controls">
+                <button class="btn-sam-action btn-prev" id="btn-sam-slide-prev" disabled>
+                  <span>◀️ BACK</span>
+                </button>
+                <button class="btn-sam-action btn-next animate-pulse" id="btn-sam-slide-next">
+                  <span>NEXT ▶️</span>
+                </button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 🟡 STAGE 2: LEARN THE TECH ICONS (Touch & Explore) -->
+          <div class="sam-substage" id="sam-stage-2">
+            <div class="sam-icon-explorer-card">
+              <div class="sam-explorer-header">
+                <span class="sam-counter-badge" id="sam-icon-counter">ICON 1 OF 11</span>
+                <span class="sam-prompt-badge">👆 TOUCH THE ICON!</span>
+              </div>
+
+              <div class="sam-large-icon-btn animate-bounce" id="sam-icon-touch-target">
+                <span class="sam-giant-icon" id="sam-explorer-icon">🔐</span>
+                <h2 class="sam-icon-title" id="sam-explorer-name">PASSWORD</h2>
+              </div>
+
+              <div class="sam-icon-feedback hidden" id="sam-icon-feedback">
+                <span class="feedback-icon">✅</span>
+                <span class="feedback-text">GREAT!</span>
+              </div>
+
+              <div class="sam-icon-nav-row">
+                <button class="btn-sam-action" id="btn-sam-icon-prev" disabled>◀️ PREV</button>
+                <button class="btn-sam-action btn-next animate-pulse" id="btn-sam-icon-next">NEXT ICON ▶️</button>
+              </div>
+            </div>
+          </div>
+
+          <!-- 🟠 STAGE 3: VERY EASY PRACTICE (Recognition) -->
+          <div class="sam-substage" id="sam-stage-3">
+            <div class="sam-quiz-card">
+              <div class="sam-quiz-header">
+                <span class="sam-counter-badge" id="sam-p1-counter">QUESTION 1 OF 5</span>
+                <span class="sam-score-pill">⭐ <span id="sam-p1-score">0</span></span>
+              </div>
+
+              <div class="sam-problem-prompt">
+                <div class="sam-prompt-emojis" id="sam-p1-prompt-visual">🧑💻 😟</div>
+                <h2 class="sam-prompt-text" id="sam-p1-prompt-text">PASSWORD?</h2>
+              </div>
+
+              <div class="sam-choices-grid" id="sam-p1-choices">
+                <!-- Dynamic Choices -->
+              </div>
+
+              <div class="sam-quiz-feedback hidden" id="sam-p1-feedback">
+                <!-- Feedback text -->
+              </div>
+
+              <button class="btn-sam-action btn-next hidden" id="btn-sam-p1-next">NEXT QUESTION ▶️</button>
+            </div>
+          </div>
+
+          <!-- 🟠 STAGE 4: SAM'S PROBLEMS (8-Step Story Sequence) -->
+          <div class="sam-substage" id="sam-stage-4">
+            <div class="sam-quiz-card">
+              <div class="sam-quiz-header">
+                <span class="sam-story-step-badge" id="sam-s4-step-badge">STORY STEP 1 OF 8</span>
+                <span class="sam-score-pill">⭐ <span id="sam-s4-score">0</span></span>
+              </div>
+
+              <div class="sam-problem-prompt">
+                <div class="sam-prompt-emojis" id="sam-s4-prompt-visual">🧑💻 😟 🔐</div>
+                <h2 class="sam-prompt-text" id="sam-s4-prompt-text">SAM FORGOT HIS PASSWORD!</h2>
+                <p class="sam-prompt-sub" id="sam-s4-prompt-sub">What does Sam need?</p>
+              </div>
+
+              <div class="sam-choices-grid" id="sam-s4-choices">
+                <!-- Dynamic Choices -->
+              </div>
+
+              <div class="sam-quiz-feedback hidden" id="sam-s4-feedback">
+                <!-- Feedback text -->
+              </div>
+
+              <button class="btn-sam-action btn-next hidden" id="btn-sam-s4-next">NEXT STEP ▶️</button>
+            </div>
+          </div>
+
+          <!-- 🔴 STAGE 5: LEVEL UP (Progressive Challenge) -->
+          <div class="sam-substage" id="sam-stage-5">
+            <div class="sam-quiz-card">
+              <div class="sam-quiz-header">
+                <span class="sam-level-badge" id="sam-s5-level-badge">LEVEL 1: EMOJIS + WORDS</span>
+                <span class="sam-score-pill">⭐ <span id="sam-s5-score">0</span></span>
+              </div>
+
+              <div class="sam-problem-prompt">
+                <div class="sam-prompt-emojis" id="sam-s5-prompt-visual">🎮 ❌ 💻 📶 ✅</div>
+                <h2 class="sam-prompt-text" id="sam-s5-prompt-text">THE GAME DOES NOT WORK!</h2>
+                <p class="sam-prompt-sub" id="sam-s5-prompt-sub">What should Sam do?</p>
+              </div>
+
+              <div class="sam-choices-grid" id="sam-s5-choices">
+                <!-- Dynamic Choices -->
+              </div>
+
+              <div class="sam-quiz-feedback hidden" id="sam-s5-feedback">
+                <!-- Feedback text -->
+              </div>
+
+              <button class="btn-sam-action btn-next hidden" id="btn-sam-s5-next">NEXT CHALLENGE ▶️</button>
+            </div>
+          </div>
+
+          <!-- 🎯 STAGE 6: MINI CHALLENGES (Tech Fix-It) -->
+          <div class="sam-substage" id="sam-stage-6">
+            <div class="sam-quiz-card">
+              <div class="sam-quiz-header">
+                <span class="sam-counter-badge" id="sam-s6-counter">FIX-IT 1 OF 8</span>
+                <span class="sam-score-pill">⭐ <span id="sam-s6-score">0</span></span>
+              </div>
+
+              <div class="sam-problem-prompt">
+                <div class="sam-prompt-emojis" id="sam-s6-prompt-visual">💻 🐌</div>
+                <h2 class="sam-prompt-text" id="sam-s6-prompt-text">COMPUTER IS SLOW!</h2>
+                <p class="sam-prompt-sub" id="sam-s6-prompt-sub">How do we fix it?</p>
+              </div>
+
+              <div class="sam-choices-grid" id="sam-s6-choices">
+                <!-- Dynamic Choices -->
+              </div>
+
+              <div class="sam-quiz-feedback hidden" id="sam-s6-feedback">
+                <!-- Feedback text -->
+              </div>
+
+              <button class="btn-sam-action btn-next hidden" id="btn-sam-s6-next">NEXT FIX ▶️</button>
+            </div>
+          </div>
+
+          <!-- 🏆 STAGE 7: FINAL BOARD GAME (Help Sam Tech Adventure Board) -->
+          <div class="sam-substage" id="sam-stage-7">
+            <div class="sam-board-arena">
+              
+              <!-- Board Left: Scoreboard & Turn Controller -->
+              <div class="sam-board-sidebar">
+                
+                <div class="sam-board-teams">
+                  <div class="sam-team-box team-blue active-turn" id="sam-team-box-blue">
+                    <div class="team-tag">🔵 BLUE TEAM</div>
+                    <div class="team-score-num"><span id="sam-blue-score">0</span> ⭐</div>
+                    <div class="team-pos-tag" id="sam-blue-pos-tag">Space 0 (START)</div>
+                  </div>
+                  
+                  <div class="sam-team-box team-red" id="sam-team-box-red">
+                    <div class="team-tag">🔴 RED TEAM</div>
+                    <div class="team-score-num"><span id="sam-red-score">0</span> ⭐</div>
+                    <div class="team-pos-tag" id="sam-red-pos-tag">Space 0 (START)</div>
+                  </div>
+                </div>
+
+                <!-- Dice Area -->
+                <div class="sam-dice-card">
+                  <div class="sam-active-turn-label" id="sam-turn-label">🔵 BLUE TEAM'S TURN</div>
+                  <div class="sam-dice-display" id="sam-dice-display">🎲</div>
+                  <button class="btn-giant btn-roll-sam animate-pulse" id="btn-sam-roll">
+                    <span>🎲 ROLL THE DICE!</span>
+                  </button>
+                </div>
+
+              </div>
+
+              <!-- Board Right: Winding Track Layout (12 Spaces) -->
+              <div class="sam-track-container" id="sam-track-container">
+                <div class="sam-track-grid" id="sam-track-grid">
+                  <!-- 12 Spaces generated dynamically -->
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Board Space Landing Challenge Modal -->
+            <div class="sam-modal-backdrop hidden" id="sam-board-modal">
+              <div class="sam-modal-content animate-pop">
+                <div class="sam-modal-header" id="sam-modal-space-title">📶 SPACE 3: WI-FI</div>
+                <div class="sam-modal-visual" id="sam-modal-visual">💻 📶 ❌</div>
+                <h3 class="sam-modal-question" id="sam-modal-question">HOW DO WE FIX WI-FI?</h3>
+                <div class="sam-modal-choices" id="sam-modal-choices">
+                  <!-- Choices -->
+                </div>
+                <div class="sam-modal-feedback hidden" id="sam-modal-feedback"></div>
+                <button class="btn-giant btn-success hidden" id="btn-sam-modal-continue">CONTINUE ▶️</button>
+              </div>
+            </div>
+
+            <!-- Winner Ceremony Modal -->
+            <div class="sam-modal-backdrop hidden" id="sam-winner-modal">
+              <div class="sam-modal-content sam-winner-content animate-pop">
+                <div class="sam-winner-emoji animate-bounce">🏆 🎮 ✅</div>
+                <h2 class="sam-winner-title" id="sam-winner-title">SAM CAN PLAY!</h2>
+                <p class="sam-winner-sub" id="sam-winner-sub">MISSION ACCOMPLISHED!</p>
+                <div class="sam-winner-scores" id="sam-winner-scores"></div>
+                <button class="btn-giant btn-replay animate-pulse" id="btn-sam-replay">
+                  <span>🔄 PLAY BOARD GAME AGAIN</span>
+                </button>
+              </div>
             </div>
 
           </div>
