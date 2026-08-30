@@ -144,6 +144,82 @@ html, body {
 }
 
 /* ==========================================================================
+   POPUP MODAL: QUICK REFERENCE SHEET
+   ========================================================================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0, 0, 0, 0.82);
+  backdrop-filter: blur(12px);
+  z-index: 2000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 2vh 2vw;
+}
+
+.modal-card {
+  background: #1e1b4b;
+  border: 4px solid var(--brand-yellow);
+  border-radius: 28px;
+  width: 100%;
+  max-width: 960px;
+  height: 90vh;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: rgba(255, 255, 255, 0.1);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.2);
+}
+
+.modal-title {
+  font-size: 1.5rem;
+  font-weight: 900;
+  color: var(--brand-yellow);
+}
+
+.btn-close-modal {
+  background: #ef4444;
+  border: 2px solid #ffffff;
+  color: #ffffff;
+  font-size: 1.4rem;
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-body {
+  flex: 1;
+  overflow: auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 16px;
+}
+
+.modal-ref-img {
+  max-width: 100%;
+  max-height: 100%;
+  object-fit: contain;
+  border-radius: 12px;
+}
+
+/* ==========================================================================
    GAME VIEWPORT & SCREEN STATE MACHINE
    ========================================================================== */
 .game-viewport {
@@ -183,7 +259,7 @@ html, body {
   flex-direction: column;
   align-items: center;
   justify-content: space-between;
-  padding: 1.5vh 1.5vw;
+  padding: 1.2vh 1.2vw;
 }
 
 /* ==========================================================================
@@ -244,12 +320,6 @@ html, body {
   text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
 }
 
-.btn-reveal {
-  background: linear-gradient(180deg, #fb923c 0%, #f97316 60%, #c2410c 100%);
-  color: #ffffff;
-  border-color: #ffedd5;
-}
-
 .btn-memory-start {
   background: linear-gradient(180deg, #c084fc 0%, #a855f7 60%, #7e22ce 100%);
   color: #ffffff;
@@ -285,18 +355,39 @@ html, body {
   border-color: #fef08a;
 }
 
+.btn-tool-pill {
+  font-family: var(--font-primary);
+  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+  font-weight: 800;
+  padding: 10px 20px;
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.2);
+  border: 2px solid rgba(255, 255, 255, 0.4);
+  color: #ffffff;
+  cursor: pointer;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  transition: all 0.2s ease;
+}
+
+.btn-tool-pill:hover {
+  background: rgba(255, 255, 255, 0.35);
+  transform: scale(1.05);
+}
+
 /* ==========================================================================
-   STATE 1: WELCOME SCREEN
+   SCREEN 1 — WELCOME
    ========================================================================== */
 .welcome-content {
   justify-content: center;
-  gap: clamp(12px, 2.5vh, 26px);
+  gap: clamp(14px, 3vh, 36px);
   text-align: center;
 }
 
 .hero-emoji-ring {
-  width: clamp(90px, 13vh, 140px);
-  height: clamp(90px, 13vh, 140px);
+  width: clamp(100px, 15vh, 160px);
+  height: clamp(100px, 15vh, 160px);
   border-radius: 50%;
   background: radial-gradient(circle, rgba(250, 204, 21, 0.35) 0%, rgba(250, 204, 21, 0.05) 70%, transparent 100%);
   border: 4px dashed rgba(250, 204, 21, 0.6);
@@ -307,13 +398,13 @@ html, body {
 }
 
 .hero-emoji-icon {
-  font-size: clamp(3.5rem, 8.5vh, 5.5rem);
+  font-size: clamp(3.8rem, 9.5vh, 6.5rem);
   display: inline-block;
   filter: drop-shadow(0 10px 20px rgba(0, 0, 0, 0.4));
 }
 
 .game-main-title {
-  font-size: clamp(2.4rem, 5.8vw, 4.8rem);
+  font-size: clamp(2.6rem, 6.2vw, 5.2rem);
   font-weight: 900;
   color: #ffffff;
   text-shadow: 0 6px 0 #1e1b4b, 0 12px 24px rgba(0, 0, 0, 0.5);
@@ -331,60 +422,36 @@ html, body {
 }
 
 .game-subtitle {
-  font-size: clamp(1.3rem, 2.8vw, 2.4rem);
+  font-size: clamp(1.4rem, 3.2vw, 2.6rem);
   font-weight: 800;
   color: var(--brand-yellow);
   text-shadow: 0 3px 0 #854d0e, 0 8px 16px rgba(0, 0, 0, 0.4);
   letter-spacing: 3px;
 }
 
-.lesson-flow-preview {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  background: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(10px);
-  padding: 10px 24px;
-  border-radius: 999px;
-  border: 2px solid rgba(255, 255, 255, 0.35);
-  font-size: clamp(0.9rem, 1.4vw, 1.2rem);
-  font-weight: 800;
-}
-
-.flow-step {
-  display: flex;
-  align-items: center;
-  gap: 6px;
-}
-
-.flow-arrow {
-  color: var(--brand-yellow);
-  font-weight: 900;
-}
-
 .start-btn-wrapper {
-  margin-top: 0.5vh;
+  margin-top: 1vh;
 }
 
 .grade-tag {
-  font-size: clamp(0.95rem, 1.3vw, 1.2rem);
+  font-size: clamp(1rem, 1.4vw, 1.3rem);
   font-weight: 600;
   background: rgba(255, 255, 255, 0.15);
-  padding: 6px 20px;
+  padding: 8px 22px;
   border-radius: 999px;
   border: 1px solid rgba(255, 255, 255, 0.3);
   color: #e2e8f0;
 }
 
 /* ==========================================================================
-   STATE 2: LOOK & LEARN (The Visual Word Bank Reference Screen)
+   SCREENS 2 & 3 — VIEWER SCREENS (Exact Uploaded Images)
    ========================================================================== */
-.look-learn-content {
+.viewer-screen-content {
   justify-content: space-between;
-  gap: 1.2vh;
+  gap: 1vh;
 }
 
-.look-top-bar {
+.viewer-top-bar {
   width: 100%;
   display: flex;
   align-items: center;
@@ -392,135 +459,75 @@ html, body {
   gap: 16px;
   background: rgba(255, 255, 255, 0.12);
   backdrop-filter: blur(10px);
-  padding: 10px 20px;
+  padding: 8px 20px;
   border-radius: 20px;
   border: 2px solid rgba(255, 255, 255, 0.25);
 }
 
-.look-title-group {
+.viewer-title-box {
   text-align: left;
 }
 
-.look-main-title {
-  font-size: clamp(1.4rem, 2.4vw, 2.2rem);
+.viewer-main-title {
+  font-size: clamp(1.3rem, 2.2vw, 2rem);
   font-weight: 900;
   color: #ffffff;
-  text-shadow: 0 2px 4px rgba(0,0,0,0.3);
 }
 
-.look-subtitle {
-  font-size: clamp(0.95rem, 1.4vw, 1.2rem);
+.viewer-sub-title {
+  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
   font-weight: 600;
   color: var(--brand-yellow);
 }
 
-/* Reference Tabs */
-.reference-tabs-group {
-  display: flex;
-  gap: 10px;
-}
-
-.tab-btn {
-  font-family: var(--font-primary);
-  font-size: clamp(0.95rem, 1.4vw, 1.25rem);
-  font-weight: 800;
-  padding: 8px 20px;
-  border-radius: 999px;
-  background: rgba(255, 255, 255, 0.2);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.tab-btn.active {
-  background: #ffffff;
-  color: #1e1b4b;
-  border-color: #fde047;
-  box-shadow: 0 6px 14px rgba(0,0,0,0.25);
-  transform: scale(1.04);
-}
-
-.look-action-tools {
-  display: flex;
-  gap: 10px;
-}
-
-.btn-tool-pill {
-  font-family: var(--font-primary);
-  font-size: clamp(0.9rem, 1.3vw, 1.15rem);
-  font-weight: 800;
-  padding: 8px 16px;
-  border-radius: 999px;
-  background: rgba(0, 0, 0, 0.35);
-  border: 2px solid rgba(255, 255, 255, 0.4);
-  color: #ffffff;
-  cursor: pointer;
+.viewer-nav-controls {
   display: flex;
   align-items: center;
-  gap: 6px;
-  transition: transform 0.15s ease;
+  gap: 10px;
 }
 
-.btn-tool-pill:hover {
-  transform: scale(1.08);
-  background: rgba(0,0,0,0.5);
-}
-
-/* Reference Stage & Image Display */
-.reference-stage-container {
+/* Stage & Scroll Wrapper for High-Res Image Display */
+.image-viewer-stage {
   width: 100%;
   flex: 1;
-  max-height: 68vh;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  position: relative;
-  background: rgba(0, 0, 0, 0.25);
+  max-height: 72vh;
+  background: rgba(0, 0, 0, 0.3);
   border-radius: 24px;
   border: 4px solid rgba(255, 255, 255, 0.3);
-  overflow: hidden;
-  padding: 10px;
-  box-shadow: inset 0 4px 12px rgba(0,0,0,0.4);
-}
-
-.reference-card-viewer {
-  display: none;
-  width: 100%;
-  height: 100%;
+  overflow: auto;
+  display: flex;
   align-items: center;
   justify-content: center;
+  padding: 8px;
+  box-shadow: inset 0 4px 16px rgba(0, 0, 0, 0.4);
 }
 
-.reference-card-viewer.active {
+.image-scroll-wrapper {
+  width: 100%;
+  height: 100%;
   display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: transform 0.25s ease;
+  transform-origin: center center;
 }
 
-.reference-image {
+.raw-asset-img {
   max-width: 100%;
   max-height: 100%;
   object-fit: contain;
-  border-radius: 16px;
-  box-shadow: 0 12px 30px rgba(0,0,0,0.4);
-  transition: transform 0.3s ease;
+  border-radius: 14px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+  display: block;
 }
 
-/* Zoom Mode */
-.reference-stage-container.zoomed .reference-image {
-  transform: scale(1.45);
-  cursor: grab;
-}
-
-/* Bottom Look & Learn Bar */
-.look-bottom-bar {
+.viewer-bottom-bar {
   width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 20px;
+  text-align: center;
+  padding: 4px 0;
 }
 
-.teacher-instruction-tip {
+.viewer-teacher-hint {
   font-size: clamp(0.95rem, 1.4vw, 1.25rem);
   font-weight: 700;
   color: #fef08a;
@@ -528,107 +535,7 @@ html, body {
 }
 
 /* ==========================================================================
-   STATE 2B: QUICK PRACTICE / WARM-UP FLASHCARDS
-   ========================================================================== */
-.warmup-content {
-  justify-content: space-between;
-  text-align: center;
-}
-
-.warmup-top-bar {
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  background: rgba(255, 255, 255, 0.12);
-  padding: 10px 24px;
-  border-radius: 18px;
-  border: 2px solid rgba(255, 255, 255, 0.25);
-}
-
-.warmup-title-pill {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  font-weight: 800;
-  color: #ffffff;
-}
-
-.warmup-counter-pill {
-  font-size: clamp(1.1rem, 1.8vw, 1.4rem);
-  font-weight: 800;
-  color: #fef08a;
-  background: rgba(0,0,0,0.25);
-  padding: 6px 18px;
-  border-radius: 999px;
-}
-
-.warmup-center-stage {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: clamp(14px, 2.5vh, 28px);
-  margin: auto 0;
-}
-
-.warmup-speech-prompt {
-  font-size: clamp(1.2rem, 2vw, 1.6rem);
-  font-weight: 800;
-  color: #bae6fd;
-  background: rgba(2, 132, 199, 0.35);
-  padding: 8px 24px;
-  border-radius: 999px;
-  border: 1px solid rgba(56, 189, 248, 0.4);
-}
-
-.warmup-emoji-card {
-  width: clamp(140px, 22vh, 210px);
-  height: clamp(140px, 22vh, 210px);
-  background: #ffffff;
-  border-radius: 36px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border: 6px solid var(--brand-yellow);
-  box-shadow: 0 16px 36px rgba(0, 0, 0, 0.35);
-}
-
-.warmup-emoji-char {
-  font-size: clamp(5.5rem, 14vh, 9rem);
-  filter: drop-shadow(0 6px 12px rgba(0,0,0,0.15));
-}
-
-.warmup-reveal-container {
-  min-height: 80px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.warmup-revealed-banner {
-  background: linear-gradient(135deg, #15803d, #22c55e);
-  border: 4px solid #fef08a;
-  color: #ffffff;
-  font-size: clamp(1.8rem, 3.5vw, 3rem);
-  font-weight: 900;
-  padding: 10px 36px;
-  border-radius: 999px;
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
-  animation: popIn 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-
-.warmup-word-text {
-  color: #fef08a;
-  letter-spacing: 2px;
-}
-
-.warmup-actions-row {
-  margin-top: 1vh;
-}
-
-/* ==========================================================================
-   STATE 3: EMOJI EXPERTS MAIN GAME (18 QUESTIONS)
+   SCREEN 4 — MAIN GAME (18 QUESTIONS)
    ========================================================================== */
 .game-play-content {
   justify-content: space-between;
@@ -694,6 +601,17 @@ html, body {
   background: linear-gradient(90deg, #facc15, #4ade80);
   border-radius: 999px;
   transition: width 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+.game-top-right-group {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.btn-ref-popup {
+  background: rgba(255, 255, 255, 0.25);
+  border-color: #fde047;
 }
 
 .score-pill {
@@ -994,7 +912,7 @@ html, body {
 }
 
 /* ==========================================================================
-   STATE 4: MEMORY GAME
+   SCREEN 5 — MEMORY GAME
    ========================================================================== */
 .memory-content {
   justify-content: center;
@@ -1180,7 +1098,7 @@ html, body {
 }
 
 /* ==========================================================================
-   STATE 5: GUESS WHAT I LIKE (Classroom Interactive)
+   SCREEN 6 — GUESS WHAT I LIKE (Classroom Interactive)
    ========================================================================== */
 .guess-content {
   justify-content: space-between;
@@ -1256,7 +1174,7 @@ html, body {
 }
 
 /* ==========================================================================
-   STATE 6: FINAL TRANSITION & PROFILE HANDOFF
+   SCREEN 7 — FINAL TRANSITION & PROFILE HANDOFF
    ========================================================================== */
 .profile-content {
   justify-content: space-between;
@@ -1467,8 +1385,8 @@ html, body {
   .cards-grid-trio {
     max-height: 50vh;
   }
-  .reference-stage-container {
-    max-height: 60vh;
+  .image-viewer-stage {
+    max-height: 64vh;
   }
   .target-emoji {
     font-size: 2.5rem;

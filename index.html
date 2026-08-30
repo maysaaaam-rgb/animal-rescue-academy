@@ -40,13 +40,28 @@
   </aside>
 
   <!-- =========================================================
+       POPUP MODAL: QUICK REFERENCE SHEET (During Game)
+       ========================================================= -->
+  <div class="modal-overlay hidden" id="modal-reference" aria-hidden="true">
+    <div class="modal-card animate-pop">
+      <div class="modal-header">
+        <h3 class="modal-title">📖 EMOJI WORDS REFERENCE</h3>
+        <button class="btn-close-modal" id="btn-close-reference" aria-label="Close Reference">✖</button>
+      </div>
+      <div class="modal-body">
+        <img src="assets/emoji_words.jpg" alt="Emoji Words Reference Sheet" class="modal-ref-img">
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
        MAIN SINGLE-PAGE APPLICATION CONTAINER
        Only ONE screen section is active/visible at any time.
        ========================================================= -->
   <div class="game-viewport">
 
     <!-- =========================================================
-         STATE 1: WELCOME SCREEN
+         SCREEN 1 — WELCOME
          ========================================================= -->
     <section class="game-screen active" id="screen-welcome">
       <div class="screen-content welcome-content animate-pop">
@@ -61,21 +76,11 @@
         </h1>
         
         <h2 class="game-subtitle">HELP THE TEACHER!</h2>
-
-        <div class="lesson-flow-preview">
-          <div class="flow-step"><span>👀</span> 1. Look & Learn</div>
-          <div class="flow-arrow">➔</div>
-          <div class="flow-step"><span>🎯</span> 2. Quick Practice</div>
-          <div class="flow-arrow">➔</div>
-          <div class="flow-step"><span>🕵️</span> 3. Emoji Experts</div>
-          <div class="flow-arrow">➔</div>
-          <div class="flow-step"><span>📋</span> 4. Make Profile</div>
-        </div>
         
         <div class="start-btn-wrapper">
-          <button class="btn-giant btn-play-primary animate-pulse" id="btn-start-play">
+          <button class="btn-giant btn-play-primary animate-pulse" id="btn-start-welcome">
             <span class="btn-icon">🎮</span>
-            <span class="btn-text">LET'S PLAY!</span>
+            <span class="btn-text">LET'S START</span>
           </button>
         </div>
 
@@ -84,144 +89,108 @@
     </section>
 
     <!-- =========================================================
-         STATE 2: LOOK & LEARN (The Visual Word Bank Reference Screen)
+         SCREEN 2 — LOOK AT OUR WORDS (Original Uploaded Sheet)
          ========================================================= -->
-    <section class="game-screen" id="screen-look-learn">
-      <div class="screen-content look-learn-content animate-pop">
+    <section class="game-screen" id="screen-words">
+      <div class="screen-content viewer-screen-content animate-pop">
         
-        <!-- Header Controls for Reference Material -->
-        <div class="look-top-bar">
-          <div class="look-title-group">
-            <h2 class="look-main-title">👀 LOOK & LEARN</h2>
-            <p class="look-subtitle">“Look! These are the words we will use!”</p>
+        <!-- Header -->
+        <header class="viewer-top-bar">
+          <div class="viewer-title-box">
+            <h2 class="viewer-main-title">👀 LOOK AT OUR WORDS</h2>
+            <p class="viewer-sub-title">“Look! These are the words we will use!”</p>
           </div>
 
-          <!-- Tabs to switch between Emoji Words sheet and All About Me Profile -->
-          <div class="reference-tabs-group">
-            <button class="tab-btn active" id="tab-btn-emoji-words">
-              <span>📖 EMOJI WORDS (Word Bank)</span>
+          <!-- Controls: Previous, Zoom In, Zoom Out, Next -->
+          <div class="viewer-nav-controls">
+            <button class="btn-tool-pill" id="btn-words-prev">
+              <span>◀ Previous</span>
             </button>
-            <button class="tab-btn" id="tab-btn-profile-sheet">
-              <span>📋 ALL ABOUT ME! (Profile)</span>
+            <button class="btn-tool-pill" id="btn-words-zoom-in" title="Zoom In">
+              <span>🔍 Zoom</span>
             </button>
-          </div>
-
-          <!-- Utility: Zoom & Pronounce -->
-          <div class="look-action-tools">
-            <button class="btn-tool-pill" id="btn-zoom-image" title="Zoom In on Smart Board">
-              <span id="zoom-btn-icon">🔍</span>
-              <span>ZOOM</span>
+            <button class="btn-tool-pill" id="btn-words-zoom-out" title="Zoom Out">
+              <span>🔎 Zoom out</span>
             </button>
-            <button class="btn-tool-pill" id="btn-read-aloud" title="Read Aloud Instructions">
-              <span>🔊</span>
-              <span>LISTEN</span>
+            <button class="btn-giant btn-next" id="btn-words-next">
+              <span>Next ➔</span>
             </button>
-          </div>
-        </div>
-
-        <!-- Large Image Stage Area -->
-        <div class="reference-stage-container" id="reference-stage">
-          
-          <!-- Image 1: EMOJI WORDS Reference Sheet -->
-          <div class="reference-card-viewer active" id="viewer-emoji-words">
-            <img src="assets/emoji_words.jpg" alt="Official Emoji Words Reference Sheet" class="reference-image" id="img-emoji-words">
-          </div>
-
-          <!-- Image 2: ALL ABOUT ME! Profile Sheet -->
-          <div class="reference-card-viewer" id="viewer-profile-sheet">
-            <img src="assets/all_about_me.jpg" alt="Official All About Me Profile Sheet" class="reference-image" id="img-profile-sheet">
-          </div>
-
-        </div>
-
-        <!-- Bottom Smart Board Navigation Bar -->
-        <div class="look-bottom-bar">
-          <div class="teacher-instruction-tip">
-            <span>💡 Teacher: Point to pictures on the Smart Board as students repeat the words.</span>
-          </div>
-          
-          <button class="btn-giant btn-success animate-pulse" id="btn-look-ready">
-            <span class="btn-text">READY? LET'S CHECK!</span>
-            <span class="btn-icon">🎯</span>
-          </button>
-        </div>
-
-      </div>
-    </section>
-
-    <!-- =========================================================
-         STATE 2B: QUICK PRACTICE / WARM-UP FLASHCARDS
-         ========================================================= -->
-    <section class="game-screen" id="screen-warmup">
-      <div class="screen-content warmup-content animate-pop">
-        
-        <header class="warmup-top-bar">
-          <div class="warmup-title-pill">
-            <span>🎯 QUICK PRACTICE WARM-UP</span>
-          </div>
-          <div class="warmup-counter-pill" id="warmup-counter-text">
-            Word 1 / 6
           </div>
         </header>
 
-        <div class="warmup-center-stage">
-          <div class="warmup-speech-prompt">
-            <span>Teacher asks: “What is this?”</span>
-          </div>
-
-          <!-- Huge Emoji Stage -->
-          <div class="warmup-emoji-card animate-bounce">
-            <span class="warmup-emoji-char" id="warmup-emoji-char">🎮</span>
-          </div>
-
-          <!-- Word Reveal Display Area -->
-          <div class="warmup-reveal-container">
-            <button class="btn-giant btn-reveal" id="btn-warmup-reveal">
-              <span class="btn-icon">💡</span>
-              <span class="btn-text">TAP TO REVEAL WORD</span>
-            </button>
-            
-            <div class="warmup-revealed-banner hidden" id="warmup-revealed-banner">
-              <span class="warmup-star">⭐</span>
-              <span class="warmup-word-text" id="warmup-word-text">PLAY GAMES</span>
-              <button class="btn-pronounce" id="btn-warmup-pronounce" title="Pronounce word">
-                <span>🔊</span>
-              </button>
-              <span class="warmup-star">⭐</span>
-            </div>
-          </div>
-
-          <!-- Warm-up Controls Row -->
-          <div class="warmup-actions-row">
-            <button class="btn-giant btn-next hidden" id="btn-warmup-next">
-              <span class="btn-text">NEXT WORD</span>
-              <span class="btn-icon">➔</span>
-            </button>
-            
-            <button class="btn-giant btn-play-primary hidden" id="btn-warmup-start-main">
-              <span class="btn-icon">🕵️</span>
-              <span class="btn-text">START EMOJI EXPERTS GAME!</span>
-            </button>
+        <!-- Large Image Stage displaying the exact uploaded emoji_words.jpg file -->
+        <div class="image-viewer-stage" id="stage-words">
+          <div class="image-scroll-wrapper" id="scroll-wrapper-words">
+            <img src="assets/emoji_words.jpg" alt="Official Emoji Words Reference Sheet" class="raw-asset-img" id="img-words-asset">
           </div>
         </div>
+
+        <footer class="viewer-bottom-bar">
+          <span class="viewer-teacher-hint">💡 Teacher: Point to the emojis on the Smart Board and teach words orally with your students.</span>
+        </footer>
 
       </div>
     </section>
 
     <!-- =========================================================
-         STATE 3: EMOJI EXPERTS — MAIN GAME (18 Questions)
+         SCREEN 3 — OUR PROFILE (Original Uploaded Worksheet)
+         ========================================================= -->
+    <section class="game-screen" id="screen-profile-preview">
+      <div class="screen-content viewer-screen-content animate-pop">
+        
+        <!-- Header -->
+        <header class="viewer-top-bar">
+          <div class="viewer-title-box">
+            <h2 class="viewer-main-title">📋 OUR PROFILE</h2>
+            <p class="viewer-sub-title">“Look! This is what we are going to make!”</p>
+          </div>
+
+          <!-- Controls: Back, Zoom In, Zoom Out, Start Game -->
+          <div class="viewer-nav-controls">
+            <button class="btn-tool-pill" id="btn-profile-back">
+              <span>◀ Back</span>
+            </button>
+            <button class="btn-tool-pill" id="btn-profile-zoom-in" title="Zoom In">
+              <span>🔍 Zoom</span>
+            </button>
+            <button class="btn-tool-pill" id="btn-profile-zoom-out" title="Zoom Out">
+              <span>🔎 Zoom out</span>
+            </button>
+            <button class="btn-giant btn-success animate-pulse" id="btn-profile-start-game">
+              <span class="btn-text">START GAME!</span>
+              <span class="btn-icon">🚀</span>
+            </button>
+          </div>
+        </header>
+
+        <!-- Large Image Stage displaying the exact uploaded all_about_me.jpg file -->
+        <div class="image-viewer-stage" id="stage-profile">
+          <div class="image-scroll-wrapper" id="scroll-wrapper-profile">
+            <img src="assets/all_about_me.jpg" alt="Official All About Me Profile Worksheet" class="raw-asset-img" id="img-profile-asset">
+          </div>
+        </div>
+
+        <footer class="viewer-bottom-bar">
+          <span class="viewer-teacher-hint">💡 Teacher: Show students the 4 sections of their final worksheet before starting the game.</span>
+        </footer>
+
+      </div>
+    </section>
+
+    <!-- =========================================================
+         SCREEN 4 — GAME (EMOJI EXPERTS: 18 Questions)
          ========================================================= -->
     <section class="game-screen" id="screen-game">
       <div class="screen-content game-play-content">
         
-        <!-- Header Bar: Category Tag, Progress, Score -->
+        <!-- Top Bar: Category, Progress, Score & Quick Reference Button -->
         <header class="game-top-bar">
           <div class="game-category-tag" id="game-category-tag">
             <span id="category-badge-icon">💚</span>
             <span id="category-badge-text">Things I love to do</span>
           </div>
 
-          <!-- Question Progress Bar -->
+          <!-- Progress -->
           <div class="question-progress-wrap">
             <span class="progress-label" id="q-counter-text">Question 1 / 18</span>
             <div class="progress-bar-track">
@@ -229,10 +198,15 @@
             </div>
           </div>
 
-          <!-- Live Star Score -->
-          <div class="score-pill" id="score-pill">
-            <span class="score-star animate-spin-slow">⭐</span>
-            <span class="score-number" id="game-score-display">0</span>
+          <!-- Score & Reference Sheet Modal Trigger -->
+          <div class="game-top-right-group">
+            <button class="btn-tool-pill btn-ref-popup" id="btn-open-reference" title="View Reference Sheet">
+              <span>📋 Reference</span>
+            </button>
+            <div class="score-pill" id="score-pill">
+              <span class="score-star animate-spin-slow">⭐</span>
+              <span class="score-number" id="game-score-display">0</span>
+            </div>
           </div>
         </header>
 
@@ -244,7 +218,7 @@
           <h2 class="question-prompt-text" id="question-prompt-text">WHAT'S THIS?</h2>
         </div>
 
-        <!-- 3 Large Realistic Photograph Answer Cards -->
+        <!-- 3 Large Realistic Photograph Answer Cards (A, B, C) -->
         <div class="cards-grid-trio" id="photo-cards-container">
           
           <!-- Card A -->
@@ -320,12 +294,12 @@
     </section>
 
     <!-- =========================================================
-         STATE 4: MEMORY GAME
+         SCREEN 5 — MEMORY GAME
          ========================================================= -->
     <section class="game-screen" id="screen-memory">
       <div class="screen-content memory-content">
         
-        <!-- Phase 4A: Memory Intro Transition Screen -->
+        <!-- Memory Intro View -->
         <div class="memory-intro-view" id="memory-intro-view">
           <div class="celebrate-badge animate-bounce">🎉</div>
           <h1 class="memory-congrats-title">GREAT JOB!</h1>
@@ -333,18 +307,17 @@
           <div class="memory-launch-wrap">
             <button class="btn-giant btn-memory-start animate-pulse" id="btn-start-memory-game">
               <span class="btn-icon">🧠</span>
-              <span class="btn-text">MEMORY GAME</span>
+              <span class="btn-text">MEMORY CHALLENGE</span>
             </button>
           </div>
         </div>
 
-        <!-- Phase 4B: Active Memory Play Area -->
+        <!-- Active Memory Play Area -->
         <div class="memory-play-view hidden" id="memory-play-view">
           
-          <!-- Header -->
           <div class="memory-top-bar">
             <div class="memory-badge-pill">
-              <span>🧠 PROFILE MEMORY GAME</span>
+              <span>🧠 MEMORY CHALLENGE</span>
             </div>
             <div class="memory-round-pill" id="memory-round-indicator">
               Round 1 / 4
@@ -361,7 +334,7 @@
             </div>
 
             <div class="memory-grid-display" id="memory-grid-container">
-              <!-- Rendered dynamically -->
+              <!-- Dynamic Cards -->
             </div>
           </div>
 
@@ -385,7 +358,7 @@
               </button>
             </div>
 
-            <!-- Memory Result Feedback Banner -->
+            <!-- Result Feedback Banner -->
             <div class="memory-feedback-box hidden" id="memory-feedback-box">
               <div class="mem-feedback-text" id="mem-feedback-text">CORRECT! ⭐</div>
               <button class="btn-giant btn-next animate-pulse" id="btn-memory-next">
@@ -400,7 +373,7 @@
     </section>
 
     <!-- =========================================================
-         STATE 5: GUESS WHAT I LIKE (Classroom Interactive Game)
+         SCREEN 6 — GUESS WHAT I LIKE
          ========================================================= -->
     <section class="game-screen" id="screen-guess">
       <div class="screen-content guess-content">
@@ -460,17 +433,17 @@
     </section>
 
     <!-- =========================================================
-         STATE 6: FINAL TRANSITION & ALL ABOUT ME PROFILE HANDOFF
+         SCREEN 7 — FINAL PROFILE TRANSITION (Original Sheet)
          ========================================================= -->
-    <section class="game-screen" id="screen-profile">
+    <section class="game-screen" id="screen-final">
       <div class="screen-content profile-content animate-pop">
         
         <div class="celebrate-trophy-ring animate-bounce">
           <span>🎉</span>
         </div>
 
-        <h1 class="final-huge-title">YOU KNOW THE EMOJIS!</h1>
-        <h2 class="final-huge-subtitle">⭐ YOU ARE ALL ABOUT ME EXPERTS! ⭐</h2>
+        <h1 class="final-huge-title">YOU ARE EMOJI EXPERTS!</h1>
+        <h2 class="final-huge-subtitle">⭐ NOW LET'S MAKE OUR PROFILES! ⭐</h2>
 
         <!-- Score & Achievement Summary -->
         <div class="final-score-card">
@@ -478,10 +451,10 @@
           <div class="final-score-text">Total Score: <strong id="final-score-num">18</strong> Stars!</div>
         </div>
 
-        <!-- Display the ACTUAL Provided "ALL ABOUT ME!" Profile Sheet -->
+        <!-- Displays the FIRST ORIGINAL UPLOADED IMAGE (All About Me Worksheet) -->
         <div class="final-profile-sheet-display">
           <div class="final-sheet-frame">
-            <img src="assets/all_about_me.jpg" alt="All About Me Physical Worksheet Preview" class="final-profile-sheet-img" id="final-profile-sheet-img">
+            <img src="assets/all_about_me.jpg" alt="All About Me Physical Worksheet" class="final-profile-sheet-img">
           </div>
           <div class="profile-worksheet-banner animate-pulse">
             <div class="worksheet-icon">📋</div>
