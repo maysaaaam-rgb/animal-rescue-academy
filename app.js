@@ -1761,6 +1761,7 @@
       this.stealTargetTileIndex = null;
       this.diceUnlocked = false;
       this.isRollingOrMoving = false;
+      this.modalOpen = false;
       this.currentQuestion = null;
       this.currentQuestionAnswered = false;
       this.countdownInterval = null;
@@ -1950,19 +1951,20 @@
         this.btnRollDice.addEventListener('pointerup', triggerRoll);
       }
 
-      // 6. Event continue button
+      // 6. Event continue button with guarded click and pointerup handler
       if (this.btnEventContinue) {
-        this.btnEventContinue.addEventListener('click', () => {
-          this.audio.playPop();
-          this.eventModal.classList.add('hidden');
-          if (this.onEventModalContinue) {
-            const cb = this.onEventModalContinue;
-            this.onEventModalContinue = null;
-            cb();
-          } else {
-            this.advanceTurn();
+        const handleContinue = (e) => {
+          if (e) {
+            e.stopPropagation();
           }
-        });
+          if (!this.modalOpen) return;
+
+          this.audio.playPop();
+          this.closeEventModal();
+        };
+
+        this.btnEventContinue.addEventListener('click', handleContinue);
+        this.btnEventContinue.addEventListener('pointerup', handleContinue);
       }
 
       // 7. Winner screen buttons
@@ -2771,6 +2773,9 @@
     }
 
     showEventModal(badge, title, desc, interactiveHtml, onContinue) {
+      this.modalOpen = true;
+      this.onEventModalContinue = onContinue;
+
       this.eventBadge.textContent = badge;
       this.eventTitle.textContent = title;
       this.eventDesc.textContent = desc;
@@ -2782,8 +2787,29 @@
         this.eventInteractive.classList.add('hidden');
       }
 
-      this.onEventModalContinue = onContinue;
+      if (this.btnEventContinue) {
+        this.btnEventContinue.disabled = false;
+        this.btnEventContinue.style.pointerEvents = 'auto';
+        this.btnEventContinue.style.cursor = 'pointer';
+        this.btnEventContinue.style.opacity = '1';
+      }
+
       this.eventModal.classList.remove('hidden');
+      this.eventModal.style.pointerEvents = 'auto';
+    }
+
+    closeEventModal() {
+      this.modalOpen = false;
+      this.eventModal.classList.add('hidden');
+      this.eventModal.style.pointerEvents = 'none';
+
+      const cb = this.onEventModalContinue;
+      this.onEventModalContinue = null;
+      if (typeof cb === 'function') {
+        cb();
+      } else {
+        this.advanceTurn();
+      }
     }
 
     // =========================================================================

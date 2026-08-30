@@ -2483,11 +2483,17 @@ html, body {
   height: 100%;
   background: rgba(15, 23, 42, 0.85);
   backdrop-filter: blur(8px);
-  z-index: 40;
+  z-index: 10000;
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 16px;
+  pointer-events: auto;
+}
+
+.m-event-modal-overlay.hidden {
+  display: none !important;
+  pointer-events: none !important;
 }
 
 .m-event-card {
@@ -2499,6 +2505,9 @@ html, body {
   width: 100%;
   text-align: center;
   box-shadow: 0 20px 40px rgba(0,0,0,0.6);
+  position: relative;
+  z-index: 10001;
+  pointer-events: auto;
 }
 
 .m-event-badge {
@@ -2526,6 +2535,26 @@ html, body {
   display: flex;
   flex-direction: column;
   gap: 8px;
+}
+
+#btn-event-continue {
+  position: relative !important;
+  z-index: 10002 !important;
+  pointer-events: auto !important;
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  min-height: 54px;
+  min-width: 200px;
+  display: inline-flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  gap: 12px !important;
+}
+
+#btn-event-continue * {
+  pointer-events: none !important;
 }
 
 /* --- Stage 4: Winner Celebration Ceremony --- */
